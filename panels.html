@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Panels and Panel Sets</title>
+    <meta charset='utf-8'>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common'
+            async class='remove'></script>
+    <style>
+        .todo { color: red; font-weight: bold; }
+    </style>
+
+    <script class='remove'>
+      var respecConfig = {
+          specStatus: "unofficial",
+          shortName:  "panels-and-panelsets",
+          editors: [
+                {   name:       "Brian Kardell",
+                    url:        "https://twitter.com/briankardell",
+                    company:    "Apollo Education Group",
+                    companyURL: "http://www.apollo.edu/"
+                },
+                {   name:       "Steve Faulkner",
+                    url:        "https://twitter.com/stevefaulkner",
+                    company:    "The Paciello Group",
+                    companyURL: "http://www.paciellogroup.com/"
+                },
+                {   name:       "Leonie Watson",
+                    url:        "https://twitter.com/LeonieWatson",
+                    company:    "The Paciello Group",
+                    companyURL: "http://www.paciellogroup.com/"
+                }
+          ]
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        This document describes a universal markup attempting to pave the cowpath 
+        we observe for a construct called a <code>&lt;common-panel&gt;</code>
+        which contains what appear to be common attributes and provide also
+        and a single selection interaction paradigm for a collection of them called a
+        <code>&lt;common-panel-set&gt;</code>.  Defining these allow editors to create a reusable 
+        set of declarative code which remains semantic, widely stylable 
+        in visual terms while retaining a conceptual and physical separation that retains 
+        the important accessibility benefits for all of them.
+      </p>
+    </section>
+
+    <section id='sotd'>
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+        When editing a document, an author attempts to mark it up semantically and control 
+        a separation of visual aspects through CSS.  This allows various the user-agent  
+        and various tools to use the same semantic data to provide any number of affordances 
+        for accessibility, navigation and interaction.  Over time, UIs have created a number 
+        of metaphors for visually managing and providing single selection/focus navigation 
+        through a collection of titled 'blocks'. 
+        </p>
+        <p>Because the art of creating a good user interface is something we are all still 
+        trying to figure out, the history and development of these metaphors appear to 
+        have obscured the underlying fact that in virtually every way, a number of them 
+        are <em>conceptually</em> and in an very real sense <em>practically</em> nearly 
+        identical in every way (in fact, the WAI-ARIA Best Practices document defines 
+        accordions as a kind of <code>tablist</code> and in terms of keyboard navigation 
+        says that UAs should treat up/down and left/right navigation for tabs and 
+        accordions as interchangeable, for example) but are visually very different. 
+        With the advent of ever more variant screen sizes, interaction methods, 
+        responsive design, and a newly energized focus on accessibility, this question has 
+        begun to come to the forefront of the mainstream:  We have designs which switch 
+        their visual representation based on the current size of the screen, rather than 
+        being constant. For example, on a wide screen, a tabbed interface may seem like a 
+        natural choice, whereas the same interface is more natural as an accordion, or a 
+        deck on a small one.  This proposal attempts to uncover the underlying structures 
+        and interactions that accurately describe the common "thing" and provide ways and 
+        examples of achieving robust separation in which CSS plays its intended role and 
+        it is easy for authors to "do the right thing". 
+    </p>
+    <p>
+        As an author, one would like to define a simple panel which has a title and have it 
+        display in a common fashion and have common UA/AT features.
+
+       <image src="titled-panel.png">
+    </p>
+    <p>
+        To this end, we introduce a common markup element...
+    </p>
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel title="Panels Rock"&gt;
+    &lt;p&gt;Don't you really think?&lt;/p&gt;
+&lt;/common-panel&gt;
+       </pre>
+    <p>
+        which exposes the following pseudo-elements with built in semantics and functionality, and which can be used to 
+        achieve a wide number of visual presentation effects:
+        <ul>
+            <li><code>::--common-panel-header</code></li>
+            <li><code>::--common-panel-icon</code></li>
+            <li><code>::--common-panel-title</code></li>
+            <li><code>::--common-panel-destroy</code> (if the is-removable attribute is set)</li>
+        </ul>
+
+        UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
+    </p>
+
+    <p>
+
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Removable Panels" is-removable&gt;
+    &lt;p&gt;Don't you really think they do? You can click the button in the titlebar to remove this panel.&lt;/p&gt;
+&lt;/common-panel&gt;
+        </pre>
+
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel title="Collapsable Panels" collapse-state="collapsed"&gt;
+    &lt;p&gt;Don't you really think they do? This element was collapsed initially, if you can read this, it's been expanded&lt;/p&gt;
+&lt;/common-panel&gt;
+        </pre>
+
+        <div class="note">Define what aria/interactions a lone panel should have, if any.</div>
+
+        <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
+        the panelset will manage the selection/activation of a <code>&lt;common-panel&gt;</code> at a time.
+        The <code>collapse-state</code> of a panel indicates whether it is intended to be
+        selected or not (any value other than <code>expanded</code> is considered collapsed.
+        By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded.
+        Because the parser processes elements in document order, any subsequent claims of
+        expansion trump the first by removing the attribute from siblings.
+        </p>
+
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set id="foo"&gt;
+    &lt;common-panel title="Panel #1"&gt;
+        &lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;
+    &lt;/common-panel&gt;
+    &lt;common-panel title="Panel #2"&gt;
+        &lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;
+    &lt;/common-panel&gt;
+&lt;common-panel-set&gt;
+        </pre>
+
+        <p>The <code>&lt;common-panel-set&gt</code> provides a DOM method like the <code>&lt;select&gt</code> element,
+        exposing <code>.basic_panels</code> collection, a <code>basic_selectedIndex</code> property, and a <code>basic_selectedPanel</code> property.</p>
+
+
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set&gt;
+    &lt;common-panel id="bar" title="Panel #1"&gt;
+        &lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;
+    &lt;/common-panel&gt;
+    &lt;common-panel title="Panel #2" collapse-state="expanded"&gt;
+        &lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;
+    &lt;/common-panel&gt;
+&lt;common-panel-set&gt;
+&lt;script&gt;
+    var panelSet = document.querySelector("#bar");
+    console.log(panelSet.selectedIndex); // 1
+    console.log(panelSet.basic_panels.length); // 2
+    console.log(panelSet.basic_selectedPanel); // the selected basic panel element
+&lt;script&gt;</pre>
+
+    <p>
+        Some examples of single select <code>&lt;common-panel-sets&gt;</code> are
+        <ul>
+            <li>tabset/tabmenu</li>
+            <li>accordion</li>
+            <li>carousel</li>
+            <li>deck</li>
+            <li>coverflow</li>
+        </ul>
+      </p>
+
+      <p>
+        A <code>&lt;common-panel&gt;</code> is defined as having:
+        <ul>
+           <li>An (optional) element for title (which allows use of CSS to ::before/::after) with attributes <em>is-destroyable</em> and <em>collapse-state</em> which can contain values "collapsed" or "expanded" (default)</li>
+           <li>A body element</li>
+
+        </ul>
+      </p>
+    </section>
+  </body>
+</html>
