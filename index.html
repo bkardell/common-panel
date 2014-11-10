@@ -129,18 +129,17 @@
         <h2>Dismissable Panels</h2>
         <p>Another recurring theme in UI is that some panels are informational, they provide a necessary noise, but you'd like a user to be able to dismiss them.  Enter the <code>is-removable</code> boolean attribute.  If present it will add the ability to dismiss the panel, removing it from the DOM.</p>
         <image src="dismissable-panel.png" >
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;
-    &lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
 &lt;/common-panel&gt;
         </pre>
 
         <h2>Collapsable Panels</h2>
         <p>Sometimes panels are collapsable and sometimes they begin their being in a collapsed state.  Being collapsable means that a user can pontentially manage the noise selectively, over time.  To this end, there is the <code>collapse-state</code> attribute.  If present, the entire title manages a toggle of the state, it can optionally be set to <code>collapse-state="closed"</code> to set its initial value.  Styling may be managhkfjsed via the provided pseudo-classes and user agents MAY choose how they indicate state by default.</p>
         <image src="collapsable-panel.png" >
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;
-    &lt;p&gt;Something &lt;a href="#"&gt;amazing&lt;/a&gt;
-  happened on the Internet today...&lt;/p&gt;
-&lt;/common-panel&gt;
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
+&lt;/common-panel&gt;<br>
         </pre>
 
     </section>
@@ -155,53 +154,53 @@
         <h1>Panel Sets</h1>
 
         <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
-        the panelset will manage the selection/activation of a <code>&lt;common-panel&gt;</code> at a time.
-        The <code>collapse-state</code> of a panel indicates whether it is intended to be
-        selected or not (any value other than <code>expanded</code> is considered collapsed.
-        By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded.
+        the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time, 
+        effectively managing their <code>collapse-state</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element 
+        children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable.  
+        By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded (not collapsed).
         Because the parser processes elements in document order, any subsequent claims of
-        expansion trump the first by removing the attribute from siblings.
+        expansion trump the first by removing the attribute from siblings and setting their <code>collapse-state="closed"</code>.  Through this means, any number of styles are achievable:
+        </p> 
+        <p>
+            Some examples of visual views on a single select <code>&lt;common-panel-sets&gt;</code> are
+            <ul>
+                <li>tabset/tabmenu</li>
+                <li>accordion</li>
+                <li>carousel</li>
+                <li>deck</li>
+                <li>coverflow</li>
+            </ul>
         </p>
 
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set id="foo"&gt;
-    &lt;common-panel title="Panel #1"&gt;
-        &lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;
-    &lt;/common-panel&gt;
-    &lt;common-panel title="Panel #2"&gt;
-        &lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;
-    &lt;/common-panel&gt;
-&lt;common-panel-set&gt;
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set id="foo"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;
         </pre>
 
-        <p>The <code>&lt;common-panel-set&gt</code> provides a DOM method like the <code>&lt;select&gt</code> element,
+        <p>The <code>&lt;common-panel-set&gt</code> exposes a DOM method like the <code>&lt;select&gt</code> element,
         exposing <code>.basic_panels</code> collection, a <code>basic_selectedIndex</code> property, and a <code>basic_selectedPanel</code> property.</p>
 
 
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set&gt;
-    &lt;common-panel id="bar" title="Panel #1"&gt;
-        &lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;
-    &lt;/common-panel&gt;
-    &lt;common-panel title="Panel #2" collapse-state="expanded"&gt;
-        &lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;
-    &lt;/common-panel&gt;
-&lt;common-panel-set&gt;
-&lt;script&gt;
-    var panelSet = document.querySelector("#bar");
-    console.log(panelSet.selectedIndex); // 1
-    console.log(panelSet.basic_panels.length); // 2
-    console.log(panelSet.basic_selectedPanel); // the selected basic panel element
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel id="bar" title="Panel #1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2" collapse-state="expanded"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;common-panel-set&gt;<br>
+&lt;script&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;var panelSet = document.querySelector("#bar");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.selectedIndex); // 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.basic_panels.length); // 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.basic_selectedPanel); // the selected basic panel element<br>
 &lt;script&gt;</pre>
 
-    <p>
-        Some examples of single select <code>&lt;common-panel-sets&gt;</code> are
-        <ul>
-            <li>tabset/tabmenu</li>
-            <li>accordion</li>
-            <li>carousel</li>
-            <li>deck</li>
-            <li>coverflow</li>
-        </ul>
-      </p>
     </section>
 
       <p>
