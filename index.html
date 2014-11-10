@@ -14,7 +14,7 @@
           specStatus: "unofficial",
           shortName:  "panels-and-panelsets",
           editors: [
-                {   name:       "Brian Kardell",
+                {   name:       "Brian Kardell", 
                     url:        "https://twitter.com/briankardell",
                     company:    "Apollo Education Group",
                     companyURL: "http://www.apollo.edu/"
@@ -55,13 +55,21 @@
       <p>
         When editing a document, an author attempts to mark it up semantically and control 
         a separation of visual aspects through CSS.  This allows various the user-agent  
-        and various tools to use the same semantic data to provide any number of affordances 
-        for accessibility, navigation and interaction.  Over time, UIs have created a number 
-        of metaphors for visually managing and providing single selection/focus navigation 
-        through a collection of titled 'blocks'. 
-        </p>
+        and tools to use the same semantic data to provide any number of affordances 
+        for accessibility, navigation, styling and interaction. Over time, UI designers 
+        have created a number of common metaphors for visually managing and providing 
+        single selection/focus navigation through a collection of titled 'blocks', which 
+        are, themselves more complex and meaningful than it might seem at first glace. 
+      </p>
+      <p>
+        While it is useful to have elements like <code>&lt;section&gt;</code> and 
+        <code>&lt;h1&gt;</code> which are high-level in their own right, it is also useful 
+        to extract continually higher constructs as we see them emerge that add to our 
+        ability to universally describe common things rather than rely on variable constructs
+        and specialized knowledge about how they fit together to achieve something greater.
+      </p>
         <p>Because the art of creating a good user interface is something we are all still 
-        trying to figure out, the history and development of these metaphors appear to 
+        collectively trying to figure out, the history and development of these metaphors appear to 
         have obscured the underlying fact that in virtually every way, a number of them 
         are <em>conceptually</em> and in an very real sense <em>practically</em> nearly 
         identical in every way (in fact, the WAI-ARIA Best Practices document defines 
@@ -79,45 +87,72 @@
         examples of achieving robust separation in which CSS plays its intended role and 
         it is easy for authors to "do the right thing". 
     </p>
-    <p>
-        As an author, one would like to define a simple panel which has a title and have it 
-        display in a common fashion and have common UA/AT features.
+    <section>
+        <h1>Panels</h1>
+        <p>
+            Starting from something very basic, the concept of a panel recurrs in print and online, in documents and applicaitons. 
+        </p>
 
-       <image src="titled-panel.png">
-    </p>
-    <p>
-        To this end, we introduce a common markup element...
-    </p>
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel title="Panels Rock"&gt;
-    &lt;p&gt;Don't you really think?&lt;/p&gt;
-&lt;/common-panel&gt;
-       </pre>
-    <p>
-        which exposes the following pseudo-elements with built in semantics and functionality, and which can be used to 
-        achieve a wide number of visual presentation effects:
-        <ul>
-            <li><code>::--common-panel-header</code></li>
-            <li><code>::--common-panel-icon</code></li>
-            <li><code>::--common-panel-title</code></li>
-            <li><code>::--common-panel-destroy</code> (if the is-removable attribute is set)</li>
-        </ul>
+        <p>
+            As an author, one would like to define a simple panel which has a title and have it 
+            display in a common fashion and have common UA/AT features and a degree of ability to
+            vary visual or aural and print styles while still remaining a cohesive semantic thing.
+        </p>
 
-        UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
-    </p>
+        <image src="basic-common-panel.png" >
+        <p>
+            To this end, we introduce a common markup element...
+        </p>
+            <pre class="example highlight prettyprint prettyprinted">&lt;fep-panel title="My favorite books"&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Here are a list of my favorite books:<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ol&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Hitchhiker's Guide to the Galaxy&lt;/li&gt;<br /> 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Pride and Prejudice&lt;/li&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Green Eggs and Ham&lt;/li&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ol&gt;<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;<br />
+        &lt;/fep-panel&gt;
+           </pre>
+        <p>
+            which exposes the following pseudo-elements with built in semantics and functionality, and which can be used to 
+            achieve a wide number of visual presentation effects:
+            <ul>
+                <li><code>::--common-panel-header</code></li>
+                <li><code>::--common-panel-icon</code></li>
+                <li><code>::--common-panel-title</code></li>
+                <li><code>::--common-panel-destroy</code> (if the is-removable attribute is set)</li>
+            </ul>
 
-    <p>
+            UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
+        </p>
 
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Removable Panels" is-removable&gt;
-    &lt;p&gt;Don't you really think they do? You can click the button in the titlebar to remove this panel.&lt;/p&gt;
+        <h2>Dismissable Panels</h2>
+        <p>Another recurring theme in UI is that some panels are informational, they provide a necessary noise, but you'd like a user to be able to dismiss them.  Enter the <code>is-removable</code> boolean attribute.  If present it will add the ability to dismiss the panel, removing it from the DOM.</p>
+        <image src="dismissable-panel.png" >
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;
+    &lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;
 &lt;/common-panel&gt;
         </pre>
 
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel title="Collapsable Panels" collapse-state="collapsed"&gt;
-    &lt;p&gt;Don't you really think they do? This element was collapsed initially, if you can read this, it's been expanded&lt;/p&gt;
+        <h2>Collapsable Panels</h2>
+        <p>Sometimes panels are collapsable and sometimes they begin their being in a collapsed state.  Being collapsable means that a user can pontentially manage the noise selectively, over time.  To this end, there is the <code>collapse-state</code> attribute.  If present, the entire title manages a toggle of the state, it can optionally be set to <code>collapse-state="closed"</code> to set its initial value.  Styling may be managhkfjsed via the provided pseudo-classes and user agents MAY choose how they indicate state by default.</p>
+        <image src="collapsable-panel.png" >
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;
+    &lt;p&gt;Something &lt;a href="#"&gt;amazing&lt;/a&gt;
+  happened on the Internet today...&lt;/p&gt;
 &lt;/common-panel&gt;
         </pre>
 
-        <div class="note">Define what aria/interactions a lone panel should have, if any.</div>
+    </section>
+
+    <p>
+
+
+        <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
+
+<hr>
+    <section>
+        <h1>Panel Sets</h1>
 
         <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
         the panelset will manage the selection/activation of a <code>&lt;common-panel&gt;</code> at a time.
@@ -167,6 +202,7 @@
             <li>coverflow</li>
         </ul>
       </p>
+    </section>
 
       <p>
         A <code>&lt;common-panel&gt;</code> is defined as having:
