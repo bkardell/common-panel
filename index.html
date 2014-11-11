@@ -138,7 +138,7 @@
         <p>Sometimes panels are collapsable and sometimes they begin their being in a collapsed state.  Being collapsable means that a user can pontentially manage the noise selectively, over time.  Thus, panels have a inherent concept of 'expansion-state' baked in.  A panel, by default has no controls for managing this state (as on a printed page or simple panel) thus it's defaulty expansion-state is "opened", however, an author may add the UI/UA ability for the 
         user to manage this by way of the <code>expansion-state</code> attribute.  If present, the entire title manages a toggle of the state, and provides default keyboard handling.  If present, without a value, <code>expansion-state</code> attribute will result in the panel beginning in the "closed" state, it may be explicity set to <code>expansion-state="opened"</code></p>
         <image src="collapsable-panel.png" >
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;<br />
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" expansion-state="opened"&gt;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
 &lt;/common-panel&gt;<br>
         </pre>
@@ -179,11 +179,11 @@
 
         <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
         the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time, 
-        effectively managing their <code>collapse-state</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element 
-        children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable.  
+        effectively managing their <code>expansion-state</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element 
+        children of a <code>&lt;common-panel-set&gt;</code> are automatically expandable/collapsable.  
         By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded (not collapsed).
         Because the parser processes elements in document order, any subsequent claims of
-        expansion trump the first by removing the attribute from siblings and setting their <code>collapse-state="closed"</code>.  Through this means, any number of styles are achievable:
+        expansion trump the first by removing the attribute from siblings and setting their <code>expansion-state="closed"</code>.  Through this means, any number of styles are achievable:
         </p> 
         <p>
             Some examples of visual views on a single select <code>&lt;common-panel-sets&gt;</code> are
@@ -214,7 +214,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel id="bar" title="Panel #1"&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2" collapse-state="expanded"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2" expansion-state="expanded"&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
 &lt;common-panel-set&gt;<br>
@@ -230,7 +230,7 @@
       <p>
         A <code>&lt;common-panel&gt;</code> is defined as having:
         <ul>
-           <li>An (optional) element for title (which allows use of CSS to ::before/::after) with attributes <em>is-destroyable</em> and <em>collapse-state</em> which can contain values "collapsed" or "expanded" (default)</li>
+           <li>An (optional) element for title (which allows use of CSS to ::before/::after) with attributes <em>is-destroyable</em> and <em>expansion-state</em> which can contain values "opened" or "closed" (default)</li>
            <li>A body element</li>
 
         </ul>
