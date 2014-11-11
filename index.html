@@ -90,11 +90,17 @@
     <section>
         <h1>Panels</h1>
         <p>
-            Starting from something very basic, the concept of a panel recurrs in print and online, in documents and applicaitons. 
+            The concept of a panel recurrs in print and online, in documents and applicaitons.  
+            Based on some factors, it has proven useful when used in UI, to sometimes add certain 
+            abilities to the panel itself, for example, the ability to 'collapse' it and both 
+            remove its contents from the visual appearance and place appropriate control for 
+            allowing the user to 'expand' it, or 'dismiss' it and remove it from the UI altogether.  
         </p>
 
+        <section>
+            <h2>Basic Panel</h2>
         <p>
-            As an author, one would like to define a simple panel which has a title and have it 
+            Use Case: As an author, one would like to define a simple panel which has a title and have it 
             display in a common fashion and have common UA/AT features and a degree of ability to
             vary visual or aural and print styles while still remaining a cohesive semantic thing.
         </p>
@@ -113,9 +119,34 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;<br />
         &lt;/fep-panel&gt;
            </pre>
-        <p>
-            which exposes the following pseudo-elements with built in semantics and functionality, and which can be used to 
-            achieve a wide number of visual presentation effects:
+        </section>
+
+        <section>
+            <h2>Dismissable Panels</h2>
+        <p>Another recurring theme in UI is that some panels are informational and secondary: They provide a necessary noise, but a user should be able to dismiss them.  For this purpose the <code>is-dismissable</code> boolean attribute.  If present it will add the ability to dismiss the panel, removing it from the DOM.</p>
+        <image src="dismissable-panel.png" >
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
+&lt;/common-panel&gt;
+        </pre>
+        <p class="note">Keep in mind that this is a standard platform boolean attribute for consistency, thus its mere
+            presence indicates truthfullness and <code>is-removable="false"</code> is actually truthy.</p>
+        </section>
+
+        <section>
+        <h2>Expandable/Collapsable Panels</h2>
+        <p>Sometimes panels are collapsable and sometimes they begin their being in a collapsed state.  Being collapsable means that a user can pontentially manage the noise selectively, over time.  Thus, panels have a inherent concept of 'expansion-state' baked in.  A panel, by default has no controls for managing this state (as on a printed page or simple panel) thus it's defaulty expansion-state is "opened", however, an author may add the UI/UA ability for the 
+        user to manage this by way of the <code>expansion-state</code> attribute.  If present, the entire title manages a toggle of the state, and provides default keyboard handling.  If present, without a value, <code>expansion-state</code> attribute will result in the panel beginning in the "closed" state, it may be explicity set to <code>expansion-state="opened"</code></p>
+        <image src="collapsable-panel.png" >
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
+&lt;/common-panel&gt;<br>
+        </pre>
+        </section>
+        <section>
+            <h2>Pseudo-Elements</h2>
+            <p>
+            A <code>&lt;common-panel&gt;</code> exposes the following pseudo-elements with built in semantics and functionality, and which can be used to achieve a wide number of visual presentation effects:
             <ul>
                 <li><code>::--common-panel-header</code></li>
                 <li><code>::--common-panel-icon</code></li>
@@ -123,25 +154,18 @@
                 <li><code>::--common-panel-destroy</code> (if the is-removable attribute is set)</li>
             </ul>
 
-            UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
-        </p>
-
-        <h2>Dismissable Panels</h2>
-        <p>Another recurring theme in UI is that some panels are informational, they provide a necessary noise, but you'd like a user to be able to dismiss them.  Enter the <code>is-removable</code> boolean attribute.  If present it will add the ability to dismiss the panel, removing it from the DOM.</p>
-        <image src="dismissable-panel.png" >
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
-&lt;/common-panel&gt;
-        </pre>
-
-        <h2>Collapsable Panels</h2>
-        <p>Sometimes panels are collapsable and sometimes they begin their being in a collapsed state.  Being collapsable means that a user can pontentially manage the noise selectively, over time.  To this end, there is the <code>collapse-state</code> attribute.  If present, the entire title manages a toggle of the state, it can optionally be set to <code>collapse-state="closed"</code> to set its initial value.  Styling may be managhkfjsed via the provided pseudo-classes and user agents MAY choose how they indicate state by default.</p>
-        <image src="collapsable-panel.png" >
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" collapse-state&gt;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
-&lt;/common-panel&gt;<br>
-        </pre>
-
+            </code>
+            <p>
+                Styling may be managed via the provided pseudo-classes and user agents MAY choose how they indicate state by default.  UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
+            </p>
+        </section>
+        <section>
+            <h2>DOM</h2>
+            <p>
+                <code>&lt;common-panel&gt;</code> elements expose a runtime property of "expansionState" which will 
+                be "opened" or "closed".
+            </p>
+        </section>
     </section>
 
     <p>
