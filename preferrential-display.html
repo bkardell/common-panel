@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Preferrential Display</title>
+    <meta charset='utf-8'>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common'
+            async class='remove'></script>
+    <style>
+        .todo { color: red; font-weight: bold; }
+    </style>
+
+    <script class='remove'>
+      var respecConfig = {
+          specStatus: "unofficial",
+          shortName:  "preferred-display",
+          editors: [
+                {   name:       "Brian Kardell", 
+                    url:        "https://twitter.com/briankardell",
+                    company:    "Apollo Education Group",
+                    companyURL: "http://www.apollo.edu/"
+                }
+          ]
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        This document decribes a proposal for a CSS mechanism and DOM APIs to 
+        aid in increasing the level of separation between visual and non-visual 
+        structures with runtime reuse.  It is useful for Custom Elements, introduces potentially new 
+        explanations for how existing elements in the platform work.
+      </p>
+    </section>
+
+    <section id='sotd'>
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+        When editing a document, an author attempts to mark it up semantically and control 
+        a separation of visual aspects through CSS.  This allows various the user-agent  
+        and tools to use the same semantic data to provide any number of affordances 
+        for accessibility, navigation, styling and interaction. HTML elements are generally 
+        carefully constructed to define <em>what</em> they do that makes them unique, 
+        rather than very specifically how they look.  This separation leaves room for 
+        certain experimentation and variance that is healthy for the long term adaptability 
+        of the platform.  For example, because a 
+        <code>&lt;select&gt;</code> element doesn't strictly define all aspects of the 
+        visual properties, it was possible for mobile phones to provide a better user 
+        experience where visual real estate is very limited and click areas are shrunk.
+      </p>
+      <p>
+        Similarly, an author may use various types on the <code>&lt;input&gt;</code> element, 
+        which, if undefined still defaults to <code>type="text"</code> and allows UAs like mobile 
+        devices provide native controls. In this aspect, the <code>type</code> attribute in 
+        some ways acts more like a hint than a requirement.  This is, of course, not <em>entirely</em> 
+        true but it is a laudbile aim and provides a conceptual background 
+        for some of the rationale for this proposal.
+      </p>
+      
+      <p>These examples which already exist in the platform are good, but they are also potentially 
+      limited and somewhat magical.  They can have impacts on more than visualization as well, to the 
+      end effect that they make it difficult for authors to deal with or innovate within.</p>
+
+      <p><em>Preferential Display</em> is a more generalized and more capable extension of the <code>type</code> idea, 
+      allowing an author to specify preference hints via CSS within Media Queries.  For example, 
+      it might be possible to offer a Preferrential Display for <code>&lt;select-timezone&gt;</code> elements 
+      which provides a map-like interface similar to those used for choosing timezones in a desktop interface, 
+      but ultimately provides a common <code>&lt;select&gt;</code> view on the same DOM, or a <code>&lt;common-panel-set&gt;</code>
+      which can be displayed as any number of visualizations (tabset, accordion, deck or carousel, for example) 
+      but has identical structures and accessibility concerns. It is useful then for an author to be able to 
+      state "under these media conditions I prefer a tabset view if you have it".
+      </p>  
+
+      <p>The design of this proposal is intended to be such that it introduces minimal new concepts, but offers 
+      new capabilities which answer some existing questions, highlight the importance of this separation, 
+      and provide new opportunities for experiementation. 
+      </p>
+
+      <section>
+        <h2>Why not...</h2>
+          <ul>
+            <li><em>Just use CSS as it is today?</em> - The authoring/maintenance of this approach is very painful.  If you took something like the above examples, you'd be styling individual elements and pseudo-elements of instances without any hint in the CSS itself (aside from comments perhaps) about what it was styling (ie, I want to display '#foo' as a tabset under these conditions).  The CSS winds up being excessively verbose.</li>
+            <li><em>Just use CSS preprocessor?</em> - The authoring/maintenance of this approach is way better, but it's authoring reuse, so the verbosity and difficult to understand still exists.  If it takes 100 lines of CSS to define all of the aspects of a 'tabset' and 
+            100 lines to define all of the aspects of an 'accordion', then you have to define when to use them with those lines in a Media Query.
+            If you put your entire applications CSS into a single sheet which it can statically analyze, you'd have the best possible outcome with this approach, but it just isn't how a lot of things work, so you wind up with a lot of copies of the same rules and no runtime reuse...</li>
+            <li><em>Wait for CSS aliases, wouldn't they solve this?</em> - They would make the problem better, for sure.  However, it requires you to define all of the aliases at once and then to style individual elements and pseudo-elements with aliases, so many of the same sorts of runtime problems above come into play. The author's mental model is more like 'now it should be type "x"' and then just use CSS as per normal and gain all of the normal benefits of CSS and reuse, so it's better if we can reflect that.</li>
+            <li><em>Just set a type attribute?</em> - Because a type is static, but if what we are giving is a rendering hint 
+            and you are aiming for definiing what it -is- and then styling it, can be variable.</li>
+            <li><em>Manage a type attribute with DOM APIs in JavaScript?</em> - Because styling information about visual presentation 
+            really belongs in CSS.  There should be an explanation of the system in terms of these primitives, but they should 
+            be aiming to describe a concept in the right part of the system, JS and CSS are not exclusive domains and the API 
+            should be defined by a CSS WG proposal who is thinking about the larger problem.</li>
+          </ul>
+      </section>
+    </section>
+
+    <section>
+        <h1>Preferred Display</h1>
+        <p>
+                    
+              An element's <em>Preferential Display</em> is determined by whether or not a Media Query has <em>activated</em> it.
+              If the preferential display has not been activated by a Media Query, setting it has no effect.  Thus:
+              <br>
+              <code>/* this has no effect as the rule's preferrential-display is not activated by a MediaQuery */ <br>
+.foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;preferred-display:  map; <br>
+} <br>
+<br>
+/* this rule defines a preferrential-display which can be activated by a MediaQuery */ <br>
+@media screen and (min-width: 767px) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;#foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred-display: tabset; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+} <br>
+</code>
+<br>
+        Upon activation, the media query relays the preferred display value to the preferred-display attribute in the DOM.  This design 
+        allows that only a media query can cause CSS to change the DOM and prevents cycles.  Its presence in the DOM allows it to be 
+        easily used in normal CSS and JavaScript to do simple adaptations.  MediaQueryList and listners can be used to explain how this works
+        fairly well today.
+        </p>
+
+    </section>
+  </body>
+</html>
