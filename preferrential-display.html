@@ -118,8 +118,9 @@
 } <br>
 </code>
 <br>
-        Upon activation, the media query relays the preferred display value to the preferred-display attribute in the DOM.  This design 
-        allows that only a media query can cause CSS to change the DOM and prevents cycles.  Its presence in the DOM allows it to be 
+        Upon activation, the media query relays the preferred display value to the preferred-display attribute in the DOM.  This attribute is 
+        settable in markup, like <code>type</code>, but once set is read-only except via the CSS provided interface.   This design 
+        allows that only a media query can cause CSS to change the DOM and simply prevents cycles which would normally prevent this sort of thing.  Its presence in the DOM allows it to be 
         easily used in normal CSS and JavaScript to do simple adaptations.  MediaQueryList and listners can be used to explain how this works
         fairly well today.
         </p>
