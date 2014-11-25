@@ -81,6 +81,20 @@
       </p>
 
       <section>
+        <h2>Aims and Requirements</h2>
+          <ul>
+            <li>It should be possible to create an element which might have many different visual variations decided by CSS, solve issues like aria once.</li>
+            <li>It should be possible for an author of HTML to provide no additional information and get a default view that retains the meaning of that thing</li>
+            <li>It should be possible for an author of HTML to temporarily provide inline information (we do this with style attribute, for example, 
+            or by manually attaching a class which would otherwise be attached dynamically) to verify that what they have renders as expected.</li>
+            <li>It should be easy for a designer to indicate different visuals in a "whole" way which doesn't require JavaScript authorship.  This is a different role in many organizations.  That is, it should be possible simply say "this element should opt to this display if possible under these media query conditions."</li>
+            <li>It should not inflate the payload of the CSS dramatically (see point above - preprocessors offer some author time facilities for this, but not runtime - they are copy/paste use oriented)</li>
+            <li>It should ideally not require an additional HTTP requests or inlining in the HTML.</li>
+            <li>It should not introduce wholly new semantics and complicated concepts for authors - minimal magic explainable by things in the platform today.</li>
+          </ul>
+          <em>To these points, what I am proposing is a single, display oriented attribute which is maintained via CSS which allows CSS to express informtation that it can select upon in normal fashion and allow experimentation with the various pieces of the platform that are already in place.</em>
+      </section>
+      <section>
         <h2>Why not...</h2>
           <ul>
             <li><em>Just use CSS as it is today?</em> - The authoring/maintenance of this approach is very painful.  If you took something like the above examples, you'd be styling individual elements and pseudo-elements of instances without any hint in the CSS itself (aside from comments perhaps) about what it was styling (ie, I want to display '#foo' as a tabset under these conditions).  The CSS winds up being excessively verbose.</li>
