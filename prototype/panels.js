@@ -23,23 +23,31 @@
 					var oldSetAttr = this.setAttribute;
 					var oldRemoveAttr = this.removeAttribute;
 					var lastSet;
-					this.setAttribute = function (key, value) {
+					this.setAttribute = function (key, value, symbolKey) {
 						console.log("someone changed my preferred display");
-						var activePanel = self.getActivePanel();
-						var header = activePanel.getHeader();
-						var tab = document.getElementById(activePanel.getAttribute("aria-labeledby"));
-						lastSet = ([header, tab].indexOf(document.activeElement) !== -1);
-						oldSetAttr.call(self, key, value);
+						if (symbolKey === "secret") {
+							var activePanel = self.getActivePanel();
+							var header = activePanel.getHeader();
+							var tab = document.getElementById(activePanel.getAttribute("aria-labeledby"));
+							lastSet = ([header, tab].indexOf(document.activeElement) !== -1);
+							oldSetAttr.call(self, key, value);
+						} else {
+							throw new TypeError();
+						}
 						setTimeout(setFocusForActivePanel, 50);
 					};
-					this.removeAttribute = function (key) {
+					this.removeAttribute = function (key, symbolKey) {
 						console.log("someone changed my preferred display");
-						var activePanel = self.getActivePanel();
-						var header = activePanel.getHeader();
-						var tab = document.getElementById(activePanel.getAttribute("aria-labeledby"));
-						lastSet = ([header, tab].indexOf(document.activeElement) !== -1);
-						oldRemoveAttr.call(self, key);
-						setTimeout(setFocusForActivePanel,500);
+						if (symbolKey === "secret") {
+							var activePanel = self.getActivePanel();
+							var header = activePanel.getHeader();
+							var tab = document.getElementById(activePanel.getAttribute("aria-labeledby"));
+							lastSet = ([header, tab].indexOf(document.activeElement) !== -1);
+							oldRemoveAttr.call(self, key);
+							setTimeout(setFocusForActivePanel,500);
+						} else {
+							throw new TypeError();
+						}
 					}
 
 

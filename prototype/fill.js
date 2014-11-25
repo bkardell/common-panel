@@ -206,9 +206,9 @@ var manageClass = function (selector, preferredDisplayMode, switcher) {
      Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function (el) {
         //el.classList[op](clazz);
         if (switcher === "add") {
-            el.setAttribute("preferred-display", preferredDisplayMode);
+            el.setAttribute("preferred-display", preferredDisplayMode, "secret");
         } else if (el.getAttribute("preferred-display") === preferredDisplayMode){
-            el.removeAttribute("preferred-display");
+            el.removeAttribute("preferred-display", "secret");
         }
      });
 };
