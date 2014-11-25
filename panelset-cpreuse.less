@@ -1,0 +1,86 @@
+/* 
+  Pre-processors provide author-level reuse with is better, 
+  but ultimately yields the above CSS with it's problems 
+*/
+
+@charset "utf-8";
+// Global variables
+@import "../../../variables";
+// Global mixins
+@import "../../../mixins/_mixins";
+// Components
+// Font awesome
+//@import "../../../components/fonts/font-awesome";
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+// Panelset - ALL modifiers need to be imported
+@import "../../../components/panelset/base";
+@import "../../../components/panelset/modifiers/tabs";
+@import "../../../components/panelset/modifiers/accordions";
+@import "../../../components/panelset/modifiers/carousel";
+
+// DEMOs
+/*Default is accordion*/
+common-panel-set {
+	.common-panel-tabs {display: none;}
+	#aes.panelset.panel-accordion();
+}
+.common-panel-tabs {display: none;}
+/*Default for #fooe, #bare, #bate*/
+common-panel-set#fooe, common-panel-set#bare, common-panel-set#bate {
+	#aes.panelset.panel-tabs();
+	.common-panel-tabs {display: block;}
+	// Hide panel top border
+	> common-panel  {
+		border-top: 0;
+		// Hide title from accordion layout
+		> .common-panel-header {display: none;}
+		// Hide unselected panels
+		&:not([expansion-state="opened"]) {display: none;}
+	}
+}
+/*small screen for #fooe is displaying as carousel*/
+@media screen and (max-width: 767px) {
+	common-panel-set#fooe {
+		#aes.panelset.panel-carousel();
+		> common-panel {
+			#aes.border.top(@module-header-bottom-border-width, @module-header-bottom-border-style, @module-header-bottom-border-color);
+			> .common-panel-header {
+				display: block;
+			    float: none;
+			}
+			&:not([expansion-state="opened"]) {
+			    display: none;
+			}
+		}
+		> .common-panel-tabs {
+			> * {display: inline;}
+		  	> .common-panel-header > span {display: none;}
+		  	.common-panel-remove { display: none;}
+		}
+	}
+}
+/*small screen for #bare, #bate are displayed as accordion*/
+@media screen and (max-width: 767px) {
+	common-panel-set#bare, common-panel-set#bate {
+		.common-panel-tabs {display: none;}
+		#aes.panelset.panel-accordion();
+		#aes.border.top(@module-header-bottom-border-width, @module-header-bottom-border-style, @module-header-bottom-border-color);
+		> common-panel {
+			&:not([expansion-state="opened"]){ display: block;}
+			&:not(:last-child) {border-bottom: 0;}
+			> .common-panel-header {
+				display: block;
+				float: none;
+				span { 
+				   &:before {display: none;}
+				}
+			}
+		}
+	}
+}

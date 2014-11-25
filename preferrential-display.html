@@ -97,10 +97,8 @@
       <section>
         <h2>Why not...</h2>
           <ul>
-            <li><em>Just use CSS as it is today?</em> - The authoring/maintenance of this approach is very painful.  If you took something like the above examples, you'd be styling individual elements and pseudo-elements of instances without any hint in the CSS itself (aside from comments perhaps) about what it was styling (ie, I want to display '#foo' as a tabset under these conditions).  The CSS winds up being excessively verbose.</li>
-            <li><em>Just use CSS preprocessor?</em> - The authoring/maintenance of this approach is way better, but it's authoring reuse, so the verbosity and difficult to understand still exists.  If it takes 100 lines of CSS to define all of the aspects of a 'tabset' and 
-            100 lines to define all of the aspects of an 'accordion', then you have to define when to use them with those lines in a Media Query.
-            If you put your entire applications CSS into a single sheet which it can statically analyze, you'd have the best possible outcome with this approach, but it just isn't how a lot of things work, so you wind up with a lot of copies of the same rules and no runtime reuse...</li>
+            <li><em>Just use CSS as it is today?</em> - The authoring/maintenance of this approach is very painful.  If you took something like the above examples, you'd be styling individual elements and pseudo-elements of instances without any hint in the CSS itself (aside from comments perhaps) about what it was styling (ie, I want to display '#foo' as a tabset under these conditions).  The CSS winds up being excessively verbose (see <a href="#panelset-without-pd">Vanilla CSS example below</a>) and cannot be re-used in other stylesheets.. In other words, if you define an 'accordion' it's just a bunch of rules which mean accordion, there is no way from another stylesheet to say 'use those rules', you have no choice but to repeat them.</li>
+            <li><em>Just use CSS preprocessor?</em> - The authoring/maintenance of this approach is way better (see <a href="#panelset-cpreuse">preprocessor example below</a>), but it's authoring reuse, so the verbosity and difficult to understand still exists.  If it takes 100 lines of CSS to define all of the aspects of a 'tabset' and 100 lines to define all of the aspects of an 'accordion', then you have to define when to use them with those lines in a Media Query. If you put your entire applications CSS into a single sheet which it can statically analyze, you'd have the best possible outcome with this approach, but it just isn't how a lot of things work, so you wind up with a lot of copies of the same rules and no runtime reuse...</li>
             <li><em>Wait for CSS aliases, wouldn't they solve this?</em> - They would make the problem better, for sure.  However, it requires you to define all of the aliases at once and then to style individual elements and pseudo-elements with aliases, so many of the same sorts of runtime problems above come into play. The author's mental model is more like 'now it should be type "x"' and then just use CSS as per normal and gain all of the normal benefits of CSS and reuse, so it's better if we can reflect that.</li>
             <li><em>Just set a type attribute?</em> - Because a type is static, but if what we are giving is a rendering hint 
             and you are aiming for definiing what it -is- and then styling it, can be variable.</li>
@@ -110,6 +108,14 @@
             should be defined by a CSS WG proposal who is thinking about the larger problem.</li>
           </ul>
       </section>
+ 
+      <h3>Vanilla CSS example without Preferred Display</h3>
+      <pre id="panelset-without-pd" class="example highlight" data-include="panelset-without-pd.css" data-include-format="text"></pre>
+      
+
+      <h3>Preprocessor authoring example without Preferred Display</h3>
+      <pre id="panelset-cpreuse" class="example highlight" data-include="panelset-cpreuse.less" data-include-format="text"></pre>
+
     </section>
 
     <section>

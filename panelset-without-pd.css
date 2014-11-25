@@ -1,0 +1,471 @@
+/* 
+  This shows what it would be like just styling elements in instances of a vanilla 
+  common-panel-set according to media queries (no shadow dom).
+  Note that any other stylesheet which talks about more instances of 'accordions' 
+  or 'tabs' for example will have to re-include the same styles and the only 
+  hint to the author about what any of these are trying to accomplish 
+  are in comments.  Many many rules apply and override which causes context 
+  headaches too.
+*/
+@charset "utf-8";
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/*panelset base*/
+common-panel-set {
+  display: block;
+  margin-bottom: 20px;
+}
+common-panel-set .common-panel-header {
+  cursor: pointer;
+}
+/*panel base*/
+common-panel {
+  display: block;
+  position: relative;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  background-color: #ffffff;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+common-panel:before,
+common-panel:after {
+  content: " ";
+  display: table;
+}
+common-panel:after {
+  clear: both;
+}
+common-panel .common-panel-header {
+  font-size: 16px;
+  color: #000000;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 12px 20px 12px 20px;
+  margin: 0;
+  background-color: #f7f7f7;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #bbbbbb;
+}
+common-panel .common-panel-header .common-panel-remove > i {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+}
+common-panel .common-panel-header .common-panel-remove > i:before {
+  content: "x";
+}
+common-panel > .common-panel-content {
+  margin: 0;
+  padding: 20px;
+}
+common-panel .common-panel-remove {
+  font-family: Roboto, arial, sans-serif;
+  border: 0;
+  color: #000;
+  background-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  -webkit-text-shadow: 1px 1px 1px #ffffff;
+  -moz-text-shadow: 1px 1px 1px #ffffff;
+  -ms-text-shadow: 1px 1px 1px #ffffff;
+  -o-text-shadow: 1px 1px 1px #ffffff;
+  text-shadow: 1px 1px 1px #ffffff;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+common-panel .common-panel-remove i {
+  font-style: normal;
+  font-weight: bold;
+}
+common-panel .common-panel-remove i:before {
+  content: "x";
+}
+common-panel .common-panel-remove:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+common-panel[expansion-state]:not([expansion-state="opened"]) > *:not(.common-panel-header) {
+  display: none;
+}
+common-panel[expansion-state] > div > span:after {
+  float: right;
+  content: "\f078";
+  font-family: FontAwesome;
+}
+common-panel[expansion-state="opened"] > div > span:after {
+  float: right;
+  content: "\f077";
+  font-family: FontAwesome;
+}
+/*Hide panel-header bottom border when closed*/
+common-panel[expansion-state="closed"] > .common-panel-header {
+  border-bottom: 0;
+}
+.common-panel-tabs {
+  *zoom: 1;
+  border-bottom: 1px solid #dddddd;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.common-panel-tabs:before,
+.common-panel-tabs:after {
+  display: table;
+  line-height: 0;
+  content: "";
+  clear: both;
+}
+.common-panel-tabs .common-panel-header {
+  float: left;
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  line-height: 20px;
+  margin-right: 2px;
+  padding: 8px 12px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+.common-panel-tabs .common-panel-header:hover,
+.common-panel-tabs .common-panel-header:focus {
+  background-color: #eeeeee;
+  border-color: #dddddd #dddddd #dddddd;
+}
+.common-panel-tabs .common-panel-header[expansion-state="opened"],
+.common-panel-tabs .common-panel-header[expansion-state="opened"]:hover,
+.common-panel-tabs .common-panel-header[expansion-state="opened"]:focus {
+  background-color: #ffffff;
+  border-color: #dddddd #dddddd transparent;
+  border-style: solid;
+  border-width: 1px;
+  color: #00324b;
+}
+.common-panel-tabs .common-panel-header span {
+  font-size: 14px;
+}
+.common-panel-tabs .common-panel-header .common-panel-remove {
+  font-family: Roboto, arial, sans-serif;
+  border: 0;
+  color: #000;
+  background-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  -webkit-text-shadow: 1px 1px 1px #ffffff;
+  -moz-text-shadow: 1px 1px 1px #ffffff;
+  -ms-text-shadow: 1px 1px 1px #ffffff;
+  -o-text-shadow: 1px 1px 1px #ffffff;
+  text-shadow: 1px 1px 1px #ffffff;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-size: 16px;
+  position: relative;
+  top: 0;
+  right: -8px;
+}
+.common-panel-tabs .common-panel-header .common-panel-remove i {
+  font-style: normal;
+  font-weight: bold;
+}
+.common-panel-tabs .common-panel-header .common-panel-remove i:before {
+  content: "x";
+}
+.common-panel-tabs .common-panel-header .common-panel-remove:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+.common-panel-tabs .common-panel-header .common-panel-remove > i {
+  font-style: normal;
+  font-weight: bold;
+}
+.common-panel-tabs .common-panel-header .common-panel-remove > i:before {
+  content: "x";
+}
+/*Default is accordion*/
+common-panel-set .common-panel-tabs {
+  display: none;
+}
+common-panel-set .common-panel-header span {
+  overflow: hidden;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+common-panel-set .common-panel-header span:before {
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  content: "\f054";
+  font-family: FontAwesome;
+  line-height: 1;
+  font-size: 14px;
+  width: 24px;
+  text-align: center;
+}
+.common-panel-tabs {
+  display: none;
+}
+/*Default for #fooe, #bare, #bate*/
+common-panel-set#fooe,
+common-panel-set#bare,
+common-panel-set#bate {
+  *zoom: 1;
+  border-bottom: 1px solid #dddddd;
+  font-family: Arial, Helvetica, sans-serif;
+}
+common-panel-set#fooe:before,
+common-panel-set#bare:before,
+common-panel-set#bate:before,
+common-panel-set#fooe:after,
+common-panel-set#bare:after,
+common-panel-set#bate:after {
+  display: table;
+  line-height: 0;
+  content: "";
+  clear: both;
+}
+common-panel-set#fooe .common-panel-header,
+common-panel-set#bare .common-panel-header,
+common-panel-set#bate .common-panel-header {
+  float: left;
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  line-height: 20px;
+  margin-right: 2px;
+  padding: 8px 12px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+common-panel-set#fooe .common-panel-header:hover,
+common-panel-set#bare .common-panel-header:hover,
+common-panel-set#bate .common-panel-header:hover,
+common-panel-set#fooe .common-panel-header:focus,
+common-panel-set#bare .common-panel-header:focus,
+common-panel-set#bate .common-panel-header:focus {
+  background-color: #eeeeee;
+  border-color: #dddddd #dddddd #dddddd;
+}
+common-panel-set#fooe .common-panel-header[expansion-state="opened"],
+common-panel-set#bare .common-panel-header[expansion-state="opened"],
+common-panel-set#bate .common-panel-header[expansion-state="opened"],
+common-panel-set#fooe .common-panel-header[expansion-state="opened"]:hover,
+common-panel-set#bare .common-panel-header[expansion-state="opened"]:hover,
+common-panel-set#bate .common-panel-header[expansion-state="opened"]:hover,
+common-panel-set#fooe .common-panel-header[expansion-state="opened"]:focus,
+common-panel-set#bare .common-panel-header[expansion-state="opened"]:focus,
+common-panel-set#bate .common-panel-header[expansion-state="opened"]:focus {
+  background-color: #ffffff;
+  border-color: #dddddd #dddddd transparent;
+  border-style: solid;
+  border-width: 1px;
+  color: #00324b;
+}
+common-panel-set#fooe .common-panel-header span,
+common-panel-set#bare .common-panel-header span,
+common-panel-set#bate .common-panel-header span {
+  font-size: 14px;
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove,
+common-panel-set#bare .common-panel-header .common-panel-remove,
+common-panel-set#bate .common-panel-header .common-panel-remove {
+  font-family: Roboto, arial, sans-serif;
+  border: 0;
+  color: #000;
+  background-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 4px;
+  -webkit-text-shadow: 1px 1px 1px #ffffff;
+  -moz-text-shadow: 1px 1px 1px #ffffff;
+  -ms-text-shadow: 1px 1px 1px #ffffff;
+  -o-text-shadow: 1px 1px 1px #ffffff;
+  text-shadow: 1px 1px 1px #ffffff;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  font-size: 16px;
+  position: relative;
+  top: 0;
+  right: -8px;
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove i,
+common-panel-set#bare .common-panel-header .common-panel-remove i,
+common-panel-set#bate .common-panel-header .common-panel-remove i {
+  font-style: normal;
+  font-weight: bold;
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove i:before,
+common-panel-set#bare .common-panel-header .common-panel-remove i:before,
+common-panel-set#bate .common-panel-header .common-panel-remove i:before {
+  content: "x";
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove:hover,
+common-panel-set#bare .common-panel-header .common-panel-remove:hover,
+common-panel-set#bate .common-panel-header .common-panel-remove:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove > i,
+common-panel-set#bare .common-panel-header .common-panel-remove > i,
+common-panel-set#bate .common-panel-header .common-panel-remove > i {
+  font-style: normal;
+  font-weight: bold;
+}
+common-panel-set#fooe .common-panel-header .common-panel-remove > i:before,
+common-panel-set#bare .common-panel-header .common-panel-remove > i:before,
+common-panel-set#bate .common-panel-header .common-panel-remove > i:before {
+  content: "x";
+}
+common-panel-set#fooe .common-panel-tabs,
+common-panel-set#bare .common-panel-tabs,
+common-panel-set#bate .common-panel-tabs {
+  display: block;
+}
+common-panel-set#fooe > common-panel,
+common-panel-set#bare > common-panel,
+common-panel-set#bate > common-panel {
+  border-top: 0;
+}
+common-panel-set#fooe > common-panel > .common-panel-header,
+common-panel-set#bare > common-panel > .common-panel-header,
+common-panel-set#bate > common-panel > .common-panel-header {
+  display: none;
+}
+common-panel-set#fooe > common-panel:not([expansion-state="opened"]),
+common-panel-set#bare > common-panel:not([expansion-state="opened"]),
+common-panel-set#bate > common-panel:not([expansion-state="opened"]) {
+  display: none;
+}
+/*small screen for #fooe is displaying as carousel*/
+@media screen and (max-width: 767px) {
+  common-panel-set#fooe {
+    position: relative;
+  }
+  common-panel-set#fooe > common-panel {
+    min-height: 200px;
+  }
+  common-panel-set#fooe > common-panel .common-panel-header {
+    background-color: transparent;
+    border-bottom: 0;
+  }
+  common-panel-set#fooe > common-panel .common-panel-header span:after {
+    display: none;
+  }
+  common-panel-set#fooe > .common-panel-tabs {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom: 5px;
+    left: 40%;
+    right: 40%;
+    border: 0;
+  }
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header {
+    background-color: #ccc;
+    border: 2px solid #aaa;
+    height: 6px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    -ms-border-radius: 14px;
+    -o-border-radius: 14px;
+    border-radius: 14px;
+  }
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header:hover,
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header:focus {
+    background-color: inherit;
+    border-color: inherit;
+  }
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header[expansion-state="opened"],
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header[expansion-state="opened"]:hover,
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header[expansion-state="opened"]:focus {
+    background-color: #fff;
+    border: 2px solid #000;
+  }
+  common-panel-set#fooe > common-panel {
+    border-top: 1px solid #bbbbbb;
+  }
+  common-panel-set#fooe > common-panel > .common-panel-header {
+    display: block;
+    float: none;
+  }
+  common-panel-set#fooe > common-panel:not([expansion-state="opened"]) {
+    display: none;
+  }
+  common-panel-set#fooe > .common-panel-tabs > * {
+    display: inline;
+  }
+  common-panel-set#fooe > .common-panel-tabs > .common-panel-header > span {
+    display: none;
+  }
+  common-panel-set#fooe > .common-panel-tabs .common-panel-remove {
+    display: none;
+  }
+}
+/*small screen for #bare, #bate are displayed as accordion*/
+@media screen and (max-width: 767px) {
+  common-panel-set#bare,
+  common-panel-set#bate {
+    border-top: 1px solid #bbbbbb;
+  }
+  common-panel-set#bare .common-panel-tabs,
+  common-panel-set#bate .common-panel-tabs {
+    display: none;
+  }
+  common-panel-set#bare .common-panel-header span,
+  common-panel-set#bate .common-panel-header span {
+    overflow: hidden;
+    display: block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  common-panel-set#bare .common-panel-header span:before,
+  common-panel-set#bate .common-panel-header span:before {
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    content: "\f054";
+    font-family: FontAwesome;
+    line-height: 1;
+    font-size: 14px;
+    width: 24px;
+    text-align: center;
+  }
+  common-panel-set#bare > common-panel:not([expansion-state="opened"]),
+  common-panel-set#bate > common-panel:not([expansion-state="opened"]) {
+    display: block;
+  }
+  common-panel-set#bare > common-panel:not(:last-child),
+  common-panel-set#bate > common-panel:not(:last-child) {
+    border-bottom: 0;
+  }
+  common-panel-set#bare > common-panel > .common-panel-header,
+  common-panel-set#bate > common-panel > .common-panel-header {
+    display: block;
+    float: none;
+  }
+  common-panel-set#bare > common-panel > .common-panel-header span:before,
+  common-panel-set#bate > common-panel > .common-panel-header span:before {
+    display: none;
+  }
+}
