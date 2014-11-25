@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      h2 { border-top: 1px solid green; }
+      code { background-color: #dfdfca; padding: 1em; color: rebeccapurple; display: block; margin-bottom: 2em; }
+      :root > *:not(h2) { margin-left: 2em; }
+      :not(common-panel-set) > common-panel { margin-bottom: 5em !important; }
+    </style>
+
+    <!-- Fill for media-query-mappings bit above -->
+    <script src="fill.js"></script> 
+
+    <!-- Webreflection polyfill of custom elements API -->
+    <script src="custom-elements.js"></script>
+
+    
+    <script type="text/MediaQueryMappings">
+      @media all { 
+        #foo {
+          --preferred-display: accordion; 
+        }
+      }
+
+      @media screen and (min-width: 767px) { 
+        #foo {
+          --preferred-display: tabset; 
+        }
+      }
+    </script>
+    
+
+
+    <!-- Our custom elements -->
+    <script src="panels.js"></script>
+
+    <!-- The CSS for our custom elements -->
+    <link rel="stylesheet" type="text/css" href="panelset.css">
+</head>
+<body>
+
+  <h1>Tests as per <a href="http://bkardell.github.io/common-panel/">Panels and Panel Sets</a> draft</h1>
+
+  <h2>Vanilla Panel</h2>
+  <code>&lt;common-panel title="My favorite books"&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;Here are a list of my favorite books:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ol&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Hitchhiker's Guide to the Galaxy&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Pride and Prejudice&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Green Eggs and Ham&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ol&gt;<br>
+&nbsp;&nbsp;&lt;/p&gt;<br>
+&lt;/common-panel&gt;
+  </code>
+  <h3>Demo</h3>
+  <common-panel title="My favorite books">
+    <p>Here are a list of my favorite books:
+      <ol>
+        <li>Hitchhiker's Guide to the Galaxy</li>
+        <li>Pride and Prejudice</li>
+        <li>Green Eggs and Ham</li>
+      </ol>
+    </p>
+  </common-panel>
+
+  <h2>Removable Panel</h2>
+  <code>&lt;common-panel title="Reminder" is-removable&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br>
+&lt;/common-panel&gt;
+  </code>
+  <h3>Demo</h3>
+  <common-panel title="Reminder" is-removable>
+    <p>Today is the first day of the rest of your life.</p>
+  </common-panel>
+      
+  <h2>Expandable/Collapsable Panel</h2>
+  <code>&lt;common-panel title="Today's News" expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;This panel should be collapsable.&lt;/p&gt;<br>
+&lt;/common-panel&gt;</code>
+  <h3>Demo</h3>
+  <common-panel title="Today's News" expansion-state="opened">
+    <p>This panel should be collapseable</p>
+  </common-panel>
+
+
+  <h2>Vanilla Panel Set (defaults to accordion)</h2>
+  <code>&lt;common-panel-set&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Current Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #1 for Current Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Previous Classes" expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #2 for Previous Classes - this should be opened by default.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Next Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #3 for Next Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #4 for Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Futher Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #5 for Further Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+
+  <h3>Demo</h3>
+  <common-panel-set>
+    <common-panel title="Current Classes">
+       <p>This is content #1 for Current Classes</p>
+    </common-panel>
+
+    <common-panel title="Previous Classes" expansion-state="opened">
+       <p>This is content #2 for Previous Classes - this should be opened by default.</p>
+    </common-panel>
+
+    <common-panel title="Next Classes">
+       <p>This is content #3 for Next Classes</p>
+    </common-panel>
+
+    <common-panel title="Future Classes">
+       <p>This is content #4 for Future Classes</p>
+    </common-panel>
+
+    <common-panel title="Futher Future Classes">
+       <p>This is content #5 for Further Future Classes</p>
+    </common-panel>
+  </common-panel-set>
+      
+
+<h2>Panel Set (preferred-display: tabset)</h2>
+  <code>&lt;common-panel-set preferred-display="tabset"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Current Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #1 for Current Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Previous Classes" expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #2 for Previous Classes - this should be opened by default.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Next Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #3 for Next Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #4 for Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Futher Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #5 for Further Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+
+  <h3>Demo</h3>
+  <common-panel-set preferred-display="tabset">
+    <common-panel title="Current Classes">
+       <p>This is content #1 for Current Classes</p>
+    </common-panel>
+
+    <common-panel title="Previous Classes" expansion-state="opened">
+       <p>This is content #2 for Previous Classes - this should be opened by default.</p>
+    </common-panel>
+
+    <common-panel title="Next Classes">
+       <p>This is content #3 for Next Classes</p>
+    </common-panel>
+
+    <common-panel title="Future Classes">
+       <p>This is content #4 for Future Classes</p>
+    </common-panel>
+
+    <common-panel title="Futher Future Classes">
+       <p>This is content #5 for Further Future Classes</p>
+    </common-panel>
+  </common-panel-set>
+
+     
+
+<h2>Panel Set (preferred-display: carousel)</h2>
+  <code>&lt;common-panel-set preferred-display="carousel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Current Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #1 for Current Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Previous Classes" expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #2 for Previous Classes - this should be opened by default.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Next Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #3 for Next Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #4 for Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Futher Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #5 for Further Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+
+  <h3>Demo</h3>
+  <common-panel-set preferred-display="carousel">
+    <common-panel title="Current Classes">
+       <p>This is content #1 for Current Classes</p>
+    </common-panel>
+
+    <common-panel title="Previous Classes" expansion-state="opened">
+       <p>This is content #2 for Previous Classes - this should be opened by default.</p>
+    </common-panel>
+
+    <common-panel title="Next Classes">
+       <p>This is content #3 for Next Classes</p>
+    </common-panel>
+
+    <common-panel title="Future Classes">
+       <p>This is content #4 for Future Classes</p>
+    </common-panel>
+
+    <common-panel title="Futher Future Classes">
+       <p>This is content #5 for Further Future Classes</p>
+    </common-panel>
+  </common-panel-set>  
+
+  <h2>Preferred Display Type Control via Media Queries</h2>
+  <code>&lt;!-- demo uses script type="text/MediaQueryMappings" lightweight polyfill --&gt;<br>
+&lt;style&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@media all { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--preferred-display: accordion; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@media screen and (min-width: 767px) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--preferred-display: tabset; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+    &lt;/style&gt;<br>
+
+    &lt;common-panel-set id="foo"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Current Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #1 for Current Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Previous Classes" expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #2 for Previous Classes - this should be opened by default.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Next Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #3 for Next Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #4 for Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Futher Future Classes"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This is content #5 for Further Future Classes&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+
+  <h3>Demo</h3>
+  <common-panel-set id="foo">
+    <common-panel title="Current Classes">
+       <p>This is content #1 for Current Classes</p>
+    </common-panel>
+
+    <common-panel title="Previous Classes" expansion-state="opened">
+       <p>This is content #2 for Previous Classes - this should be opened by default.</p>
+    </common-panel>
+
+    <common-panel title="Next Classes">
+       <p>This is content #3 for Next Classes</p>
+    </common-panel>
+
+    <common-panel title="Future Classes">
+       <p>This is content #4 for Future Classes</p>
+    </common-panel>
+
+    <common-panel title="Futher Future Classes">
+       <p>This is content #5 for Further Future Classes</p>
+    </common-panel>
+  </common-panel-set>     
+  <!--
+    <script>
+      var changeType = function (el) {
+        var type = el.options[el.selectedIndex].value;
+        var demoPanelSetEl = document.querySelector("common-panel-set");
+        if (type) {
+          demoPanelSetEl.setAttribute("preferred-display", type);
+        } else {
+          demoPanelSetEl.removeAttribute("type");
+        }
+      };
+    </script>
+    <br>
+    <label>Panelset Type: </label>
+    <select onchange="changeType(this)" style="width:50px; margin-left:4px;">
+      <option value="">(default)</option>
+      <option value="tabset" selected>a</option>
+      <option value="accordion">b</option>
+      <option value="carousel">c</option>
+    </select>
+  -->
+  </body>
+</html>
+      
