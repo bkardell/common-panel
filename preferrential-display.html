@@ -2,12 +2,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Preferrential Display</title>
+    <title>Preferrential Display Explainer</title>
     <meta charset='utf-8'>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common'
             async class='remove'></script>
     <style>
         .todo { color: red; font-weight: bold; }
+        #whynot li > em { font-weight: bold; }
     </style>
 
     <script class='remove'>
@@ -55,10 +56,11 @@
       <p>
         Similarly, an author may use various types on the <code>&lt;input&gt;</code> element, 
         which, if undefined still defaults to <code>type="text"</code> and allows UAs like mobile 
-        devices provide native controls. In this aspect, the <code>type</code> attribute in 
+        devices provide native controls. In <em>this aspect</em>, the <code>type</code> attribute in 
         some ways acts more like a hint than a requirement.  This is, of course, not <em>entirely</em> 
-        true but it is a laudbile aim and provides a conceptual background 
-        for some of the rationale for this proposal.
+        true (input type is kind of a debacle actually, APIs actually vary making it improbable to 
+        use the intended 'text only' fallback without much pain) but it is a laudbile 
+        aim and provides a conceptual background for some of the rationale for this proposal.
       </p>
       
       <p>These examples which already exist in the platform are good, but they are also potentially 
@@ -66,7 +68,44 @@
       end effect that they make it difficult for authors to deal with or innovate within.</p>
 
       <p><em>Preferential Display</em> is a more generalized and more capable extension of the <code>type</code> idea, 
-      allowing an author to specify preference hints via CSS within Media Queries.  For example, 
+      allowing an author to specify preference hints of the type <em>"when the media is screen and max-width is 767px, I would  
+      like to display elements #foo, #bar and #bat as tabsets if possible".</em>  At some low level it simply allows the user to manage 
+      a special attribute based on a media query from outside the markup and it desugars into existing platform code 
+      in JavaScript something like this:
+      <pre class="example highlight">/* This is basically a possible approach today */
+matchMedia("screen and (max-width: 767px)").addListener(function(evt) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;var element = Array.prototype.slice.call(document.querySelectorAll("#foo, #bar, #bat")); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;elements.forEach(function (el) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (evt.matches) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;el.setAttribute("preferrential-display", "tabset"); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;el.removeAttribute("preferrential-display"); <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;&nbsp;}); <br>
+})</pre>
+
+      </p>
+
+      <p>
+      However, this would be a bit more than you'd like to manage in terms of boilerplate, and order should probably follow selector 
+      specificity if they have a generic means to add these, and so we can introduce a new API to manage it - something like this:
+      </p>
+
+      <pre class="example highlight">CSS.associateDisplayPrefernce({ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;mediaQuery: "screen and (max-width: 767px)", <br> 
+&nbsp;&nbsp;&nbsp;&nbsp;selector: "#foo, #bar, #bat", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;preference: "tabset" <br>
+});</pre>      
+
+      <p>
+      This is considerably more conveneint, but ideally you'd be able to express this in CSS itself in a way that is familliar ala something like:
+      </p>
+
+      <pre class="example highlight">@media screen and (max-width: 767px) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;#foo, #bar, #bat { preferred-display: tabset; } <br> 
+};</pre>   
+
+      <p>For example, 
       it might be possible to offer a Preferrential Display for <code>&lt;select-timezone&gt;</code> elements 
       which provides a map-like interface similar to those used for choosing timezones in a desktop interface, 
       but ultimately provides a common <code>&lt;select&gt;</code> view on the same DOM, or a <code>&lt;common-panel-set&gt;</code>
@@ -96,7 +135,7 @@
       </section>
       <section>
         <h2>Why not...</h2>
-          <ul>
+          <ul id="whynot">
             <li><em>Just use CSS as it is today?</em> - The authoring/maintenance of this approach is very painful.  If you took something like the above examples, you'd be styling individual elements and pseudo-elements of instances without any hint in the CSS itself (aside from comments perhaps) about what it was styling (ie, I want to display '#foo' as a tabset under these conditions).  The CSS winds up being excessively verbose (see <a href="#panelset-without-pd">Vanilla CSS example below</a>) and cannot be re-used in other stylesheets.. In other words, if you define an 'accordion' it's just a bunch of rules which mean accordion, there is no way from another stylesheet to say 'use those rules', you have no choice but to repeat them.</li>
             <li><em>Just use CSS preprocessor?</em> - The authoring/maintenance of this approach is way better (see <a href="#panelset-cpreuse">preprocessor example below</a>), but it's authoring reuse, so the verbosity and difficult to understand still exists.  If it takes 100 lines of CSS to define all of the aspects of a 'tabset' and 100 lines to define all of the aspects of an 'accordion', then you have to define when to use them with those lines in a Media Query. If you put your entire applications CSS into a single sheet which it can statically analyze, you'd have the best possible outcome with this approach, but it just isn't how a lot of things work, so you wind up with a lot of copies of the same rules and no runtime reuse...</li>
             <li><em>Wait for CSS aliases, wouldn't they solve this?</em> - They would make the problem better, for sure.  However, it requires you to define all of the aliases at once and then to style individual elements and pseudo-elements with aliases, so many of the same sorts of runtime problems above come into play. The author's mental model is more like 'now it should be type "x"' and then just use CSS as per normal and gain all of the normal benefits of CSS and reuse, so it's better if we can reflect that.</li>
@@ -125,7 +164,7 @@
               An element's <em>Preferential Display</em> is determined by whether or not a Media Query has <em>activated</em> it.
               If the preferential display has not been activated by a Media Query, setting it has no effect.  Thus:
               <br>
-              <code>/* this has no effect as the rule's preferrential-display is not activated by a MediaQuery */ <br>
+              <pre class="example highlight">/* this has no effect as the rule's preferrential-display is not activated by a MediaQuery */ <br>
 .foo { <br>
 &nbsp;&nbsp;&nbsp;&nbsp;preferred-display:  map; <br>
 } <br>
@@ -136,7 +175,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred-display: tabset; <br>
 &nbsp;&nbsp;&nbsp;&nbsp;} <br>
 } <br>
-</code>
+</pre>
 <br>
         Upon activation, the media query relays the preferred display value to the preferred-display attribute in the DOM.  This attribute is 
         settable in markup, like <code>type</code>, but once set is read-only except via the CSS provided interface.   This design 
