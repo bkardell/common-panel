@@ -1,4 +1,21 @@
 /* Element.prototype.closest polyfill */
+(function () {
+    window.Element && function(ElementPrototype) {
+        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector || 
+        ElementPrototype.mozMatchesSelector ||
+        ElementPrototype.msMatchesSelector ||
+        ElementPrototype.oMatchesSelector ||
+        ElementPrototype.webkitMatchesSelector ||
+        function (selector) {
+            var node = this, nodes = (node.parentNode || node.document).querySelectorAll(selector), i = -1;
+     
+            while (nodes[++i] && nodes[i] != node);
+     
+            return !!nodes[i];
+        }
+    }(Element.prototype);
+}());
+
 (function (ELEMENT, PREFIX) {
  ELEMENT.matches = ELEMENT.matches || ELEMENT[PREFIX + 'MatchesSelector'];
 
