@@ -54,39 +54,53 @@
       <h2>Introduction</h2>
       <p>
         When editing a document, an author attempts to mark it up semantically and control 
-        a separation of visual aspects through CSS.  This allows various the user-agent  
+        a separation of visual aspects through CSS.  This allows various the user-agent (UA) 
         and tools to use the same semantic data to provide any number of affordances 
-        for accessibility, navigation, styling and interaction. Over time, UI designers 
-        have created a number of common metaphors for visually managing and providing 
-        single selection/focus navigation through a collection of titled 'blocks', which 
-        are, themselves more complex and meaningful than it might seem at first glace. 
+        for accessibility, navigation, styling and interaction. Currently we have a 
+        number of useful building block elements like <code>&lt;section&gt;</code> and 
+        <code>&lt;h1&gt;</code> which are high-level in their own right, but still beneath 
+        the level of describing many common constructs.  It is useful then to attempt to 
+        extract more complex, higher-level constructs as we see them emerge.  Doing so, 
+        expands an author's ability to easily universally describe common things and the 
+        ability of UA, tools and search engines to make sense of them.  This is one 
+        such effort.
       </p>
+
+      <p>The concept of a <em>panel</em> exists in traditional print media and has carried
+        over into Web design.  Over time, UI/UX designers have created a number of common 
+        visual metaphors for managing interaction with a collection of panels: Accordions, 
+        tabs, decks and carousels are just a few.</p>
+
+      <p>Because the art of creating a good user interface is something we are all still 
+        collectively trying to figure out, the history and development of these metaphors 
+        have generally taken the approach of independently naming these and solving each 
+        problem independently:  In the realm of custom elements, this means that you would 
+        have independent tags for each.  However, this obscures the underlying fact that 
+        in virtually every way they are  are <em>conceptually</em> identical.  
+        The WAI-ARIA Best Practices document, in fact, 
+        defines accordions as a kind of <code>tablist</code> and in terms of keyboard 
+        navigation says that UAs should treat up/down and left/right navigation for tabs and 
+        accordions as interchangeable.</p>
+
       <p>
-        While it is useful to have elements like <code>&lt;section&gt;</code> and 
-        <code>&lt;h1&gt;</code> which are high-level in their own right, it is also useful 
-        to extract continually higher constructs as we see them emerge that add to our 
-        ability to universally describe common things rather than rely on variable constructs
-        and specialized knowledge about how they fit together to achieve something greater.
-      </p>
-        <p>Because the art of creating a good user interface is something we are all still 
-        collectively trying to figure out, the history and development of these metaphors appear to 
-        have obscured the underlying fact that in virtually every way, a number of them 
-        are <em>conceptually</em> and in an very real sense <em>practically</em> nearly 
-        identical in every way (in fact, the WAI-ARIA Best Practices document defines 
-        accordions as a kind of <code>tablist</code> and in terms of keyboard navigation 
-        says that UAs should treat up/down and left/right navigation for tabs and 
-        accordions as interchangeable, for example) but are visually very different. 
         With the advent of ever more variant screen sizes, interaction methods, 
-        responsive design, and a newly energized focus on accessibility, this question has 
-        begun to come to the forefront of the mainstream:  We have designs which switch 
-        their visual representation based on the current size of the screen, rather than 
+        responsive design we now have designs which switch their visual representation of 
+        these metaphors based on the current size of the screen, rather than 
         being constant. For example, on a wide screen, a tabbed interface may seem like a 
         natural choice, whereas the same interface is more natural as an accordion, or a 
-        deck on a small one.  This proposal attempts to uncover the underlying structures 
-        and interactions that accurately describe the common "thing" and provide ways and 
-        examples of achieving robust separation in which CSS plays its intended role and 
-        it is easy for authors to "do the right thing". 
-    </p>
+        deck on a small one.  This further underscores their 'sameness'.
+      </p>
+
+      <p>These observations highlight the fact that their differences are primarily 
+        visual, not semantic:  How could a tabset suddenly <em>become</em> a wholly 
+        different thing based on screen resizing?  What difference does it make to 
+        the user of a screen reader that it is one or the other if their interaction 
+        model is unchanged?  And, if the difference is visual, shouldn't control of 
+        this be in the domain of CSS, rather than markup?</p>
+
+    <p>This proposal attempts to solve the issues described in this introduction 
+        by defining these common elements and providing a separation of concerns 
+        which we believe strikes the right balances.</p>
     <section>
         <h1>Panels</h1>
         <p>
