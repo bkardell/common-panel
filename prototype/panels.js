@@ -83,7 +83,8 @@
 
 						ref.setAttribute("aria-labeledby", tab.id);
 						tab.setAttribute("role", "tab");
-						if (ref.getAttribute("expansion-state") === "opened") {
+
+						if (ref.getAttribute("expansion-state") === "opened" || self.common_panels.length === 0) {
 							tab.setAttribute("expansion-state", "opened");
 							ref.setAttribute("tabindex", "0");
 							tab.setAttribute("tabindex", "0");
