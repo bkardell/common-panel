@@ -1,7 +1,7 @@
 /* Element.prototype.closest polyfill */
 (function () {
     window.Element && function(ElementPrototype) {
-        ElementPrototype.matchesSelector = ElementPrototype.matchesSelector || 
+        ElementPrototype.matches = ElementPrototype.matches || 
         ElementPrototype.mozMatchesSelector ||
         ElementPrototype.msMatchesSelector ||
         ElementPrototype.oMatchesSelector ||
