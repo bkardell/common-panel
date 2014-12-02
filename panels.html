@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Panels and Panel Sets</title>
     <meta charset='utf-8'>
@@ -24,7 +24,7 @@
                     company:    "The Paciello Group",
                     companyURL: "http://www.paciellogroup.com/"
                 },
-                {   name:       "Leonie Watson",
+                {   name:       "Léonie Watson",
                     url:        "https://twitter.com/LeonieWatson",
                     company:    "The Paciello Group",
                     companyURL: "http://www.paciellogroup.com/"
@@ -90,20 +90,20 @@
     <section>
         <h1>Panels</h1>
         <p>
-            The concept of a panel recurrs in print and online, in documents and applicaitons.  
-            Based on some factors, it has proven useful when used in UI, to sometimes add certain 
-            abilities to the panel itself, for example, the ability to 'collapse' it and both 
-            remove its contents from the visual appearance and place appropriate control for 
-            allowing the user to 'expand' it, or 'dismiss' it and remove it from the UI altogether.  
+            The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
         </p>
+		<p>
+		A panel represents a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in UA/AT. A panel may be a simple representation of content, or it may have certain characteristics such as the ability to be expanded/collapsed or removed from the UI completely.
+		</p>
 
         <section>
             <h2>Basic Panel</h2>
         <p>
-            Use Case: As an author, one would like to define a simple panel which has a title and have it 
-            display in a common fashion and have common UA/AT features and a degree of ability to
-            vary visual or aural and print styles while still remaining a cohesive semantic thing.
+		Use case: An author wants to create a simple content container with consistent UA/AT features, that can be displayed in a common fashion.
         </p>
+		<p>
+		A basic panel may be adapted with visual or aural styles, but it remains a cohesive semantic thing. It is the basic building block for the use cases and design patterns in the remainder of this document.
+		</p>
 
         <image src="basic-common-panel.png" >
         <p>
@@ -122,15 +122,21 @@
         </section>
 
         <section>
-            <h2>Dismissable Panels</h2>
-        <p>Another recurring theme in UI is that some panels are informational and secondary: They provide a necessary noise, but a user should be able to dismiss them.  For this purpose the <code>is-dismissable</code> boolean attribute.  If present it will add the ability to dismiss the panel, removing it from the DOM.</p>
+            <h2>Removable Panels</h2>
+        <p>
+		Use case: An author includes a panel containing content of secondary or ancillary importance, and wants to provide the user with the option to remove the panel from the UI.
+		</p>
+		<p>
+		A removable panel has the <code>is-removable</code> attribute assigned to it. When the <code>is-removable</code> attribute is present, a mechanism to let the user dismiss the panel is provided. When the panel is dismissed by the user it is removed from the DOM.
+		</p>
         <image src="dismissable-panel.png" >
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
 &lt;/common-panel&gt;
         </pre>
-        <p class="note">Keep in mind that this is a standard platform boolean attribute for consistency, thus its mere
-            presence indicates truthfullness and <code>is-removable="false"</code> is actually truthy.</p>
+        <p class="note">
+		The <code>is-removable</a> attribute is a standard platform <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attribute">Boolean attribute</a>. The presence of <code>is-removable</code> represents the true state (the panel can be removed), and the absence of the attribute represents the false value (the panel cannot be removed).
+		</p>
         </section>
 
         <section>
