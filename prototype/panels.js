@@ -268,7 +268,7 @@
 						this.getContent = function () {
 							return self.querySelector("#" + self.id + "> .common-panel-content");
 						};
-						tab.innerHTML = '<i class="common-panel-icon"></i><span>' + this.getAttribute('title') + '</span><button class="common-panel-remove"><i></i></button>';
+						tab.innerHTML = '<i class="common-panel-icon"></i><span>' + this.getAttribute('title') + '</span><button class="common-panel-remove" title="Remove this panel"><i></i></button>';
 						if (ownedBy) {
 							ownedBy._addTab(tab);
 						} else {
