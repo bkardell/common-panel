@@ -16,7 +16,7 @@
 				createdCallback: { value: function () {
 					var self = this;
 					var tabbarEl = document.createElement("div");
-					this.selectedIndex =  0;
+					this.selectedIndex =  -1;
 					this.common_panels = [];
 					
 					/* Wrapping these so that they respond to changes to preferred display without losing focus */
@@ -75,7 +75,7 @@
 					}
 
 					this._addTab = function (tab) {
-						var ref = document.querySelector("#" + tab.getAttribute("aria-controls"));
+						var ref = document.querySelector("#" + tab.getAttribute("aria-controls")), active;
 
 						// is this correct? more likely it should be tab content with this role
 						// ref.setAttribute("role", "tabpanel");
@@ -85,6 +85,15 @@
 						tab.setAttribute("role", "tab");
 
 						if (ref.getAttribute("expansion-state") === "opened" || self.common_panels.length === 0) {
+							if (self.selectedIndex !== -1) {
+								active = self.getActivePanel();
+								active.setAttribute("expansion-state", "closed");
+								active.setAttribute("tabindex", -1);
+								active = document.querySelector("#" + active.getAttribute("aria-labeledby"));
+								active.setAttribute("tabindex", -1);
+								active.setAttribute("expansion-state", "closed");
+							}
+							ref.setAttribute("expansion-state", "opened"); /* for unspecified case */
 							tab.setAttribute("expansion-state", "opened");
 							ref.setAttribute("tabindex", "0");
 							tab.setAttribute("tabindex", "0");
