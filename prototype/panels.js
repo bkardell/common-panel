@@ -116,7 +116,6 @@
                             var observer = new MutationObserver(function (mutations) {
                                 mutations.forEach(function(mutation) {
                                     var headerElement, tabProxyElement, activePanelElement;
-                                    console.log("MUTATION %s", mutation.type);
                                     if (mutation.type === "attributes") {
                                         activePanelElement = self.activePanelElement;
                                         if (activePanelElement) {
@@ -124,18 +123,15 @@
                                             tabProxyElement = activePanelElement.tabProxyElement;
                                         }
                                         lastSet = ([headerElement, tabProxyElement].indexOf(document.activeElement) !== -1);
-                                        console.log("last set: %o %o" + lastSet, document.activeElement);
                                         setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
                                     }
                                     Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
                                         if (el.tagName === "COMMON-PANEL") {
-                                            console.log("addded panel %o", el);
                                             self._registerChildPanel(el);
                                         }
                                     });
                                     Array.prototype.slice.call(mutation.removedNodes).forEach(function (el) {
                                         if (el.tagName === "COMMON-PANEL") {
-                                            console.log("removed panel %o", el);
                                             self._deregisterChildPanel(el);
                                         }
                                     });
@@ -192,19 +188,19 @@
                                 /* jshint -W015 */
                                 switch (evt.keyCode) {
                                     case 37:
-                                        console.log("pressed left"); /* previous tab */
+                                        // console.log("pressed left"); /* previous tab */
                                         self.selectPreviousTab();
                                         break;
                                     case 38:
-                                        console.log("pressed up");
+                                        // console.log("pressed up");
                                         self.selectPreviousTab();
                                         break;
                                     case 39:
-                                        console.log("pressed right"); /* next tab */
+                                        // console.log("pressed right"); /* next tab */
                                         self.selectNextTab();
                                         break;
                                     case 40:
-                                        console.log("pressed down");
+                                        // console.log("pressed down");
                                         self.selectNextTab();
                                         break;
                                 }
