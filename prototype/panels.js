@@ -1,4 +1,4 @@
-(function(registerElement) {
+(function(document) {
     var lastUid = 0,
         nextUid = function() {
             return "-cp-" + (++lastUid);
@@ -23,7 +23,7 @@
             return Array.prototype.slice.call(scope.querySelectorAll("#" + scope.id + query));
         };
 
-    registerElement(
+    document.registerElement(
         "common-panel-set", {
             prototype: Object.create(
                 HTMLElement.prototype, {
@@ -315,4 +315,4 @@
                 })
             });
 
-}(document.registerElement));
+}(document));
