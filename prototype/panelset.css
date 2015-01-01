@@ -145,9 +145,9 @@ common-panel[expansion-state="closed"] > .common-panel-header {
   background-color: #eeeeee;
   border-color: #dddddd #dddddd #dddddd;
 }
-.common-panel-tabs .common-panel-header[expansion-state="opened"],
-.common-panel-tabs .common-panel-header[expansion-state="opened"]:hover,
-.common-panel-tabs .common-panel-header[expansion-state="opened"]:focus {
+.common-panel-tabs .common-panel-header[aria-selected],
+.common-panel-tabs .common-panel-header[aria-selected]:hover,
+.common-panel-tabs .common-panel-header[aria-selected]:focus {
   background-color: #ffffff;
   border-color: #dddddd #dddddd transparent;
   border-style: solid;
@@ -272,9 +272,9 @@ common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-pa
   background-color: inherit;
   border-color: inherit;
 }
-common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[expansion-state="opened"],
-common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[expansion-state="opened"]:hover,
-common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[expansion-state="opened"]:focus {
+common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[aria-selected],
+common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[aria-selected]:hover,
+common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header[aria-selected]:focus {
   background-color: #fff;
   border: 2px solid #000;
 }
