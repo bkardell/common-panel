@@ -281,7 +281,7 @@
                             this.innerHTML = "";
                             this.appendChild(tab);
                             this.appendChild(content);
-                            containerPanelSetElement = this.closest("common-panel-set");
+                            containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
 
                             if (containerPanelSetElement) {
                                 containerPanelSetElement._registerChildPanel(this);
