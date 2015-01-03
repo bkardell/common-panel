@@ -258,13 +258,13 @@
                         value: function () {
                             var current = this.getAttribute("expansion-state");
                             var isClosedOrDefault = (current === null || current === "closed");
-                            this.setExpansionState((isClosedOrDefault) ? "opened" : "closed");
+                            this.expansionState = (isClosedOrDefault) ? "opened" : "closed";
                         }
                     },
                     createdCallback: {
                         value: function() {
                             // nothing to do here
-                            var containerPanelSetElement, tab, content, removableOptions;
+                            var self = this, containerPanelSetElement, tab, content, removableOptions;
                             this.id = this.id || nextUid();
                             removableOptions = (this.hasAttribute("is-removable")) ? "" : " style=\"display: none\" aria-hidden=\"true\" ";
                             content = elFromString("<div class=\"common-panel-content\" id=\"" + nextUid() + "\" tabindex=\"0\">" + this.innerHTML + "</div>");
@@ -299,10 +299,11 @@
 
                             if (!containerPanelSetElement) {
                                 tab.addEventListener("click", function(evt) {
-                                    var panel;
-                                    if (evt.target.matches(".common-panel-remove") || evt.target.parentElement.matches(".common-panel-remove")) {
-                                        panel = evt.target.closest("common-panel");
-                                        panel.parentElement.removeChild(panel);
+                                    if (evt.target.matches(".common-panel-remove") ||
+                                        (evt.target.parentElement && evt.target.parentElement.matches(".common-panel-remove"))) {
+                                        self.parentElement.removeChild(self);
+                                    } else {
+                                        self.toggleExpansionState();
                                     }
                                 }, false);
                             }
