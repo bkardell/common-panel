@@ -107,21 +107,50 @@
     <p>This proposal attempts to solve the issues described in this introduction 
         by defining these common elements and providing a separation of concerns 
         which we believe strikes the right balances.</p>
+		</section>
+
+		<section>
+		<h2>Use cases and requirements</h2>
+<p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
+<section>
+<h3>Use cases for panels and panel sets</h3>
+<dl>
+<dt>Providing a simple panel</dt>
+<dd>TBC</dd>
+<dt>Providing a removable panel</dt>
+<dd>An author wants to provide content of secondary or ancillary importance, that a user can dismiss from the UI. For example a message of the day.</dd>
+<dt>Providing an expandable panel</dt>
+<dd>An author wants to make efficient use of screen real-estate, that a user can choose to show/hide. For example the erms and conditions of an agreement.</dd>
+<dt>Providing a collection of panels</dt>
+<dd>An author wants to provide a set of multiple panels, that a user can cycle through to display different content. For example a set of tabs (with either horizontal or vertical orientation) that presents information about different types of apple on a grocery website.</dd>
+</dl>
+</section>
+
+<section>
+<h3>Requirements for panels and panel sets</h3>
+<dl>
+<dt>Consistent</dt>
+<dd>It must be possible to interact with a panel or set of panels in a consistent way, using different modes of interaction including keyboard, mouse, voice and touch.</dd>
+<dt>Identifiable</dt>
+<dd>It must be possible for a user agent to identify the components of a panel, and the component panels within a set.</dd>
+<dt>Stylable</dt>
+<dd>It must be possible to style a panel or set of panels to provide different visual affordances.</dd>
+</dl>
+</section>
+</section>
+	
     <section>
-        <h1>Panels</h1>
+        <h2>Panels</h2>
 		 
  	  <p>
 	    The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
       </p>
 	  <p>
-		 A panel represents a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in UA/AT. A panel may be a simple representation of content, or it may have certain characteristics such as the ability to be expanded/collapsed or removed from the UI completely.
+		 A panel represents a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in user agents and assistive technologies. A panel may be a simple representation of content, or it may have certain characteristics such as the ability to be expanded/collapsed or removed from the user interface completely.
       </p>
 
         <section>
-            <h2>Basic Panel</h2>
-            <p>
-                Use case: An author wants to create a simple content container with consistent UA/AT features, that can be displayed in a common fashion.
-            </p>
+            <h3>Basic Panel</h3>
             <p>
                 A basic panel may be adapted with visual or aural styles, but it remains a cohesive semantic thing. It is the basic building block for the use cases and design patterns in the remainder of this document.
             </p>
@@ -140,10 +169,7 @@
         </section>
 
         <section>
-            <h2>Removable Panels</h2>
-        <p>
-		Use case: An author includes a panel containing content of secondary or ancillary importance, and wants to provide the user with the option to remove the panel from the UI.
-		</p>
+            <h3>Removable Panels</h3>
 		<p>
 		A removable panel has the <code>is-removable</code> attribute assigned to it. When the <code>is-removable</code> attribute is present, a mechanism to let the user dismiss the panel is provided. When the panel is dismissed by the user it is removed from the DOM.
 		</p>
@@ -158,10 +184,9 @@
         </section>
 
         <section>
-        <h2>Expandable/Collapsible Panels</h2>
-		<p><strong>Use case:</strong> An author wants to make efficient use of screen real-estate by giving the user the ability to show/hide panel content. The user benefits by being able to manage "information noise" in a way that minimises cognitive load.</p>
-        <p>an expandable/collapsible panel has the <code>expanded-state</code> attribute assigned to it. When the <code>expanded-state</code> attribute is present, the panel title becomes a control that allows the panel to be expanded/collapsed.
-        It is linked by proxy to mange the inversely specified <code>aria-collapse</code> on relevant Shadow DOM descendants.</p>
+        <h3>Expandable/Collapsible Panels</h3>
+        <p>
+		an expandable/collapsible panel has the <code>expanded-state</code> attribute assigned to it. When the <code>expanded-state</code> attribute is present, the panel title becomes a control that allows the panel to be expanded/collapsed.</p>
         <p>If the <code>expanded-state</code> attribute is present but has no value, the starting state of the panel is collapsed. The <code>expanded-state</code> attribute may be set explicitly to <code>"open"</code>.</p>
         <img src="collapsable-panel.png" alt="a visual depiction of a collapsible panel with visual indication that it can be expanded and collapsed.">
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" expanded-state&gt;<br />
@@ -170,7 +195,7 @@
         </pre>
         </section>
         <section>
-            <h2>Pseudo-Elements</h2>
+            <h3>Pseudo-Elements</h3>
             <p>
             A <code>&lt;common-panel&gt;</code> exposes the following pseudo-elements with built in semantics and functionality, and which can be used to achieve a wide number of visual presentation effects:
             <ul>
@@ -186,13 +211,12 @@
             </p>
         </section>
         <section>
-            <h2>DOM</h2>
+            <h3>DOM</h3>
             <p>
                 <code>&lt;common-panel&gt;</code> elements expose a runtime property of "expansionState" which will 
                 be "opened" or "closed".
             </p>
         </section>
-    </section>
 
     <p>
 
@@ -200,6 +224,8 @@
         <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
 
 <hr>
+</section>
+
     <section>
         <h1>Panel Sets</h1>
 
@@ -258,8 +284,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.panels.length); // 2<br>
 &nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.selectedPanel); // the selected basic panel element<br>
 &lt;script&gt;</pre>
-
-    </section>
 
     </section>
   </body>
