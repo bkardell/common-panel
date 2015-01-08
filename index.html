@@ -14,7 +14,7 @@
           specStatus: "unofficial",
           shortName:  "panels-and-panelsets",
           editors: [
-                {   name:       "Brian Kardell", 
+                {   name:       "Brian Kardell",
                     url:        "https://twitter.com/briankardell",
                     company:    "Apollo Education Group",
                     companyURL: "http://www.apollo.edu/"
@@ -36,13 +36,13 @@
   <body>
     <section id='abstract'>
       <p>
-        This document describes a universal markup attempting to pave the cowpath 
+        This document describes a universal markup attempting to pave the cowpath
         we observe for a construct called a <code>&lt;common-panel&gt;</code>
         which contains what appear to be common attributes and provide also
         and a single selection interaction paradigm for a collection of them called a
-        <code>&lt;common-panel-set&gt;</code>.  Defining these allow editors to create a reusable 
-        set of declarative code which remains semantic, widely stylable 
-        in visual terms while retaining a conceptual and physical separation that retains 
+        <code>&lt;common-panel-set&gt;</code>.  Defining these allow editors to create a reusable
+        set of declarative code which remains semantic, widely stylable
+        in visual terms while retaining a conceptual and physical separation that retains
         the important accessibility benefits for all of them.
       </p>
     </section>
@@ -53,61 +53,76 @@
     <section>
       <h2>Introduction</h2>
       <p>
-        When editing a document, an author attempts to mark it up semantically and control 
-        a separation of visual aspects through CSS.  This allows various the user-agent  
-        and tools to use the same semantic data to provide any number of affordances 
-        for accessibility, navigation, styling and interaction. Over time, UI designers 
-        have created a number of common metaphors for visually managing and providing 
-        single selection/focus navigation through a collection of titled 'blocks', which 
-        are, themselves more complex and meaningful than it might seem at first glace. 
+        When editing a document, an author attempts to mark it up semantically and control
+        a separation of visual aspects through CSS.  This allows various the user-agent
+        and tools to use the same semantic data to provide any number of affordances
+        for accessibility, navigation, styling and interaction. Over time, UI designers
+        have created a number of common metaphors for visually managing and providing
+        single selection/focus navigation through a collection of titled 'blocks', which
+        are, themselves more complex and meaningful than it might seem at first glace.
       </p>
 
-      <p>        
-        Currently we have a number of useful building block elements like 
-        <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in 
+      <p>
+        Currently we have a number of useful building block elements like
+        <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in
         their own right, but still beneath the level of describing many common constructs.
-        It is useful then to attempt to extract more complex, higher-level constructs as 
-        we see them emerge.  Doing so, expands an author's ability to easily universally 
-        describe common things and the  ability of UA, tools and search engines to make 
+        It is useful then to attempt to extract more complex, higher-level constructs as
+        we see them emerge.  Doing so, expands an author's ability to easily universally
+        describe common things and the  ability of UA, tools and search engines to make
         sense of them.  This is one such effort.
       </p>
 
       <p>The concept of a <em>panel</em> exists in traditional print media and has carried
-        over into Web design.  Over time, UI/UX designers have created a number of common 
-        visual metaphors for managing interaction with a collection of panels: Accordions, 
+        over into Web design.  Over time, UI/UX designers have created a number of common
+        visual metaphors for managing interaction with a collection of panels: Accordions,
         tabs, decks and carousels are just a few.</p>
 
-      <p>Because the art of creating a good user interface is something we are all still 
-        collectively trying to figure out, the history and development of these metaphors 
-        have generally taken the approach of independently naming these and solving each 
-        problem independently:  In the realm of custom elements, this means that you would 
-        have independent tags for each.  However, this obscures the underlying fact that 
-        in virtually every way they are <em>conceptually</em> identical.  
-        The WAI-ARIA Best Practices document, in fact, 
-        defines accordions as a kind of <code>tablist</code> and in terms of keyboard 
-        navigation says that UAs should treat up/down and left/right navigation for tabs and 
+      <p>Because the art of creating a good user interface is something we are all still
+        collectively trying to figure out, the history and development of these metaphors
+        have generally taken the approach of independently naming these and solving each
+        problem independently:  In the realm of custom elements, this means that you would
+        have independent tags for each.  However, this obscures the underlying fact that
+        in virtually every way they are <em>conceptually</em> identical.
+        The WAI-ARIA Best Practices document, in fact,
+        defines accordions as a kind of <code>tablist</code> and in terms of keyboard
+        navigation says that UAs should treat up/down and left/right navigation for tabs and
         accordions as interchangeable.</p>
 
       <p>
-        With the advent of ever more variant screen sizes, interaction methods, 
-        responsive design we now have designs which switch their visual representation of 
-        these metaphors based on the current size of the screen, rather than 
-        being constant. For example, on a wide screen, a tabbed interface may seem like a 
-        natural choice, whereas the same interface is more natural as an accordion, or a 
+        With the advent of ever more variant screen sizes, interaction methods,
+        responsive design we now have designs which switch their visual representation of
+        these metaphors based on the current size of the screen, rather than
+        being constant. For example, on a wide screen, a tabbed interface may seem like a
+        natural choice, whereas the same interface is more natural as an accordion, or a
         deck on a small one.  This further underscores their 'sameness'.
       </p>
 
-      <p>These observations highlight the fact that their differences are primarily 
-        visual, not semantic:  How could a tabset suddenly <em>become</em> a wholly 
-        different thing based on screen resizing?  What difference does it make to 
-        the user of a screen reader that it is one or the other if their interaction 
-        model is unchanged?  And, if the difference is visual, shouldn't control of 
+      <p>These observations highlight the fact that their differences are primarily
+        visual, not semantic:  How could a tabset suddenly <em>become</em> a wholly
+        different thing based on screen resizing?  What difference does it make to
+        the user of a screen reader that it is one or the other if their interaction
+        model is unchanged?  And, if the difference is visual, shouldn't control of
         this be in the domain of CSS, rather than markup?</p>
 
-    <p>This proposal attempts to solve the issues described in this introduction 
-        by defining these common elements and providing a separation of concerns 
+    <p>This proposal attempts to solve the issues described in this introduction
+        by defining these common elements and providing a separation of concerns
         which we believe strikes the right balances.</p>
 		</section>
+
+
+        <section>
+            <h2>Conformance</h2>
+            <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!QAFRAME]].
+
+The key words "must", "should", "should not" and "may" in this specification are to be interpreted as described in [[!RFC2119]].</p>
+
+            <section>
+                <h3>Dependencies and Definitions</h3>
+                <p>The Interface Definition Language (IDL) fragments in this specification must be interpreted as required for conforming IDL fragments, as described in the Web IDL specification. [[!WEBIDL]]</p>
+
+                <p>This document uses the terms accessible and accessibility in the sense of ensuring people with disabilities can use the Web. Further information is available, e.g. Introduction to Web Accessibility.</p>
+            </section>
+        </section>
 
 		<section>
 		<h2>Use cases and requirements</h2>
@@ -138,10 +153,10 @@
 </dl>
 </section>
 </section>
-	
+
     <section>
         <h2>Panels</h2>
-		 
+
  	  <p>
 	    The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
       </p>
@@ -212,14 +227,32 @@
         </section>
         <section>
             <h3>Panel DOM</h3>
-            <p>
-                <code>&lt;common-panel&gt;</code> elements expose a runtime property of "expansionState" which will 
-                be "opened" or "closed".
-            </p>
+            <dl title='[Constructor] interface Panel : HTMLElement' class='idl'>
+                <dt>getter HTMLElement headerElement;</dt>
+                <dd>
+                    Provides access to the header element for this panel
+                </dd>
+                <dt>getter HTMLElement contentElement;</dt>
+                <dd>
+                    Provides access to the content element for this panel
+                </dd>
+                <dt>getter HTMLElement tabProxyElement;</dt>
+                <dd>
+                    Provides access to the tab proxy element associated with this panel if it exists
+                    (if the panel is part of a panel set) or null
+                </dd>
+                <dt>void expansionState (DOMString state);</dt>
+                <dd>
+                    Sets the panel's expansion state to "opened" or "closed" and manages associated
+                    accessibility attributes on relevant elements.
+                    // TODO: Should this be const instead of DOMString?
+                </dd>
+                <dt>void toggleEpansionState ();</dt>
+                <dd>
+                    Inverts the current expansion state of the panel.
+                </dd>
+            </dl>
         </section>
-
-    <p>
-
 
         <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
 
@@ -230,13 +263,13 @@
         <h1>Panel Sets</h1>
 
         <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
-        the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time, 
-        effectively managing their <code>expansion-state</code> as panels and their Shadow DOM descendant's corresponding WAI-ARIA <code>aria-collapse</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element 
-        children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable.  
+        the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time,
+        effectively managing their <code>expansion-state</code> as panels and their Shadow DOM descendant's corresponding WAI-ARIA <code>aria-collapse</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element
+        children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable.
         By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded (not collapsed).
         Because the parser processes elements in document order, any subsequent claims of
         expansion trump the first by removing the attribute from siblings and setting their <code>collapse-state="closed"</code>.  Through this means, any number of styles are achievable:
-        </p> 
+        </p>
         <p>
             Some examples of visual views on a single select <code>&lt;common-panel-sets&gt;</code> are
             <ul>
@@ -249,9 +282,9 @@
         </p>
 
     <p class="issue">
-        If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can 
-        correctly manage which type of display the element takes on in which conditions.  This is currently "up in the air" 
-        with one (not especially good, but currently prollyfilled) answer <a href="preferrential-display.html">here</a>.    
+        If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can
+        correctly manage which type of display the element takes on in which conditions.  This is currently "up in the air"
+        with one (not especially good, but currently prollyfilled) answer <a href="preferrential-display.html">here</a>.
     </p>
 
     <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
@@ -292,7 +325,31 @@
 </section>
 
 <section>
-<h3>Panel set DOM</h3>
+    <h3>Panel set DOM</h3>
+    <dl title='[Constructor] interface Panel : HTMLElement' class='idl'>
+        <dt>HTMLElement activePanelElement;</dt>
+        <dd>
+            Get or set an element as active (currently selected) panel element in this panel set
+        </dd>
+        <dt>void selectNextTab();</dt>
+        <dd>
+            Selects/activates the next panel in this panel set in document order if any remain
+        </dd>
+        <dt>void selectPreviousTab();</dt>
+        <dd>
+            Selects/activates the previous panel in this panel set in document order if any previous exist
+        </dd>
+        <dt>void expansionState (DOMString state);</dt>
+        <dd>
+            Sets the panel's expansion state to "opened" or "closed" and manages associated
+            accessibility attributes on relevant elements.
+            // TODO: Should this be const instead of DOMString?
+        </dd>
+        <dt>void toggleEpansionState ();</dt>
+        <dd>
+            Inverts the current expansion state of the panel.
+        </dd>
+    </dl>
 
 <p>Content TBC.</p>
 </section>
