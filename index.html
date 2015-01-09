@@ -112,7 +112,7 @@
 
         <section>
             <h2>Conformance</h2>
-            <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!QAFRAME]].
+            <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!qaframe-spec]].
 
 The key words "must", "should", "should not" and "may" in this specification are to be interpreted as described in [[!RFC2119]].</p>
 
@@ -241,13 +241,13 @@ The key words "must", "should", "should not" and "may" in this specification are
                     Provides access to the tab proxy element associated with this panel if it exists
                     (if the panel is part of a panel set) or null
                 </dd>
-                <dt>attribute void expansionState(DOMString state)</dt>
+                <dt>attribute DOMString expansionState</dt>
                 <dd>
                     Sets the panel's expansion state to "opened" or "closed" and manages associated
                     accessibility attributes on relevant elements.
                     // TODO: Should this be const instead of DOMString?
                 </dd>
-                <dt>attribute void toggleEpansionState()</dt>
+                <dt>void toggleEpansionState()</dt>
                 <dd>
                     Inverts the current expansion state of the panel.
                 </dd>
@@ -331,23 +331,13 @@ The key words "must", "should", "should not" and "may" in this specification are
         <dd>
             Get or set an element as active (currently selected) panel element in this panel set
         </dd>
-        <dt>attribute void selectNextTab()</dt>
+        <dt>void selectNextTab()</dt>
         <dd>
             Selects/activates the next panel in this panel set in document order if any remain
         </dd>
-        <dt>attribute void selectPreviousTab()</dt>
+        <dt>void selectPreviousTab()</dt>
         <dd>
             Selects/activates the previous panel in this panel set in document order if any previous exist
-        </dd>
-        <dt>attribute void expansionState(DOMString state)</dt>
-        <dd>
-            Sets the panel's expansion state to "opened" or "closed" and manages associated
-            accessibility attributes on relevant elements.
-            // TODO: Should this be const instead of DOMString?
-        </dd>
-        <dt>attribute void toggleEpansionState()</dt>
-        <dd>
-            Inverts the current expansion state of the panel.
         </dd>
     </dl>
 
