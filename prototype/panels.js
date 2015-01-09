@@ -268,8 +268,9 @@
                             this.id = this.id || nextUid();
                             removableOptions = (this.hasAttribute("is-removable")) ? "" : " style=\"display: none\" aria-hidden=\"true\" ";
                             content = elFromString("<div class=\"common-panel-content\" id=\"" + nextUid() + "\" tabindex=\"0\">" + this.innerHTML + "</div>");
+                            // aria-controls is only relevant when you are expandable
                             tab = elFromString(
-                                "<div class=\"common-panel-header\" tabindex=\"0\" aria-controls=\"" + content.id + "\">" +
+                                "<div class=\"common-panel-header\" tabindex=\"0\">" +
                                 "<i class=\"common-panel-icon\"></i><span>" + this.title + "</span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
                                 removableOptions +
                                 "><i></i></button>" +
@@ -283,26 +284,31 @@
                             this.appendChild(content);
                             containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
 
-                            if (containerPanelSetElement) {
-                                containerPanelSetElement._registerChildPanel(this);
-                            } else {
-                                // we are making the whole thing clickable/adding a span to the title so that we can ::before and ::after
-                                tab.addEventListener("click", function () {
-                                    tab.expansionState = "opened";
-                                }, false);
-                                this.addEventListener("keydown", function(evt) {
-                                    if (evt.keyCode === 32) {
-                                        tab.expansionState = "closed";
-                                    }
-                                }, false);
+
+                            if (this.hasAttribute("expansion-state") || containerPanelSetElement) {
+                                tab.setAttribute("aria-controls", content.id);
+                                if (containerPanelSetElement) {
+                                    containerPanelSetElement._registerChildPanel(this);
+                                } else {
+                                    // we are making the whole thing clickable/adding a span to the title so that we can ::before and ::after
+                                    tab.addEventListener("click", function () {
+                                        tab.expansionState = "opened";
+                                    }, false);
+                                    this.addEventListener("keydown", function(evt) {
+                                        if (evt.keyCode === 32) {
+                                            tab.expansionState = "closed";
+                                        }
+                                    }, false);
+                                }
                             }
+
 
                             if (!containerPanelSetElement) {
                                 tab.addEventListener("click", function(evt) {
                                     if (evt.target.matches(".common-panel-remove") ||
                                         (evt.target.parentElement && evt.target.parentElement.matches(".common-panel-remove"))) {
                                         self.parentElement.removeChild(self);
-                                    } else {
+                                    } else if (self.hasAttribute("expansion-state")){
                                         self.toggleExpansionState();
                                     }
                                 }, false);
