@@ -264,24 +264,37 @@
                     createdCallback: {
                         value: function() {
                             // nothing to do here
-                            var self = this, containerPanelSetElement, tab, content, removableOptions;
+                            var self = this, containerPanelSetElement, tab, content, removableOptions, titleElement;
                             this.id = this.id || nextUid();
                             removableOptions = (this.hasAttribute("is-removable")) ? "" : " style=\"display: none\" aria-hidden=\"true\" ";
+
+                            // remove the titles
+                            findAll(this, ">common-panel-title").forEach(function (el) {
+                                titleElement = this.removeChild(el);
+                            }, this);
+
+                            // content is what's left
                             content = elFromString("<div class=\"common-panel-content\" id=\"" + nextUid() + "\" tabindex=\"0\">" + this.innerHTML + "</div>");
+
                             // aria-controls is only relevant when you are expandable
                             tab = elFromString(
                                 "<div class=\"common-panel-header\" tabindex=\"0\">" +
-                                "<i class=\"common-panel-icon\"></i><span>" + this.title + "</span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
+                                "<i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"></span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
                                 removableOptions +
                                 "><i></i></button>" +
                                 "</div>"
                             );
+
+
+                            this.setAttribute("role", "group");
 
                             // we have to be destructive to content, that is, we build the same thing based on serialization rather than keep the thing
                             // because without the ability to use shadow dom and projections, we HAVE to create new
                             this.innerHTML = "";
                             this.appendChild(tab);
                             this.appendChild(content);
+                            find(this, ">.common-panel-header>.common-panel-title").appendChild(titleElement);
+
                             containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
 
 
@@ -313,6 +326,18 @@
                                     }
                                 }, false);
                             }
+                        }
+                    }
+                })
+            });
+
+    document.registerElement(
+        "common-panel-title", {
+            prototype: Object.create(
+                HTMLElement.prototype, {
+                    createdCallback: {
+                        value: function () {
+                            /* not much to do here... */
                         }
                     }
                 })
