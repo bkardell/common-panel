@@ -230,7 +230,8 @@ The key words "must", "should", "should not" and "may" in this specification are
             </p>
 
             <img src="basic-common-panel.png" alt="a visual depiction of a simple panel with no special attributes containing a header and body">
-            <pre class="example highlight prettyprint prettyprinted">&lt;common-panel title="My favorite books"&gt; <br>
+            <pre class="example highlight prettyprint prettyprinted">&lt;common-panel&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;My favorite books&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Here are a list of my favorite books: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ol&gt; <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Hitchhiker's Guide to the Galaxy&lt;/li&gt; <br>
@@ -248,7 +249,8 @@ The key words "must", "should", "should not" and "may" in this specification are
 		A removable panel has the <code>is-removable</code> attribute assigned to it. When the <code>is-removable</code> attribute is present, a mechanism to let the user dismiss the panel is provided. When the panel is dismissed by the user it is removed from the DOM.
 		</p>
         <img src="dismissable-panel.png" alt="a visual depiction of a dismissable panel with a 'remove' button">
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Reminder" is-removable&gt;<br>
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel is-removable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Reminder&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
 &lt;/common-panel&gt;
         </pre>
@@ -263,7 +265,8 @@ The key words "must", "should", "should not" and "may" in this specification are
 		an expandable/collapsible panel has the <code>expanded-state</code> attribute assigned to it. When the <code>expanded-state</code> attribute is present, the panel title becomes a control that allows the panel to be expanded/collapsed.</p>
         <p>If the <code>expanded-state</code> attribute is present but has no value, the starting state of the panel is collapsed. The <code>expanded-state</code> attribute may be set explicitly to <code>"open"</code>.</p>
         <img src="collapsable-panel.png" alt="a visual depiction of a collapsible panel with visual indication that it can be expanded and collapsed.">
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel common-title="Today's News" expanded-state&gt;<br />
+        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel expanded-state&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Today's News&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
 &lt;/common-panel&gt;<br>
         </pre>
@@ -333,10 +336,12 @@ The key words "must", "should", "should not" and "may" in this specification are
     <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
 
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set id="foo"&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Panel #1&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Panel #2&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
 &lt;/common-panel-set&gt;
@@ -347,10 +352,12 @@ The key words "must", "should", "should not" and "may" in this specification are
 
 
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel id="bar" title="Panel #1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel id="bar"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Panel #1&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #1 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel title="Panel #2" collapse-state="expanded"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel collapse-state="expanded"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Panel #1&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;If you can read this, tab #2 is expanded&lt;/p&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
 &lt;common-panel-set&gt;<br>
