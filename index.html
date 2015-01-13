@@ -161,7 +161,66 @@ The key words "must", "should", "should not" and "may" in this specification are
 	    The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
       </p>
 	  <p>
-		 A panel represents a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in user agents and assistive technologies. A panel may be a simple representation of content, or it may have certain characteristics such as the ability to be expanded/collapsed or removed from the user interface completely.
+		 A panel represents a particular composed tree of DOM elements and pseudo elements around a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in user agents and assistive technologies and provides optional functionality for managing operations like expansion/collapse or removal from the user interface entirely.
+      </p>
+      <img src="dom-panel-explained.png" alt="An illustration of composed tree of DOM elements and pseudo elements for a panel, details of which are explained in prose below">
+      <p>
+        On it's own, a panel may be used anywhere sectioning content is used, it is granted an <code>aria-role="group"</code>.  Elements and pseudo elements of the composite tree of a panel are.
+         <ul>
+             <li>
+                <dl>
+                    <dt>::--common-panel-header-box</dt>
+                    <dd>Useful mainly for styling, this pseduo-element contains all of the visual elements of a conceptual 'header'.</dd>
+                </dl>
+                <ul>
+                    <li>
+                        <dl>
+                            <dt>::--common-panel-header</dt>
+                            <dd>When panel is used as standard sectioning content, this has default styles and provides hooks.  When panel is used as
+                            a child of a &lt;common-panel-set&gt; this is granted special affordances (see that section for details).</dd>
+                        </dl>
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>::--common-panel-icon</dt>
+                                    <dd>Optional visual styling hook for icon.  Empty/blank/dimensionless by default, it can be used to provide
+                                    icons via background for cases having a relationship like browser tabs show the .ico.  Stylesheet authors can
+                                    also use the ::before pseudo-element of this to provide a left-oriented expansion state indicator (see also ::-common-panel-hook)
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>&lt;common-panel-title&gt;</dt>
+                                    <dd>Author specified flow content which serves as the panel's title.</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>::--common-panel-hook</dt>
+                                    <dd>Like the ::-common-panel-icon, this is by default empty/blank/dimensionless, it can be used by stylesheet authors
+                                    via the ::after element to provide right-oriented expansion state indicator.</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>::--common-panel-destroy</dt>
+                            <dd>The a button that removes this panel from the tree completely and dismisses it.  If the panel sets the is-removable attribute
+                            this will be shown and events wired to handle that behavior, if not, it will be hidden (including aria-hidden).  This element, when
+                            present is focusable and announces its purpose.
+                            </dd>
+                        </li>
+                </ul>
+             </li>
+             <li>
+                <dl>
+                    <dt>::--common-panel-content</dt>
+                    <dd>Author provided detail comment which lives inside this panel.</dd>
+                </dl>
+            </li>
+         </ul>
       </p>
 
         <section>
@@ -208,22 +267,6 @@ The key words "must", "should", "should not" and "may" in this specification are
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
 &lt;/common-panel&gt;<br>
         </pre>
-        </section>
-        <section>
-            <h3>Panel pseudo-elements</h3>
-            <p>
-            A <code>&lt;common-panel&gt;</code> exposes the following pseudo-elements with built in semantics and functionality, and which can be used to achieve a wide number of visual presentation effects:
-            <ul>
-                <li><code>::--common-panel-header</code></li>
-                <li><code>::--common-panel-icon</code></li>
-                <li><code>::--common-panel-title</code></li>
-                <li><code>::--common-panel-destroy</code> (if the is-removable attribute is set)</li>
-            </ul>
-
-            </code>
-            <p>
-                Styling may be managed via the provided pseudo-classes and user agents MAY choose how they indicate state by default.  UA MUST <span class="todo">(todo: DEFINE WHAT IT MUST DO vs WHAT IT MAY DO to automatically adjust).</span>
-            </p>
         </section>
         <section>
             <h3>Panel DOM</h3>
