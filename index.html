@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Panels and Panel Sets</title>
+    <title>Panels and Panel Sets Extension</title>
     <meta charset='utf-8'>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common'
             async class='remove'></script>
@@ -38,9 +38,8 @@
       <p>
         This document describes a universal markup attempting to pave the cowpath
         we observe for a construct called a <code>&lt;common-panel&gt;</code>
-        which contains what appear to be common attributes and provide also
-        and a single selection interaction paradigm for a collection of them called a
-        <code>&lt;common-panel-set&gt;</code>.  Defining these allow editors to create a reusable
+        which contains what appear to be common attributes, and a single selection interaction paradigm for a collection of them called a
+        <code>&lt;common-panel-set&gt;</code>.  Defining these will allow editors to create a reusable
         set of declarative code which remains semantic, widely stylable
         in visual terms while retaining a conceptual and physical separation that retains
         the important accessibility benefits for all of them.
@@ -54,12 +53,10 @@
       <h2>Introduction</h2>
       <p>
         When editing a document, an author attempts to mark it up semantically and control
-        a separation of visual aspects through CSS.  This allows various the user-agent
-        and tools to use the same semantic data to provide any number of affordances
-        for accessibility, navigation, styling and interaction. Over time, UI designers
+        a separation of visual aspects through CSS.  This allows user-agents and tools to use the same semantic data to provide any number of affordances for accessibility, navigation, styling and interaction. Over time, user interface designers
         have created a number of common metaphors for visually managing and providing
         single selection/focus navigation through a collection of titled 'blocks', which
-        are, themselves more complex and meaningful than it might seem at first glace.
+        are, themselves more complex and meaningful than it might seem at first glance.
       </p>
 
       <p>
@@ -67,9 +64,8 @@
         <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in
         their own right, but still beneath the level of describing many common constructs.
         It is useful then to attempt to extract more complex, higher-level constructs as
-        we see them emerge.  Doing so, expands an author's ability to easily universally
-        describe common things and the  ability of UA, tools and search engines to make
-        sense of them.  This is one such effort.
+        we see them emerge.  Doing so, expands an author's ability to easily describe common things, and the  ability of user-agents, tools and search engines to make
+        sense of them.
       </p>
 
       <p>The concept of a <em>panel</em> exists in traditional print media and has carried
@@ -125,10 +121,10 @@ The key words "must", "should", "should not" and "may" in this specification are
         </section>
 
 		<section>
-		<h2>Use cases and requirements</h2>
+		<h2>Use cases and Requirements</h2>
 <p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
 <section>
-<h3>Use cases for panels and panel sets</h3>
+<h3>Use Cases for Panels and Panel Sets</h3>
 <dl>
 <dt>Providing a simple panel</dt>
 <dd>TBC</dd>
@@ -142,7 +138,7 @@ The key words "must", "should", "should not" and "may" in this specification are
 </section>
 
 <section>
-<h3>Requirements for panels and panel sets</h3>
+<h3>Requirements for Panels and Panel Sets</h3>
 <dl>
 <dt>Consistent</dt>
 <dd>It must be possible to interact with a panel or set of panels in a consistent way, using different modes of interaction including keyboard, mouse, voice and touch.</dd>
@@ -155,7 +151,7 @@ The key words "must", "should", "should not" and "may" in this specification are
 </section>
 
     <section>
-        <h2>Panels</h2>
+        <h2>The panel element</h2>
 
  	  <p>
 	    The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
@@ -306,7 +302,7 @@ The key words "must", "should", "should not" and "may" in this specification are
 </section>
 
     <section>
-        <h1>Panel Sets</h1>
+        <h2>The panelset element</h2>
 
         <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
         the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time,
