@@ -70,9 +70,13 @@
                                 } else {
                                     this.activePanelElement = this.common_panels[0];
                                 }
-                                tabElement = find(this, ">.common-panel-tabs>.common-panel-header[aria-controls=\"" + panelElement.id + "\"]");
-                                tabElement.parentElement.removeChild(tabElement);
-                                panelElement.parentElement.removeChild(panelElement);
+                                tabElement = find(this, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + panelElement.id + "\"]");
+                                try {
+                                    tabElement.parentElement.removeChild(tabElement);
+                                    panelElement.parentElement.removeChild(panelElement);
+                                } catch (e) {
+                                    console.error("Skipping %e", e);
+                                }
                             }
                         }
                     },
@@ -83,15 +87,17 @@
                                 headerElement = panelElement.headerElement;
                                 contentElement = panelElement.contentElement;
                                 tabElement = headerElement.cloneNode(true);
+                                tabElement.setAttribute("aria-controls", contentElement.id);
                                 //  Using header because qsa reports early (bug?) and you can get stuff before upgrade
-                                findAll(this, ">common-panel>.common-panel-header").forEach(function (item, i) {
-                                    if (item.parentElement === panelElement) {
+                                findAll(this, ">common-panel>.common-panel-header-box>.common-panel-header").forEach(function (item, i) {
+                                    if (item.parentElement.parentElement === panelElement) {
                                         ownIndex = i;
                                     }
-                                    this.common_panels[i] = item.parentElement;
+                                    this.common_panels[i] = item.parentElement.parentElement;
                                 }, this);
 
                                 contentElement.setAttribute("role", "tabpanel");
+                                headerElement.firstElementChild.setAttribute("role", "tab");
                                 tabElement.setAttribute("role", "tab");
                                 tablistElement = find(this, ">.common-panel-tabs");
                                 tablistElement.insertBefore(tabElement, tablistElement.children[ownIndex]);
@@ -108,10 +114,11 @@
                     createdCallback: {
                         value: function() {
                             var self = this;
-                            var tabbarEl = elFromString("<div class=\"common-panel-tabs\" role=\"tablist\"></div>");
+                            var tabbarEl = elFromString("<div class=\"common-panel-tabs\"></div>");
                             this.selectedIndex = -1;
                             this.common_panels = [];
                             this.id = this.id || nextUid(); // ensure it has an id
+                            this.setAttribute("role", "tablist");
 
                             var observer = new MutationObserver(function (mutations) {
                                 mutations.forEach(function(mutation) {
@@ -122,7 +129,7 @@
                                             headerElement = activePanelElement.headerElement;
                                             tabProxyElement = activePanelElement.tabProxyElement;
                                         }
-                                        lastSet = ([headerElement, tabProxyElement].indexOf(document.activeElement) !== -1);
+                                        lastSet = ([headerElement.firstElementChild, tabProxyElement.firstElementChild].indexOf(document.activeElement) !== -1);
                                         setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
                                     }
                                     Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
@@ -158,8 +165,8 @@
 
                                 // THIS WOULD BE BETTER AS A CHECK FOR ARIA HIDDEN ON THE TABLIST
                                 if (force || lastSet) {
-                                    if (headerElement.offsetParent) {
-                                        headerElement.focus();
+                                    if (headerElement.firstElementChild.offsetParent) {
+                                        headerElement.firstElementChild.focus();
                                     } else {
                                         tabProxyElement.focus();
                                     }
@@ -217,9 +224,10 @@
         "common-panel", {
             prototype: Object.create(
                 HTMLElement.prototype, {
+                    /* Todo, this isn't exactly the header element anymore, needs clarity */
                     headerElement: {
                         get: function () {
-                            return find(this, ">.common-panel-header");
+                            return find(this, ">.common-panel-header-box");
                         }
                     },
                     contentElement: {
@@ -231,7 +239,7 @@
                         get: function () {
                             var ret;
                             if (this.parentElement.tagName === "COMMON-PANEL-SET") {
-                                ret = find(this.parentElement, ">.common-panel-tabs>.common-panel-header[aria-controls=\"" + this.contentElement.id + "\"]");
+                                ret = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + this.contentElement.id + "\"]");
                             }
                             return ret;
                         }
@@ -248,7 +256,7 @@
 
                             // he should echo this to his parent/tab... shortcut the re-lookup of contentElement.id
                             if (this.parentElement.tagName === "COMMON-PANEL-SET") {
-                                tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
+                                tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
                                 manageBooleanAttr(tabProxyElement, "aria-selected", isOpen);
                                 tabProxyElement.setAttribute("tabindex", (isOpen) ? "0" : "-1");
                             }
@@ -265,66 +273,72 @@
                         value: function() {
                             // nothing to do here
                             var self = this, containerPanelSetElement, tab, content, removableOptions, titleElement;
-                            this.id = this.id || nextUid();
-                            removableOptions = (this.hasAttribute("is-removable")) ? "" : " style=\"display: none\" aria-hidden=\"true\" ";
+                            if (this.getAttribute("data-upgrade-state") !== "resolved") {
+                                this.id = this.id || nextUid();
+                                removableOptions = (this.hasAttribute("is-removable")) ? "" : " style=\"display: none\" aria-hidden=\"true\" ";
 
-                            // remove the titles
-                            findAll(this, ">common-panel-title").forEach(function (el) {
-                                titleElement = this.removeChild(el);
-                            }, this);
+                                // remove the titles
+                                findAll(this, ">common-panel-title").forEach(function (el) {
+                                    titleElement = this.removeChild(el);
+                                }, this);
 
-                            // content is what's left
-                            content = elFromString("<div class=\"common-panel-content\" id=\"" + nextUid() + "\" tabindex=\"0\">" + this.innerHTML + "</div>");
+                                // content is what's left
+                                content = elFromString("<div class=\"common-panel-content\" id=\"" + nextUid() + "\" tabindex=\"0\">" + this.innerHTML + "</div>");
 
-                            // aria-controls is only relevant when you are expandable
-                            tab = elFromString(
-                                "<div class=\"common-panel-header\" tabindex=\"0\">" +
-                                "<i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"></span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
-                                removableOptions +
-                                "><i></i></button>" +
-                                "</div>"
-                            );
-
-
-                            this.setAttribute("role", "group");
-
-                            // we have to be destructive to content, that is, we build the same thing based on serialization rather than keep the thing
-                            // because without the ability to use shadow dom and projections, we HAVE to create new
-                            this.innerHTML = "";
-                            this.appendChild(tab);
-                            this.appendChild(content);
-                            find(this, ">.common-panel-header>.common-panel-title").appendChild(titleElement);
-
-                            containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
+                                // aria-controls is only relevant when you are expandable
+                                tab = elFromString(
+                                    "<div class=\"common-panel-header-box\"><div class=\"common-panel-header\" tabindex=\"0\">" +
+                                    "<i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"></span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
+                                    removableOptions +
+                                    ">&times;</button>" +
+                                    "</div></div>"
+                                );
 
 
-                            if (this.hasAttribute("expansion-state") || containerPanelSetElement) {
-                                tab.setAttribute("aria-controls", content.id);
-                                if (containerPanelSetElement) {
-                                    containerPanelSetElement._registerChildPanel(this);
-                                } else {
-                                    // we are making the whole thing clickable/adding a span to the title so that we can ::before and ::after
-                                    tab.addEventListener("click", function () {
-                                        tab.expansionState = "opened";
-                                    }, false);
-                                    this.addEventListener("keydown", function(evt) {
-                                        if (evt.keyCode === 32) {
-                                            tab.expansionState = "closed";
+                                this.setAttribute("role", "group");
+
+                                // we have to be destructive to content, that is, we build the same thing based on serialization rather than keep the thing
+                                // because without the ability to use shadow dom and projections, we HAVE to create new
+                                this.innerHTML = "";
+                                this.appendChild(tab);
+                                this.appendChild(content);
+                                find(this, ">.common-panel-header-box>.common-panel-header>.common-panel-title").appendChild(titleElement);
+
+                                containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
+
+
+                                if (this.hasAttribute("expansion-state") || containerPanelSetElement) {
+                                    tab.firstElementChild.setAttribute("aria-controls", content.id);
+                                    if (containerPanelSetElement) {
+                                        containerPanelSetElement._registerChildPanel(this);
+                                    } else {
+                                        // we are making the whole thing clickable/adding a span to the title so that we can ::before and ::after
+                                        tab.addEventListener("click", function () {
+                                            tab.expansionState = "opened";
+                                        }, false);
+                                        this.addEventListener("keydown", function(evt) {
+                                            if (evt.keyCode === 32) {
+                                                tab.expansionState = "closed";
+                                            }
+                                        }, false);
+                                    }
+                                }
+
+
+                                if (!containerPanelSetElement) {
+                                    tab.addEventListener("click", function(evt) {
+                                        if (evt.target.matches(".common-panel-remove") ||
+                                            (evt.target.parentElement && evt.target.parentElement.matches(".common-panel-remove"))) {
+                                            self.parentElement.removeChild(self);
+                                        } else if (self.hasAttribute("expansion-state")){
+                                            self.toggleExpansionState();
                                         }
                                     }, false);
                                 }
-                            }
 
-
-                            if (!containerPanelSetElement) {
-                                tab.addEventListener("click", function(evt) {
-                                    if (evt.target.matches(".common-panel-remove") ||
-                                        (evt.target.parentElement && evt.target.parentElement.matches(".common-panel-remove"))) {
-                                        self.parentElement.removeChild(self);
-                                    } else if (self.hasAttribute("expansion-state")){
-                                        self.toggleExpansionState();
-                                    }
-                                }, false);
+                                // Useful for things like angular.js which will create a template and attempt to re-stamp this
+                                // if we're not careful
+                                this.setAttribute("data-upgrade-state", "resolved") ;
                             }
                         }
                     }

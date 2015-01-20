@@ -93,19 +93,17 @@ common-panel .common-panel-remove:hover {
   opacity: 0.9;
   filter: alpha(opacity=90);
 }
-common-panel[expansion-state]:not([expansion-state="opened"]) > *:not(.common-panel-header) {
+common-panel[expansion-state]:not([expansion-state="opened"]) > *:not(.common-panel-header-box) {
   display: none;
 }
-common-panel[expansion-state] > .common-panel-header > span::after {
+common-panel[expansion-state] > .common-panel-header-box > .common-panel-header > span::after {
   float: right;
-  content: "\f054";
-  font-family: FontAwesome;
+  content: "\25BC";
   font-size: 14px;
 }
-common-panel[expansion-state="opened"] > .common-panel-header > span::after {
+common-panel[expansion-state="opened"] > .common-panel-header-box > .common-panel-header > span::after {
   float: right;
-  content: "\f078";
-  font-family: FontAwesome;
+  content: "\25B2";
   font-size: 14px;
 }
 common-panel.borderless {
@@ -131,7 +129,7 @@ common-panel.borderless .common-panel-header {
   border-radius: 0;
   border-bottom: 1px solid #bbbbbb;
 }
-common-panel[expansion-state="closed"] > .common-panel-header {
+common-panel[expansion-state="closed"] > .common-panel-header-box > .common-panel-header {
   border-bottom: 0;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -139,10 +137,10 @@ common-panel[expansion-state="closed"] > .common-panel-header {
   -o-border-radius: 0;
   border-radius: 0;
 }
-common-panel.minus-plus-panel[expansion-state] > .common-panel-header > span::after {
+common-panel.minus-plus-panel[expansion-state] > .common-panel-header-box > .common-panel-header > span::after {
   content: "\f067";
 }
-common-panel.minus-plus-panel[expansion-state="opened"] > .common-panel-header > span::after {
+common-panel.minus-plus-panel[expansion-state="opened"] > .common-panel-header-box > .common-panel-header > span::after {
   content: "\f068";
 }
 common-panel[expansion-state="closed"] .common-panel-header {
@@ -235,7 +233,7 @@ common-panel[expansion-state="opened"] .common-panel-header {
 common-panel-set[preferred-display="tabset"] > common-panel {
   border-top: 0;
 }
-common-panel-set[preferred-display="tabset"] > common-panel > .common-panel-header {
+common-panel-set[preferred-display="tabset"] > common-panel > .common-panel-header-box > .common-panel-header {
   display: none;
 }
 common-panel-set[preferred-display="tabset"] > common-panel:not([expansion-state="opened"]) {
@@ -265,8 +263,8 @@ common-panel-set[preferred-display="accordion"] .common-panel-header span::befor
   display: inline-block;
   font-style: normal;
   font-weight: normal;
-  content: "\f078";
-  font-family: FontAwesome;
+  /*content: "\f078";
+  font-family: FontAwesome;*/
   line-height: 1;
   font-size: 14px;
   width: 12px;
@@ -304,7 +302,7 @@ common-panel-set[preferred-display="carousel"] > common-panel .common-panel-head
   border-bottom: 0;
   color: #000000;
 }
-common-panel-set[preferred-display="carousel"] > common-panel .common-panel-header span::after {
+common-panel-set[preferred-display="carousel"] > common-panel > .common-panel-header-box > .common-panel-header span::after {
   display: none;
 }
 common-panel-set[preferred-display="carousel"] > .common-panel-tabs {
@@ -317,7 +315,7 @@ common-panel-set[preferred-display="carousel"] > .common-panel-tabs {
   border: 0;
   background-color: transparent;
 }
-common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header {
+common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header-box > .common-panel-header {
   background-color: #ccc;
   border: 2px solid #aaa;
   height: 6px;
@@ -345,7 +343,7 @@ common-panel-set[preferred-display="carousel"] > common-panel:not([expansion-sta
 common-panel-set[preferred-display="carousel"] > .common-panel-tabs > * {
   display: inline;
 }
-common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header > span {
+common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-panel-header-box > .common-panel-header > span {
   display: none;
 }
 common-panel-set[preferred-display="carousel"] > .common-panel-tabs .common-panel-remove {
