@@ -96,6 +96,8 @@
                                     this.common_panels[i] = item.parentElement.parentElement;
                                 }, this);
 
+                                panelElement.setAttribute("role", "presentation");
+                                headerElement.setAttribute("role", "presentation");
                                 contentElement.setAttribute("role", "tabpanel");
                                 headerElement.firstElementChild.setAttribute("role", "tab");
                                 tabElement.setAttribute("role", "tab");
