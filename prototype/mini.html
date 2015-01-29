@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Custom Elements and Opera Mini</title>
+    <!-- Webreflection polyfill of custom elements API -->
+    <script src="custom-elements.js"></script>
+    <script>
+    document.registerElement("mini-test", {
+        "prototype": Object.create(HTMLElement.prototype, {
+            createdCallback: {
+                value: function() {
+                    this.innerHTML = "IT WORKED!";
+                }
+            }
+        })
+    });
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        This is a simple test of a custom element to see if it works in Opera mini and, if not, figure out why...
+        The box below will say either "IT WORKED!" or "IT DIDN'T WORK :( Why?!".
+        <mini-test style="margin: 2em; border: 3px solid; padding: 1em; display: block">
+            IT DIDN'T WORK :( Why?!
+        </mini-test>
+
+      </p>
+    </section>
+
+  </body>
+</html>
