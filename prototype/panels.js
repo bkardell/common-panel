@@ -27,6 +27,26 @@
         "common-panel-set", {
             prototype: Object.create(
                 HTMLElement.prototype, {
+                    insertBefore: {
+                        value: function (o, n) {
+                            HTMLElement.prototype.insertBefore.call(this, o, n);
+                        }
+                    },
+                    appendChild: {
+                        value: function (n) {
+                            HTMLElement.prototype.appendChild.call(this, n);
+                        }
+                    },
+                    removeChild: {
+                        value: function (n) {
+                            HTMLElement.prototype.removeChild.call(this, n);
+                        }
+                    },
+                    replaceChild: {
+                        value: function (o, n) {
+                            HTMLElement.prototype.replaceChild.call(this, o, n);
+                        }
+                    },
                     activePanelElement: {
                         get: function() {
                             return this.common_panels[this.selectedIndex];
@@ -60,9 +80,10 @@
                             setTimeout(function() { self.setFocusForActivePanel(true); }, FOCUS_DELAY);
                         }
                     },
+                    // mutation observers should manage registration more effectively
                     _deregisterChildPanel: {
                         value: function (panelElement) {
-                            var tabElement;
+                            var tabElement, tabsList;
                             if (panelElement === this.activePanelElement) {
                                 this.common_panels.splice(this.selectedIndex, 1);
                                 if (this.selectedIndex !== 0) {
@@ -70,9 +91,11 @@
                                 } else {
                                     this.activePanelElement = this.common_panels[0];
                                 }
-                                tabElement = find(this, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + panelElement.id + "\"]");
+                                tabElement = find(this, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + panelElement.contentElement.id + "\"]");
+                                tabsList = find(this, ">.common-panel-tabs");
                                 try {
-                                    tabElement.parentElement.removeChild(tabElement);
+                                    // TODO: Straighten out tab box / tab confusion
+                                    tabElement.parentElement.parentElement.removeChild(tabElement.parentElement);
                                     panelElement.parentElement.removeChild(panelElement);
                                 } catch (e) {
                                     console.error("Skipping %e", e);
@@ -82,8 +105,11 @@
                     },
                     _registerChildPanel: {
                         value: function (panelElement) {
-                            var headerElement, contentElement, tabElement, ownIndex, tablistElement;
-                            if (panelElement.parentElement === this) {
+                            var headerElement, contentElement, tabElement, ownIndex, tablistElement, existingTab;
+                            // prevent duplicate registration
+                            existingTab = find(this, ">.common-panel-tabs>[aria-controls=" + panelElement.contentElement.id + "]");
+
+                            if (panelElement.parentElement === this && !existingTab) {
                                 headerElement = panelElement.headerElement;
                                 contentElement = panelElement.contentElement;
                                 tabElement = headerElement.cloneNode(true);
@@ -136,6 +162,7 @@
                                     }
                                     Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
                                         if (el.tagName === "COMMON-PANEL") {
+                                            // console.info("registering common-panel %s", el.id);
                                             self._registerChildPanel(el);
                                         }
                                     });
@@ -226,6 +253,18 @@
         "common-panel", {
             prototype: Object.create(
                 HTMLElement.prototype, {
+                    cloneNode: {
+                        value: function () {
+                            var clone = HTMLElement.prototype.cloneNode.call(this, true);
+                            clone.id = nextUid();
+                            clone.contentElement.id = nextUid();
+                            clone.headerElement.firstElementChild.setAttribute("aria-controls", clone.contentElement.id);
+                            if (this.parentElement) {
+                                this.parentElement._registerChildPanel(clone);
+                            }
+                            return clone;
+                        }
+                    },
                     /* Todo, this isn't exactly the header element anymore, needs clarity */
                     headerElement: {
                         get: function () {
@@ -259,6 +298,10 @@
                             // he should echo this to his parent/tab... shortcut the re-lookup of contentElement.id
                             if (this.parentElement.tagName === "COMMON-PANEL-SET") {
                                 tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
+                                if (!tabProxyElement) {
+                                    this.parentElement._registerChildPanel(this);
+                                    tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
+                                }
                                 manageBooleanAttr(tabProxyElement, "aria-selected", isOpen);
                                 tabProxyElement.setAttribute("tabindex", (isOpen) ? "0" : "-1");
                             }
@@ -341,6 +384,12 @@
                                             self.toggleExpansionState();
                                         }
                                     }, false);
+                                }
+
+                                if (window.MediaQueryMappings && window.MediaQueryMappings.recalc) {
+                                    setTimeout(function () {
+                                        window.MediaQueryMappings.recalc();
+                                    }, 10);
                                 }
 
                                 // Useful for things like angular.js which will create a template and attempt to re-stamp this

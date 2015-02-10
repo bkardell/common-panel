@@ -1,12 +1,24 @@
-/* global window,document,console  */
+/* global window,document,console */
 (function() {
     window.MediaQueryMappings = {
+        cache: [],
         queue: [],
+        recalc: function () {
+            var mediaList;
+            MediaQueryMappings.cache.forEach(function (o) {
+                MediaQueryMappings.queue.push(o);
+                mediaList = window.matchMedia(o.mediaQuery);
+                //console.log("matched %s for preferredDisplayMode %s", o.mediaQuery, o.preferredDisplayMode);
+                o.mode = (mediaList.matches) ? "add" : "remove";
+                throttleManageClass(o.selector, o.preferredDisplayMode, o.mode);
+            });
+        },
         add: function(o) {
             var listener = function(evt) {
-                console.log("matched %s for preferredDisplayMode %s", o.mediaQuery, o.preferredDisplayMode);
+                //console.log("matched %s for preferredDisplayMode %s", o.mediaQuery, o.preferredDisplayMode);
                 o.mode = (evt.matches) ? "add" : "remove";
                 MediaQueryMappings.queue.push(o);
+                MediaQueryMappings.cache.push(o);
                 throttleManageClass(o.selector, o.preferredDisplayMode, o.mode);
             };
             var mediaList = window.matchMedia(o.mediaQuery);
@@ -79,7 +91,7 @@
             s = sv;
         this.context = {};
         this.hasMore = function() {
-            console.log("%d in %d", currentIndex, (s.length - 1));
+            //console.log("%d in %d", currentIndex, (s.length - 1));
             return currentIndex < s.length - 1;
         };
         this.skipUntil = function(sub, consume) {
@@ -150,7 +162,7 @@
         /* This is a problem... we have to wait for DCL if necessary and then search... upgrading should allow a check.. */
         //window.addEventListener("DOMContentLoaded", function () {
         rules.forEach(function(rule) {
-            console.info(rule);
+            //console.info(rule);
             MediaQueryMappings.add(rule);
         });
     }, false);
