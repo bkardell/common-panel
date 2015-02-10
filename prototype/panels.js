@@ -248,7 +248,7 @@
                     },
                     expansionState: {
                         set: function (state) {
-                            var tabProxyElement;
+                            var evt, tabProxyElement;
                             var contentElement = this.contentElement;
                             var isOpen = "opened" === state;
                             this.setAttribute("expansion-state",  state);
@@ -261,6 +261,11 @@
                                 tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
                                 manageBooleanAttr(tabProxyElement, "aria-selected", isOpen);
                                 tabProxyElement.setAttribute("tabindex", (isOpen) ? "0" : "-1");
+                            }
+                            if (isOpen) {
+                                evt = document.createEvent("CustomEvent");
+                                evt.initCustomEvent("_activate", true, true, null);
+                                this.dispatchEvent(evt);
                             }
                         }
                     },
