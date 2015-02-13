@@ -1,169 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Panels and Panel Sets Extension</title>
     <meta charset='utf-8'>
-    <script src='http://www.w3.org/Tools/respec/respec-w3c-common'
-            async class='remove'></script>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' async class='remove'></script>
     <style>
-        .todo { color: red; font-weight: bold; }
+        .todo {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 
     <script class='remove'>
-      var respecConfig = {
-          specStatus: "unofficial",
-          shortName:  "panels-and-panelsets",
-          editors: [
-                {   name:       "Brian Kardell",
-                    url:        "https://twitter.com/briankardell",
-                    company:    "Apollo Education Group",
-                    companyURL: "http://www.apollo.edu/"
-                },
-                {   name:       "Steve Faulkner",
-                    url:        "https://twitter.com/stevefaulkner",
-                    company:    "The Paciello Group",
-                    companyURL: "http://www.paciellogroup.com/"
-                },
-                {   name:       "Léonie Watson",
-                    url:        "https://twitter.com/LeonieWatson",
-                    company:    "The Paciello Group",
-                    companyURL: "http://www.paciellogroup.com/"
-                }
-          ]
-      };
+        var respecConfig = {
+            specStatus: "unofficial",
+            shortName: "panels-and-panelsets",
+            editors: [{
+                name: "Brian Kardell",
+                url: "https://twitter.com/briankardell",
+                company: "Apollo Education Group",
+                companyURL: "http://www.apollo.edu/"
+            }, {
+                name: "Steve Faulkner",
+                url: "https://twitter.com/stevefaulkner",
+                company: "The Paciello Group",
+                companyURL: "http://www.paciellogroup.com/"
+            }, {
+                name: "Léonie Watson",
+                url: "https://twitter.com/LeonieWatson",
+                company: "The Paciello Group",
+                companyURL: "http://www.paciellogroup.com/"
+            }]
+        };
     </script>
-  </head>
-  <body>
+</head>
+
+<body>
     <section id='abstract'>
-      <p>
-        This document describes a universal markup attempting to pave the cowpath
-        we observe for a construct called a <code>&lt;common-panel&gt;</code>
-        which contains what appear to be common attributes, and a single selection interaction paradigm for a collection of them called a
-        <code>&lt;common-panel-set&gt;</code>.  Defining these will allow editors to create a reusable
-        set of declarative code which remains semantic, widely stylable
-        in visual terms while retaining a conceptual and physical separation that retains
-        the important accessibility benefits for all of them.
-      </p>
+        <p>
+            This document describes a universal markup attempting to pave the cowpath we observe for a construct called a <code>&lt;common-panel&gt;</code> which contains what appear to be common attributes, and a single selection interaction paradigm for a collection of them called a
+            <code>&lt;common-panel-set&gt;</code>. Defining these will allow editors to create a reusable set of declarative code which remains semantic, widely stylable in visual terms while retaining a conceptual and physical separation that retains the important accessibility benefits for all of them.
+        </p>
     </section>
 
     <section id='sotd'>
     </section>
 
     <section>
-      <h2>Introduction</h2>
-      <p>
-        When editing a document, an author attempts to mark it up semantically and control
-        a separation of visual aspects through CSS.  This allows user-agents and tools to use the same semantic data to provide any number of affordances for accessibility, navigation, styling and interaction. Over time, user interface designers
-        have created a number of common metaphors for visually managing and providing
-        single selection/focus navigation through a collection of titled 'blocks', which
-        are, themselves more complex and meaningful than it might seem at first glance.
-      </p>
+        <h2>Introduction</h2>
+        <p>
+            When editing a document, an author attempts to mark it up semantically and control a separation of visual aspects through CSS. This allows user-agents and tools to use the same semantic data to provide any number of affordances for accessibility, navigation, styling and interaction. Over time, user interface designers have created a number of common metaphors for visually managing and providing single selection/focus navigation through a collection of titled 'blocks', which are, themselves more complex and meaningful than it might seem at first glance.
+        </p>
 
-      <p>
-        Currently we have a number of useful building block elements like
-        <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in
-        their own right, but still beneath the level of describing many common constructs.
-        It is useful then to attempt to extract more complex, higher-level constructs as
-        we see them emerge.  Doing so, expands an author's ability to easily describe common things, and the  ability of user-agents, tools and search engines to make
-        sense of them.
-      </p>
+        <p>
+            Currently we have a number of useful building block elements like
+            <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in their own right, but still beneath the level of describing many common constructs. It is useful then to attempt to extract more complex, higher-level constructs as we see them emerge. Doing so, expands an author's ability to easily describe common things, and the ability of user-agents, tools and search engines to make sense of them.
+        </p>
 
-      <p>The concept of a <em>panel</em> exists in traditional print media and has carried
-        over into Web design.  Over time, UI/UX designers have created a number of common
-        visual metaphors for managing interaction with a collection of panels: Accordions,
-        tabs, decks and carousels are just a few.</p>
+        <p>The concept of a <em>panel</em> exists in traditional print media and has carried over into Web design. Over time, UI/UX designers have created a number of common visual metaphors for managing interaction with a collection of panels: Accordions, tabs, decks and carousels are just a few.</p>
 
-      <p>Because the art of creating a good user interface is something we are all still
-        collectively trying to figure out, the history and development of these metaphors
-        have generally taken the approach of independently naming these and solving each
-        problem independently:  In the realm of custom elements, this means that you would
-        have independent tags for each.  However, this obscures the underlying fact that
-        in virtually every way they are <em>conceptually</em> identical.
-        The WAI-ARIA Best Practices document, in fact,
-        defines accordions as a kind of <code>tablist</code> and in terms of keyboard
-        navigation says that UAs should treat up/down and left/right navigation for tabs and
-        accordions as interchangeable.</p>
+        <p>Because the art of creating a good user interface is something we are all still collectively trying to figure out, the history and development of these metaphors have generally taken the approach of independently naming these and solving each problem independently: In the realm of custom elements, this means that you would have independent tags for each. However, this obscures the underlying fact that in virtually every way they are <em>conceptually</em> identical. The WAI-ARIA Best Practices document, in fact, defines accordions as a kind of <code>tablist</code> and in terms of keyboard navigation says that UAs should treat up/down and left/right navigation for tabs and accordions as interchangeable.</p>
 
-      <p>
-        With the advent of ever more variant screen sizes, interaction methods,
-        responsive design we now have designs which switch their visual representation of
-        these metaphors based on the current size of the screen, rather than
-        being constant. For example, on a wide screen, a tabbed interface may seem like a
-        natural choice, whereas the same interface is more natural as an accordion, or a
-        deck on a small one.  This further underscores their 'sameness'.
-      </p>
+        <p>
+            With the advent of ever more variant screen sizes, interaction methods, responsive design we now have designs which switch their visual representation of these metaphors based on the current size of the screen, rather than being constant. For example, on a wide screen, a tabbed interface may seem like a natural choice, whereas the same interface is more natural as an accordion, or a deck on a small one. This further underscores their 'sameness'.
+        </p>
 
-      <p>These observations highlight the fact that their differences are primarily
-        visual, not semantic:  How could a tabset suddenly <em>become</em> a wholly
-        different thing based on screen resizing?  What difference does it make to
-        the user of a screen reader that it is one or the other if their interaction
-        model is unchanged?  And, if the difference is visual, shouldn't control of
-        this be in the domain of CSS, rather than markup?</p>
+        <p>These observations highlight the fact that their differences are primarily visual, not semantic: How could a tabset suddenly <em>become</em> a wholly different thing based on screen resizing? What difference does it make to the user of a screen reader that it is one or the other if their interaction model is unchanged? And, if the difference is visual, shouldn't control of this be in the domain of CSS, rather than markup?</p>
 
-    <p>This proposal attempts to solve the issues described in this introduction
-        by defining these common elements and providing a separation of concerns
-        which we believe strikes the right balances.</p>
-		</section>
+        <p>This proposal attempts to solve the issues described in this introduction by defining these common elements and providing a separation of concerns which we believe strikes the right balances.</p>
+    </section>
 
+
+    <section>
+        <h2>Conformance</h2>
+        <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!qaframe-spec]]. The key words "must", "should", "should not" and "may" in this specification are to be interpreted as described in [[!RFC2119]].</p>
 
         <section>
-            <h2>Conformance</h2>
-            <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!qaframe-spec]].
+            <h3>Dependencies and Definitions</h3>
+            <p>The Interface Definition Language (IDL) fragments in this specification must be interpreted as required for conforming IDL fragments, as described in the Web IDL specification. [[!WEBIDL]]</p>
 
-The key words "must", "should", "should not" and "may" in this specification are to be interpreted as described in [[!RFC2119]].</p>
+            <p>This document uses the terms accessible and accessibility in the sense of ensuring people with disabilities can use the Web. Further information is available, e.g. Introduction to Web Accessibility.</p>
+        </section>
+    </section>
 
-            <section>
-                <h3>Dependencies and Definitions</h3>
-                <p>The Interface Definition Language (IDL) fragments in this specification must be interpreted as required for conforming IDL fragments, as described in the Web IDL specification. [[!WEBIDL]]</p>
-
-                <p>This document uses the terms accessible and accessibility in the sense of ensuring people with disabilities can use the Web. Further information is available, e.g. Introduction to Web Accessibility.</p>
-            </section>
+    <section>
+        <h2>Use cases and Requirements</h2>
+        <p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
+        <section>
+            <h3>Use Cases for Panels and Panel Sets</h3>
+            <dl>
+                <dt>Providing a simple panel</dt>
+                <dd>TBC</dd>
+                <dt>Providing a removable panel</dt>
+                <dd>An author wants to provide content of secondary or ancillary importance, that a user can dismiss from the UI. For example a message of the day.</dd>
+                <dt>Providing an expandable panel</dt>
+                <dd>An author wants to make efficient use of screen real-estate, that a user can choose to show/hide. For example the erms and conditions of an agreement.</dd>
+                <dt>Providing a collection of panels</dt>
+                <dd>An author wants to provide a set of multiple panels, that a user can cycle through to display different content. For example a set of tabs (with either horizontal or vertical orientation) that presents information about different types of apple on a grocery website.</dd>
+            </dl>
         </section>
 
-		<section>
-		<h2>Use cases and Requirements</h2>
-<p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
-<section>
-<h3>Use Cases for Panels and Panel Sets</h3>
-<dl>
-<dt>Providing a simple panel</dt>
-<dd>TBC</dd>
-<dt>Providing a removable panel</dt>
-<dd>An author wants to provide content of secondary or ancillary importance, that a user can dismiss from the UI. For example a message of the day.</dd>
-<dt>Providing an expandable panel</dt>
-<dd>An author wants to make efficient use of screen real-estate, that a user can choose to show/hide. For example the erms and conditions of an agreement.</dd>
-<dt>Providing a collection of panels</dt>
-<dd>An author wants to provide a set of multiple panels, that a user can cycle through to display different content. For example a set of tabs (with either horizontal or vertical orientation) that presents information about different types of apple on a grocery website.</dd>
-</dl>
-</section>
-
-<section>
-<h3>Requirements for Panels and Panel Sets</h3>
-<dl>
-<dt>Consistent</dt>
-<dd>It must be possible to interact with a panel or set of panels in a consistent way, using different modes of interaction including keyboard, mouse, voice and touch.</dd>
-<dt>Identifiable</dt>
-<dd>It must be possible for a user agent to identify the components of a panel, and the component panels within a set.</dd>
-<dt>Stylable</dt>
-<dd>It must be possible to style a panel or set of panels to provide different visual affordances.</dd>
-</dl>
-</section>
-</section>
+        <section>
+            <h3>Requirements for Panels and Panel Sets</h3>
+            <dl>
+                <dt>Consistent</dt>
+                <dd>It must be possible to interact with a panel or set of panels in a consistent way, using different modes of interaction including keyboard, mouse, voice and touch.</dd>
+                <dt>Identifiable</dt>
+                <dd>It must be possible for a user agent to identify the components of a panel, and the component panels within a set.</dd>
+                <dt>Stylable</dt>
+                <dd>It must be possible to style a panel or set of panels to provide different visual affordances.</dd>
+            </dl>
+        </section>
+    </section>
 
     <section>
         <h2>The panel element</h2>
 
- 	  <p>
-	    The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
-      </p>
-	  <p>
-		 A panel represents a particular composed tree of DOM elements and pseudo elements around a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in user agents and assistive technologies and provides optional functionality for managing operations like expansion/collapse or removal from the user interface entirely.
-      </p>
-      <img src="dom-panel-explained.png" alt="An illustration of composed tree of DOM elements and pseudo elements for a panel, details of which are explained in prose below">
-      <p>
-        On it's own, a panel may be used anywhere sectioning content is used, it is granted an <code>aria-role="group"</code>.  Elements and pseudo elements of the composite tree of a panel are.
-         <ul>
-             <li>
+        <p>
+            The concept of a content panel is clearly established in both online and offline paradigms. It recurs in print and digital media, in documents and applications.
+        </p>
+        <p>
+            A panel represents a particular composed tree of DOM elements and pseudo elements around a chunk of content that can be displayed in a common fashion within a UI, and which behaves consistently in user agents and assistive technologies and provides optional functionality for managing operations like expansion/collapse or removal from the user interface entirely.
+        </p>
+        <img src="dom-panel-explained.png" alt="An illustration of composed tree of DOM elements and pseudo elements for a panel, details of which are explained in prose below">
+        <p>
+            On it's own, a panel may be used anywhere sectioning content is used, it is granted an <code>aria-role="group"</code>. Elements and pseudo elements of the composite tree of a panel are.
+        </p>
+        <ul>
+            <li>
                 <dl>
                     <dt>::--common-panel-header-box</dt>
                     <dd>Useful mainly for styling, this pseduo-element contains all of the visual elements of a conceptual 'header'.</dd>
@@ -172,16 +137,13 @@ The key words "must", "should", "should not" and "may" in this specification are
                     <li>
                         <dl>
                             <dt>::--common-panel-header</dt>
-                            <dd>When panel is used as standard sectioning content, this has default styles and provides hooks.  When panel is used as
-                            a child of a &lt;common-panel-set&gt; this is granted special affordances (see that section for details).</dd>
+                            <dd>When panel is used as standard sectioning content, this has default styles and provides hooks. When panel is used as a child of a &lt;common-panel-set&gt; this is granted special affordances (see that section for details).</dd>
                         </dl>
                         <ul>
                             <li>
                                 <dl>
                                     <dt>::--common-panel-icon</dt>
-                                    <dd>Optional visual styling hook for icon.  Empty/blank/dimensionless by default, it can be used to provide
-                                    icons via background for cases having a relationship like browser tabs show the .ico.  Stylesheet authors can
-                                    also use the ::before pseudo-element of this to provide a left-oriented expansion state indicator (see also ::-common-panel-hook)
+                                    <dd>Optional visual styling hook for icon. Empty/blank/dimensionless by default, it can be used to provide icons via background for cases having a relationship like browser tabs show the .ico. Stylesheet authors can also use the ::before pseudo-element of this to provide a left-oriented expansion state indicator (see also ::-common-panel-hook)
                                     </dd>
                                 </dl>
                             </li>
@@ -194,8 +156,7 @@ The key words "must", "should", "should not" and "may" in this specification are
                             <li>
                                 <dl>
                                     <dt>::--common-panel-hook</dt>
-                                    <dd>Like the ::-common-panel-icon, this is by default empty/blank/dimensionless, it can be used by stylesheet authors
-                                    via the ::after element to provide right-oriented expansion state indicator.</dd>
+                                    <dd>Like the ::-common-panel-icon, this is by default empty/blank/dimensionless, it can be used by stylesheet authors via the ::after element to provide right-oriented expansion state indicator.</dd>
                                 </dl>
                             </li>
                         </ul>
@@ -203,21 +164,20 @@ The key words "must", "should", "should not" and "may" in this specification are
                     <li>
                         <dl>
                             <dt>::--common-panel-destroy</dt>
-                            <dd>The a button that removes this panel from the tree completely and dismisses it.  If the panel sets the is-removable attribute
-                            this will be shown and events wired to handle that behavior, if not, it will be hidden (including aria-hidden).  This element, when
-                            present is focusable and announces its purpose.
+                            <dd>The a button that removes this panel from the tree completely and dismisses it. If the panel sets the is-removable attribute this will be shown and events wired to handle that behavior, if not, it will be hidden (including aria-hidden). This element, when present is focusable and announces its purpose.
                             </dd>
-                        </li>
+                        </dl>
+                    </li>
                 </ul>
-             </li>
-             <li>
+            </li>
+            <li>
                 <dl>
                     <dt>::--common-panel-content</dt>
                     <dd>Author provided detail comment which lives inside this panel.</dd>
                 </dl>
             </li>
-         </ul>
-      </p>
+        </ul>
+
 
         <section>
             <h3>Basic Panel</h3>
@@ -241,27 +201,27 @@ The key words "must", "should", "should not" and "may" in this specification are
 
         <section>
             <h3>Removable Panels</h3>
-		<p>
-		A removable panel has the <code>is-removable</code> attribute assigned to it. When the <code>is-removable</code> attribute is present, a mechanism to let the user dismiss the panel is provided. When the panel is dismissed by the user it is removed from the DOM.
-		</p>
-        <img src="dismissable-panel.png" alt="a visual depiction of a dismissable panel with a 'remove' button">
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel is-removable&gt;<br>
+            <p>
+                A removable panel has the <code>is-removable</code> attribute assigned to it. When the <code>is-removable</code> attribute is present, a mechanism to let the user dismiss the panel is provided. When the panel is dismissed by the user it is removed from the DOM.
+            </p>
+            <img src="dismissable-panel.png" alt="a visual depiction of a dismissable panel with a 'remove' button">
+            <pre class="example highlight prettyprint prettyprinted">&lt;common-panel is-removable&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Reminder&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Today is the first day of the rest of your life.&lt;/p&gt;<br />
 &lt;/common-panel&gt;
         </pre>
-        <p class="note">
-		The <code>is-removable</code> attribute is a standard platform <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attribute">Boolean attribute</a>. The presence of <code>is-removable</code> represents the true state (the panel can be removed), and the absence of the attribute represents the false value (the panel cannot be removed).
-		</p>
+            <p class="note">
+                The <code>is-removable</code> attribute is a standard platform <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attribute">Boolean attribute</a>. The presence of <code>is-removable</code> represents the true state (the panel can be removed), and the absence of the attribute represents the false value (the panel cannot be removed).
+            </p>
         </section>
 
         <section>
-        <h3>Expandable/Collapsible Panels</h3>
-        <p>
-		an expandable/collapsible panel has the <code>expanded-state</code> attribute assigned to it. When the <code>expanded-state</code> attribute is present, the panel title becomes a control that allows the panel to be expanded/collapsed.</p>
-        <p>If the <code>expanded-state</code> attribute is present but has no value, the starting state of the panel is collapsed. The <code>expanded-state</code> attribute may be set explicitly to <code>"open"</code>.</p>
-        <img src="collapsable-panel.png" alt="a visual depiction of a collapsible panel with visual indication that it can be expanded and collapsed.">
-        <pre class="example highlight prettyprint prettyprinted">&lt;common-panel expanded-state&gt;<br />
+            <h3>Expandable/Collapsible Panels</h3>
+            <p>
+                an expandable/collapsible panel has the <code>expanded-state</code> attribute assigned to it. When the <code>expanded-state</code> attribute is present, the panel title becomes a control that allows the panel to be expanded/collapsed.</p>
+            <p>If the <code>expanded-state</code> attribute is present but has no value, the starting state of the panel is collapsed. The <code>expanded-state</code> attribute may be set explicitly to <code>"open"</code>.</p>
+            <img src="collapsable-panel.png" alt="a visual depiction of a collapsible panel with visual indication that it can be expanded and collapsed.">
+            <pre class="example highlight prettyprint prettyprinted">&lt;common-panel expanded-state&gt;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel-title&gt;Today's News&lt;/common-panel-title&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Something &lt;a href="amazing.html"&gt;amazing&lt;/a&gt;happened on the Internet today...&lt;/p&gt;<br>
 &lt;/common-panel&gt;<br>
@@ -280,14 +240,11 @@ The key words "must", "should", "should not" and "may" in this specification are
                 </dd>
                 <dt>attribute HTMLElement tabProxyElement</dt>
                 <dd>
-                    Provides access to the tab proxy element associated with this panel if it exists
-                    (if the panel is part of a panel set) or null
+                    Provides access to the tab proxy element associated with this panel if it exists (if the panel is part of a panel set) or null
                 </dd>
                 <dt>attribute DOMString expansionState</dt>
                 <dd>
-                    Sets the panel's expansion state to "opened" or "closed" and manages associated
-                    accessibility attributes on relevant elements.
-                    // TODO: Should this be const instead of DOMString?
+                    Sets the panel's expansion state to "opened" or "closed" and manages associated accessibility attributes on relevant elements. // TODO: Should this be const instead of DOMString?
                 </dd>
                 <dt>void toggleEpansionState()</dt>
                 <dd>
@@ -298,38 +255,31 @@ The key words "must", "should", "should not" and "may" in this specification are
 
         <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
 
-<hr>
-</section>
+        <hr>
+    </section>
 
     <section>
         <h2>The panelset element</h2>
 
-        <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element,
-        the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time,
-        effectively managing their <code>expansion-state</code> as panels and their Shadow DOM descendant's corresponding WAI-ARIA <code>aria-collapse</code>.  In otherwords, <code>&lt;common-panel&gt;</code> element
-        children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable.
-        By default, the first <code>&lt;common-panel-set&gt</code> is considered expanded (not collapsed).
-        Because the parser processes elements in document order, any subsequent claims of
-        expansion trump the first by removing the attribute from siblings and setting their <code>collapse-state="closed"</code>.  Through this means, any number of styles are achievable:
+        <p>When placed as a child of a <code>&lt;common-panel-set&gt;</code> element, the panel set will manage the selection/activation of a single <code>&lt;common-panel&gt;</code> at a time, effectively managing their <code>expansion-state</code> as panels and their Shadow DOM descendant's corresponding WAI-ARIA <code>aria-collapse</code>. In otherwords, <code>&lt;common-panel&gt;</code> element children of a <code>&lt;common-panel-set&gt;</code> are automatically collapsable. By default, the first <code>&lt;common-panel-set&gt;</code> is considered expanded (not collapsed). Because the parser processes elements in document order, any subsequent claims of expansion trump the first by removing the attribute from siblings and setting their <code>collapse-state="closed"</code>. Through this means, any number of styles are achievable:
         </p>
         <p>
             Some examples of visual views on a single select <code>&lt;common-panel-sets&gt;</code> are
-            <ul>
-                <li>tabset/tabmenu</li>
-                <li>accordion</li>
-                <li>carousel</li>
-                <li>deck</li>
-                <li>coverflow</li>
-            </ul>
+        </p>
+        <ul>
+            <li>tabset/tabmenu</li>
+            <li>accordion</li>
+            <li>carousel</li>
+            <li>deck</li>
+            <li>coverflow</li>
+        </ul>
+
+
+        <p class="issue">
+            If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can correctly manage which type of display the element takes on in which conditions. This is currently "up in the air" with one (not especially good, but currently prollyfilled) answer <a href="preferrential-display.html">here</a>.
         </p>
 
-    <p class="issue">
-        If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can
-        correctly manage which type of display the element takes on in which conditions.  This is currently "up in the air"
-        with one (not especially good, but currently prollyfilled) answer <a href="preferrential-display.html">here</a>.
-    </p>
-
-    <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
+        <em class="note">Define what aria/interactions a lone panel should have, if any.</em>
 
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set id="foo"&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
@@ -343,8 +293,7 @@ The key words "must", "should", "should not" and "may" in this specification are
 &lt;/common-panel-set&gt;
         </pre>
 
-        <p>The <code>&lt;common-panel-set&gt</code> exposes a DOM method like the <code>&lt;select&gt</code> element,
-        exposing <code>.basic_panels</code> collection, a <code>basic_selectedIndex</code> property, and a <code>basic_selectedPanel</code> property.</p>
+        <p>The <code>&lt;common-panel-set&gt;</code> exposes a DOM method like the <code>&lt;select&gt;</code> element, exposing <code>.basic_panels</code> collection, a <code>basic_selectedIndex</code> property, and a <code>basic_selectedPanel</code> property.</p>
 
 
         <pre class="example highlight prettyprint prettyprinted">&lt;common-panel-set&gt;<br>
@@ -364,31 +313,32 @@ The key words "must", "should", "should not" and "may" in this specification are
 &nbsp;&nbsp;&nbsp;&nbsp;console.log(panelSet.selectedPanel); // the selected basic panel element<br>
 &lt;script&gt;</pre>
 
-<section>
-<h3>Panel set pseudo-elements</h3>
+        <section>
+            <h3>Panel set pseudo-elements</h3>
 
-<p>Content TBC.</p>
-</section>
+            <p>Content TBC.</p>
+        </section>
 
-<section>
-    <h3>Panel set DOM</h3>
-    <dl title='[Constructor] interface HTMLPanelSetElement : HTMLElement' class='idl'>
-        <dt>attribute HTMLPanelElement activePanelElement</dt>
-        <dd>
-            Get or set an element as active (currently selected) panel element in this panel set
-        </dd>
-        <dt>void selectNextTab()</dt>
-        <dd>
-            Selects/activates the next panel in this panel set in document order if any remain
-        </dd>
-        <dt>void selectPreviousTab()</dt>
-        <dd>
-            Selects/activates the previous panel in this panel set in document order if any previous exist
-        </dd>
-    </dl>
+        <section>
+            <h3>Panel set DOM</h3>
+            <dl title='[Constructor] interface HTMLPanelSetElement : HTMLElement' class='idl'>
+                <dt>attribute HTMLPanelElement activePanelElement</dt>
+                <dd>
+                    Get or set an element as active (currently selected) panel element in this panel set
+                </dd>
+                <dt>void selectNextTab()</dt>
+                <dd>
+                    Selects/activates the next panel in this panel set in document order if any remain
+                </dd>
+                <dt>void selectPreviousTab()</dt>
+                <dd>
+                    Selects/activates the previous panel in this panel set in document order if any previous exist
+                </dd>
+            </dl>
 
-<p>Content TBC.</p>
-</section>
-</section>
-  </body>
+            <p>Content TBC.</p>
+        </section>
+    </section>
+</body>
+
 </html>
