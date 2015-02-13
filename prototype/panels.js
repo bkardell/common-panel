@@ -157,8 +157,10 @@
                                             headerElement = activePanelElement.headerElement;
                                             tabProxyElement = activePanelElement.tabProxyElement;
                                         }
-                                        lastSet = ([headerElement.firstElementChild, tabProxyElement.firstElementChild].indexOf(document.activeElement) !== -1);
-                                        setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
+                                        if (headerElement && tabProxyElement) {
+                                            lastSet = ([headerElement.firstElementChild, tabProxyElement.firstElementChild].indexOf(document.activeElement) !== -1);
+                                            setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
+                                        }
                                     }
                                     Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
                                         if (el.tagName === "COMMON-PANEL") {
@@ -168,6 +170,7 @@
                                     });
                                     Array.prototype.slice.call(mutation.removedNodes).forEach(function (el) {
                                         if (el.tagName === "COMMON-PANEL") {
+                                            // console.info("DEREGISTER %e", el);
                                             self._deregisterChildPanel(el);
                                         }
                                     });
@@ -354,7 +357,7 @@
                                 this.appendChild(content);
                                 find(this, ">.common-panel-header-box>.common-panel-header>.common-panel-title").appendChild(titleElement);
 
-                                containerPanelSetElement = (this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
+                                containerPanelSetElement = (this.parentElement && this.parentElement.tagName === "COMMON-PANEL-SET") ? this.parentElement : null;
 
 
                                 if (this.hasAttribute("expansion-state") || containerPanelSetElement) {
