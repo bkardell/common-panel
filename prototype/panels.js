@@ -54,6 +54,7 @@
                         set: function (panel) {
                             this.selectedIndex = this.common_panels.indexOf(panel);
                             // setting a panel element active has a side effect of making siblings inactive...
+                            this.selectedIndex = (this.selectedIndex !== -1) ? this.selectedIndex : 0;
                             this.common_panels.forEach(function (curPanel, i) {
                                 curPanel.expansionState = (i === this.selectedIndex) ? "opened" : "closed";
                             }, this);
