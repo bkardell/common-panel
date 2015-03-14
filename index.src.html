@@ -49,28 +49,14 @@
 
     <section>
         <h2>Introduction</h2>
-        <p>
-            When editing a document, an author attempts to mark it up semantically and control a separation of visual aspects through CSS. This allows user-agents and tools to use the same semantic data to provide any number of affordances for accessibility, navigation, styling and interaction. Over time, user interface designers have created a number of common metaphors for visually managing and providing single selection/focus navigation through a collection of titled 'blocks', which are, themselves more complex and meaningful than it might seem at first glance.
-        </p>
+        <p>The concept of a content panel originates in print media and has carried over into digital media. The transition to digital media brought about the ability to interact with collections of panels, and over time a number of visual metaphors for this interaction have emerged. Tabs, accordions, decks and carousels are all design patterns based on interactions with sets of content panels.</p>
 
-        <p>
-            Currently we have a number of useful building block elements like
-            <code>&lt;section&gt;</code> and <code>&lt;h1&gt;</code> which are high-level in their own right, but still beneath the level of describing many common constructs. It is useful then to attempt to extract more complex, higher-level constructs as we see them emerge. Doing so, expands an author's ability to easily describe common things, and the ability of user-agents, tools and search engines to make sense of them.
-        </p>
+<p>The history of interface design shows that each of these design patterns has evolved independently, despite their similarities. The WAI-ARIA Authoring Practices Guide for example, describes a set of tabs and an accordion widget in identical terms except for visual orientation.</p>
 
-        <p>The concept of a <em>panel</em> exists in traditional print media and has carried over into Web design. Over time, UI/UX designers have created a number of common visual metaphors for managing interaction with a collection of panels: Accordions, tabs, decks and carousels are just a few.</p>
+<p>With the growing number of screen sizes and the advent of responsive design, these visual metaphors may no longer be constant. A set of tabs may be the logical choice for displaying content on a wide-screen, but the same content may be more intuitively displayed as an accordion or a deck on a narrow-screen. However, the interaction model and semantic information for each of these design patterns remains the same, regardless of the visual representation.</p>
 
-        <p>Because the art of creating a good user interface is something we are all still collectively trying to figure out, the history and development of these metaphors have generally taken the approach of independently naming these and solving each problem independently: In the realm of custom elements, this means that you would have independent tags for each. However, this obscures the underlying fact that in virtually every way they are <em>conceptually</em> identical. The WAI-ARIA Best Practices document, in fact, defines accordions as a kind of <code>tablist</code> and in terms of keyboard navigation says that UAs should treat up/down and left/right navigation for tabs and accordions as interchangeable.</p>
-
-        <p>
-            With the advent of ever more variant screen sizes, interaction methods, responsive design we now have designs which switch their visual representation of these metaphors based on the current size of the screen, rather than being constant. For example, on a wide screen, a tabbed interface may seem like a natural choice, whereas the same interface is more natural as an accordion, or a deck on a small one. This further underscores their 'sameness'.
-        </p>
-
-        <p>These observations highlight the fact that their differences are primarily visual, not semantic: How could a tabset suddenly <em>become</em> a wholly different thing based on screen resizing? What difference does it make to the user of a screen reader that it is one or the other if their interaction model is unchanged? And, if the difference is visual, shouldn't control of this be in the domain of CSS, rather than markup?</p>
-
-        <p>This proposal attempts to solve the issues described in this introduction by defining these common elements and providing a separation of concerns which we believe strikes the right balances.</p>
+<p>This extension defines a set of HTML elements and attributes for representing collections of content panels with appropriate semantics and interactions. The task of adopting a particular visual metaphor is left to CSS.</p>
     </section>
-
 
     <section>
         <h2>Conformance</h2>
@@ -89,16 +75,53 @@
         <p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
         <section>
             <h3>Use Cases for Panels and Panel Sets</h3>
-            <dl>
-                <dt>Providing a simple panel</dt>
-                <dd>TBC</dd>
-                <dt>Providing a removable panel</dt>
-                <dd>An author wants to provide content of secondary or ancillary importance, that a user can dismiss from the UI. For example a message of the day.</dd>
-                <dt>Providing an expandable panel</dt>
-                <dd>An author wants to make efficient use of screen real-estate, that a user can choose to show/hide. For example the erms and conditions of an agreement.</dd>
-                <dt>Providing a collection of panels</dt>
-                <dd>An author wants to provide a set of multiple panels, that a user can cycle through to display different content. For example a set of tabs (with either horizontal or vertical orientation) that presents information about different types of apple on a grocery website.</dd>
-            </dl>
+            
+			<section>
+			<h4>Use cases for the tab set metaphor</h4>
+
+<ul>
+<li>Displaying semester timetables for the school year on a college intranet.</li>
+<li>Displaying nutritional values, ingredients, allergy warnings etc. about a food product on a grocery store website.</li>
+<li>Displaying configuration settings, statistics, performance data etc. about a software deployment pipeline on a continuous build server.</li>
+<li>Displaying descriptions, details, floor plans etc. about a house for sale on a property website.</li>
+<li>Displaying alternative representations of data (graphical and tabular) in an analytics web application.</li>
+</ul>
+</section>
+<section>
+<h4>Use cases for the accordion metaphor</h4>
+
+<ul>
+<li>Displaying bulletin board messages on an office intranet.</li>
+<li>Displaying an A to Z of glossary definitions on a medical research website.</li>
+<li>Displaying answers to frequently asked questions for newbies on a gamer’s forum.</li>
+</ul>
+</section>
+
+<section>
+<h4>Use cases for the carousel metaphor</h4>
+
+<ul>
+<li>Displaying attractive pictures of a spa resort on a vacation brochure website.</li>
+<li>Advertising key features of a prototype flying car on the company’s corporate website.</li>
+</ul>
+</section>
+
+<section>
+<h4>Use cases for the coverflow metaphor</h4>
+
+<ul>
+<li>Flipping through an album of sky dive photos on a photo sharing website.</li>
+<li>Browsing a portfolio of watercolours on an artist’s brochure website.</li>
+</ul>
+</section>
+
+<section>
+<h4>Use cases for the deck metaphor</h4>
+
+<ul>
+<li>Displaying a slide deck from a conference talk.</li>
+</ul>
+</section>
         </section>
 
         <section>
