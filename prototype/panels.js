@@ -44,7 +44,7 @@ this.Element && function(ElementPrototype) {
                 HTMLElement.prototype, {
                     insertBefore: {
                         value: function (o, n) {
-                            HTMLElement.prototype.insertBefore.call(this, o, n);
+                            HTMLElement.prototype.insertBefore.call(this, o, n || null);
                         }
                     },
                     appendChild: {
@@ -144,7 +144,7 @@ this.Element && function(ElementPrototype) {
                                 headerElement.firstElementChild.setAttribute("role", "tab");
                                 tabElement.setAttribute("role", "tab");
                                 tablistElement = find(this, ">.common-panel-tabs");
-                                tablistElement.insertBefore(tabElement, tablistElement.children[ownIndex]);
+                                tablistElement.insertBefore(tabElement, tablistElement.children[ownIndex] || null);
 
                                 // if the expansion state is explicitly open or this is the first panel we'd just set the panelElement to active
                                 if (panelElement.getAttribute("expansion-state") === "opened" || this.common_panels.length === 1) {
@@ -200,7 +200,7 @@ this.Element && function(ElementPrototype) {
                                     "attributeFilter": ["preferred-display"]
                                 });
                             }
-                            this.insertBefore(tabbarEl, this.firstChild);
+                            this.insertBefore(tabbarEl, this.firstChild || null);
 
 
                             // IS the content focused or the tab or something in one of them or neither?!?
