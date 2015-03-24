@@ -149,41 +149,42 @@
                             this.id = this.id || nextUid(); // ensure it has an id
                             this.setAttribute("role", "tablist");
 
-                            var observer = new MutationObserver(function (mutations) {
-                                mutations.forEach(function(mutation) {
-                                    var headerElement, tabProxyElement, activePanelElement;
-                                    if (mutation.type === "attributes") {
-                                        activePanelElement = self.activePanelElement;
-                                        if (activePanelElement) {
-                                            headerElement = activePanelElement.headerElement;
-                                            tabProxyElement = activePanelElement.tabProxyElement;
+                            if (window.MutationObserver) {
+                                var observer = new MutationObserver(function (mutations) {
+                                    mutations.forEach(function(mutation) {
+                                        var headerElement, tabProxyElement, activePanelElement;
+                                        if (mutation.type === "attributes") {
+                                            activePanelElement = self.activePanelElement;
+                                            if (activePanelElement) {
+                                                headerElement = activePanelElement.headerElement;
+                                                tabProxyElement = activePanelElement.tabProxyElement;
+                                            }
+                                            if (headerElement && tabProxyElement) {
+                                                lastSet = ([headerElement.firstElementChild, tabProxyElement.firstElementChild].indexOf(document.activeElement) !== -1);
+                                                setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
+                                            }
                                         }
-                                        if (headerElement && tabProxyElement) {
-                                            lastSet = ([headerElement.firstElementChild, tabProxyElement.firstElementChild].indexOf(document.activeElement) !== -1);
-                                            setTimeout(self.setFocusForActivePanel, FOCUS_DELAY);
-                                        }
-                                    }
-                                    Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
-                                        if (el.tagName === "COMMON-PANEL") {
-                                            // console.info("registering common-panel %s", el.id);
-                                            self._registerChildPanel(el);
-                                        }
+                                        Array.prototype.slice.call(mutation.addedNodes).forEach(function (el) {
+                                            if (el.tagName === "COMMON-PANEL") {
+                                                // console.info("registering common-panel %s", el.id);
+                                                self._registerChildPanel(el);
+                                            }
+                                        });
+                                        Array.prototype.slice.call(mutation.removedNodes).forEach(function (el) {
+                                            if (el.tagName === "COMMON-PANEL") {
+                                                // console.info("DEREGISTER %e", el);
+                                                self._deregisterChildPanel(el);
+                                            }
+                                        });
+    
                                     });
-                                    Array.prototype.slice.call(mutation.removedNodes).forEach(function (el) {
-                                        if (el.tagName === "COMMON-PANEL") {
-                                            // console.info("DEREGISTER %e", el);
-                                            self._deregisterChildPanel(el);
-                                        }
-                                    });
-
                                 });
-                            });
-                            observer.observe(this, {
-                                "attributes": true,
-                                "childList": true,
-                                "attributeFilter": ["preferred-display"]
-                            });
-
+                                observer.observe(this, {
+                                    "attributes": true,
+                                    "childList": true,
+                                    "attributeFilter": ["preferred-display"]
+                                });
+                            }
                             this.insertBefore(tabbarEl, this.firstChild);
 
 
