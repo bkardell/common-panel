@@ -28,10 +28,7 @@
       tab: "<div class=\"common-panel-header-box\" role=\"presentation\"><div class=\"common-panel-header\" tabindex=\"0\"><i class=\"common-panel-icon\"></i><span class=\"common-paneltitle\"><common-panel-title>{{title}}</common-panel-title></span><button ng-show=\"isRemovable\" class=\"common-panel-remove\" title=\"Remove this panel\">×</button></div></div>",
       tabcontent: "<div class=\"common-panel-content\" tabindex=\"0\"><transclude-replace></transclude-replace></div>"
     };
-  angular.module("test", [])
-    .controller("Controller", ["$scope", function($scope) {
-      $scope.stuffGoes = "Here";
-    }])
+  angular.module("commonPanels", [])
     .directive('transcludeReplace', ['$log', function($log) {
       return {
         terminal: true,
