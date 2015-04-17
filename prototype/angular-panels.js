@@ -29,16 +29,15 @@
       tabcontent: "<div class=\"common-panel-content\" tabindex=\"0\"><transclude-replace></transclude-replace></div>"
     };
   angular.module("commonPanels", [])
-    .directive('transcludeReplace', ['$log', function($log) {
+    .directive("transcludeReplace", ["$log", function($log) {
       return {
         terminal: true,
-        restrict: 'EA',
+        restrict: "EA",
 
         link: function($scope, $element, $attr, ctrl, transclude) {
           if (!transclude) {
-            $log.error('orphan',
-              'Illegal use of ngTranscludeReplace directive in the template! ' +
-              'No parent directive that requires a transclusion found. ');
+            $log.error("orphan",
+              "No parent directive that requires a transclusion found.");
             return;
           }
           transclude(function(clone) {
@@ -54,14 +53,14 @@
     .directive("commonPanelSet", function($interpolate) {
       return {
         restrict: "E",
-        controller: function($scope, $element, $attrs) {
+        controller: function($scope, $element) {
           this.addPanel = function(panelScope) {
             var ownElement = $element[0];
             ownElement.tabData = ownElement.tabData || [];
             ownElement.tabData.push(panelScope);
           };
         },
-        link: function($scope, $element, $attrs, ngModel) {
+        link: function($scope, $element) {
           var ownElement = $element[0],
             tabsContainer = find(ownElement, ">.common-panel-tabs"),
             selectedIndex = 0;
@@ -69,7 +68,7 @@
           Object.defineProperties(ownElement, {
             common_panels: {
               get: function() {
-                return findAll(this, '>common-panel');
+                return findAll(this, ">common-panel");
               }
             },
             activePanelElement: {
@@ -133,8 +132,8 @@
             /* TODO:
                 add selectNextTab / selectPreviousTab on ownElement + keydown listener for keyCode 37-40
 
-                Add _registerChild? Not sure angular will like that or why you'd use it
-           figure that out, it's very similar to addPanel in the controller
+                Add _registerChild? Not sure angular will like that or why you would use it
+           figure that out, it is very similar to addPanel in the controller
 
            add _deregisterChild? Again, if there is cleanup to do, like the
            transferral of focus/selected index, etc
@@ -158,7 +157,7 @@
             contentElement.setAttribute("role", "tabpanel");
             tabElement.setAttribute("role", "tab");
 
-            // TODO: This seems bad, let's name the thing
+            // TODO: This seems bad, lets name the thing
             tabElement.firstElementChild.setAttribute("aria-controls", panelScope.identifiers.content);
 
             // TODO: This seems bad, lets name the thing
@@ -201,7 +200,7 @@
             }
           });
 
-          ownElement.activePanelElement = findAll(ownElement, '>common-panel')[selectedIndex];
+          ownElement.activePanelElement = findAll(ownElement, ">common-panel")[selectedIndex];
           // TODO: add key handler here which calls selectNextTab or selectPreviousTab
 
         },
@@ -345,7 +344,7 @@
           //TODO: wire up media query listener?
 
         }
-      }
+      };
     });
 
 })(window.angular);
