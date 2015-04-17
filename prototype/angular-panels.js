@@ -341,11 +341,10 @@
                   ownElement.parentElement.removeChild(ownElement);
                 } else if (ownElement.hasAttribute("expansion-state")) {
                   ownElement.toggleExpansionState();
+                  ownElement.setAttribute(
+                    "expansion-state", (ownElement.getAttribute("expansion-state") === "opened") ? "opened" : "closed"
+                  );
                 }
-
-                ownElement.setAttribute(
-                  "expansion-state", (ownElement.getAttribute("expansion-state") === "opened") ? "opened" : "closed"
-                );
               }, false);
 
             // TODO: clean this up? the angular boolean attribute stuff is weird
