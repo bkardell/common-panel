@@ -25,8 +25,14 @@
     FOCUS_DELAY = 50,
     templates = {
       tabset: "<div class=\"common-panel-tabs\"></div>{{tabs}}<transclude-replace></ng-trasclude-replace>",
-      tab: "<div class=\"common-panel-header-box\" role=\"presentation\"><div class=\"common-panel-header\" tabindex=\"0\"><i class=\"common-panel-icon\"></i><span class=\"common-paneltitle\"><common-panel-title>{{title}}</common-panel-title></span><button ng-show=\"isRemovable\" class=\"common-panel-remove\" title=\"Remove this panel\">×</button></div></div>",
+      tab: "<div class=\"common-panel-header-box\" role=\"presentation\"><div class=\"common-panel-header\" tabindex=\"0\"><i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"><common-panel-title>{{title}}</common-panel-title></span><button class=\"common-panel-remove\" title=\"Remove this panel\">x</button></div></div>",
       tabcontent: "<div class=\"common-panel-content\" tabindex=\"0\"><transclude-replace></transclude-replace></div>"
+    },
+    hideRemovable = function (el) {
+      var btn = el.querySelector(".common-panel-remove");
+      if (btn) {
+        btn.style.display = "none";
+      }
     };
   angular.module("commonPanels", [])
     .directive("transcludeReplace", ["$log", function($log) {
@@ -147,9 +153,12 @@
               tabElement;
 
 
-            console.log("this tab belongs to " + panelScope.identifiers.panel);
             angular.element(tabsContainer).append($interpolate(templates.tab)(panelScope));
             tabElement = tabsContainer.lastElementChild;
+
+            if (!panelScope.isRemovable) {
+              hideRemovable(tabElement);
+            }
 
             /* TODO: each of these has a related panel which needs wiring */
             panelElement.setAttribute("role", "presentation");
@@ -315,6 +324,10 @@
             content: contentElement.id,
             header: headerElement.id
           };
+
+          if (!scope.isRemovable) {
+            hideRemovable(headerElement);
+          }
           // wire up aria controls
           if (commonPanelSetCtrl) {
             //debugger;
