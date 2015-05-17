@@ -49,7 +49,7 @@
     </section>
 
     <section>
-        <h2>Introduction</h2>
+        <h2 id="introduction">Introduction</h2>
         <p>The concept of a content panel originates in print media and has carried over into digital media. The transition to digital media brought about the ability to interact with collections of panels, and over time a number of visual metaphors for this interaction have emerged. Tabs, accordions, decks and carousels are all design patterns based on interactions with sets of content panels.</p>
 
 <p>The history of interface design shows that each of these design patterns has evolved independently, despite their similarities. The WAI-ARIA Authoring Practices Guide for example, describes a set of tabs and an accordion widget in identical terms except for visual orientation.</p>
@@ -60,11 +60,11 @@
     </section>
 
     <section>
-        <h2>Conformance</h2>
+        <h2 id="conformance">Conformance</h2>
         <p>All authoring guidelines, diagrams, examples, notes, and sections marked "informative" in this specification are informational. Everything else in this specification is "normative" as described in [[!qaframe-spec]]. The key words "must", "should", "should not" and "may" in this specification are to be interpreted as described in [[!RFC2119]].</p>
 
         <section>
-            <h3>Dependencies and Definitions</h3>
+            <h3 id="dependencies-and-definitions">Dependencies and Definitions</h3>
             <p>The Interface Definition Language (IDL) fragments in this specification must be interpreted as required for conforming IDL fragments, as described in the Web IDL specification. [[!WEBIDL]]</p>
 
             <p>This document uses the terms accessible and accessibility in the sense of ensuring people with disabilities can use the Web.</p>
@@ -72,10 +72,10 @@
     </section>
 
     <section>
-        <h2>Use cases and Requirements</h2>
+        <h2 id="use-cases-and-requirements">Use cases and Requirements</h2>
         <p>The panels specification describes a number of elements and attributes that give authors the ability to present panels or collections of panels in a semantically consistent way.</p>
         <section>
-            <h3>Use Cases for Panels and Panel Sets</h3>
+            <h3 id="use-cases">Use Cases for Panels and Panel Sets</h3>
             
 			<section>
 			<h4>Use cases for the tab set metaphor</h4>
@@ -126,7 +126,7 @@
         </section>
 
         <section>
-            <h3>Requirements for Panels and Panel Sets</h3>
+            <h3 id="requirements">Requirements for Panels and Panel Sets</h3>
             <dl>
                 <dt>Consistent</dt>
                 <dd>It must be possible to interact with a panel or set of panels in a consistent way, using different modes of interaction including keyboard, mouse, voice and touch.</dd>
@@ -204,7 +204,7 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 		</section>
 
 <section>
-<h2>The panelset element</h2>
+<h2 id="panelset-element">The panelset element</h2>
 
 <dl>
 <dt>Categories:</dt>
@@ -238,14 +238,14 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 </section>
 
 <section>
-<h2>The removable attribute</h2>
+<h2 id="removable-attribute">The removable attribute</h2>
 
 <dl>
 <dt>Categories:</dt>
 <dd>...</dd>
 </dl>
 
-<p>The removable attribute indicates that a panel element can be removed from the user-interface. When a panel element is dismissed from the user-interface, it is removed from the DOM.</p>
+<p>The removable attribute is a <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attribute">Boolean attribute</a> that indicates that a panel element can be removed from the user interface. When a panel element is dismissed from the user interface, it is removed from the DOM.</p>
 
 <p>When the removable attribute is present, a mechanism to dismiss the panel is included in the panel element header.</p>
 
@@ -265,7 +265,7 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 </section>
 
 <section>
-<h2>The expandable attribute</h2>
+<h2 id="expandable-attribute">The expandable attribute</h2>
 
 <dl>
 <dt>Categories:</dt>
@@ -274,7 +274,7 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 
 <p>The expandable attribute indicates the expanded or collapsed state of a panel (panel element).</p>
 
-<p>When the expandable attribute is present, a mechanism to toggle the expanded state of the panel is included in the panel header.</p>
+<p>When the expandable attribute is present, the paneltitle element becomes a control that allows the panel element to be toggled between an expanded or collapsed state.</p>
 
 <p>When the expandable attribute is present and has no value, the panel is in a collapsed state. If the expandable attribute is not present, or is set to true, the panel is in an expanded state.</p>
 
@@ -292,6 +292,10 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 
 <section>
 <h2 id="dom-interfaces">DOM interfaces</h2>
+
+<section>
+<h3 id="panel-dom-interface">The panel element DOM interface</h3>
+
             <dl title='[Constructor] interface HTMLPanelElement : HTMLElement' class='idl'>
                 <dt>attribute HTMLElement headerElement</dt>
                 <dd>
@@ -314,6 +318,124 @@ Any ARIA attributes applicable to the allowed roles.</dd>
                     Inverts the current expansion state of the panel.
                 </dd>
             </dl>
+			</section>
+
+			<section>
+			<h3 id="panelset-dom-interface">The panelset element DOM interface</h3>
+
+			            <dl title='[Constructor] interface HTMLPanelSetElement : HTMLElement' class='idl'>
+                <dt>attribute HTMLPanelElement activePanelElement</dt>
+                <dd>
+                    Get or set an element as active (currently selected) panel element in this panel set
+                </dd>
+                <dt>void selectNextTab()</dt>
+                <dd>
+                    Selects/activates the next panel in this panel set in document order if any remain
+                </dd>
+                <dt>void selectPreviousTab()</dt>
+                <dd>
+                    Selects/activates the previous panel in this panel set in document order if any previous exist
+                </dd>
+            </dl>
+
+</section>
+
+</section>
+</section>
+
+<section>
+<h2 id="user-interfaces">User interfaces</h2>
+
+<p>This section is non-normative.</p>
+
+<p>When the panel and paneltitle elements are used, the user agent should expose a user interface to the user. This user interface should include a visible title, and may optionally include an author provided icon or indicator of expandable state.</p>
+
+<p>If the removable attribute is present, the user interface should include a control for dismissing the panel element from the user interface. The control should be focusable and have an accessible name.</p>
+
+<p>If the expandable attribute is present, the paneltitle should become a control for toggling the panel between an expanded or collapsed state. The control must be focusable.</p>
+
+<section>
+
+ id="user-interface-composite-tree">Composite tree</h3>
+
+<p>The elements and pseudo-elements of the composite tree of a panel element with a paneltitle element:</p>
+
+<dl>
+<dt>::--common-panel-header-box</dt>
+<dd>Used for styling, it contains all the visual features of a panel header.</dd>
+
+<dt>::--common-panel-header</dt>
+<dd>When a panel element is used on its own, this has default styles and hooks. When a panel element is used as a child of a panelset element, this has special affordances.</dd>
+
+<dt>::--common-panel-icon</dt>
+<dd>Optional styling hook for an icon. Empty/blank/dimensionless by default, it can be used to display an icon via the CSS background:; property.<br>
+Authors can also use the ::before pseudo-element to display a left-orientated indicator of the expandable state of the panel element.</dd>
+
+<dt>::--common-panel-title</dt>
+<dd>Author specified flow content which serves as the panel element's title.</dd>
+
+<dt>::--common-panel-hook</dt>
+<dd>Optional hook for a right-orientated indicator of the expandable state of the panel element.</dd>
+
+<dt>::--common-panel-destroy</dt>
+<dd>When the removable attribute is set, this displays a control for dismissing the panel element from the user interface. The control must be focusable and have an accessible name, otherwise it is hidden.</dd>
+
+<dt>::--common-panel-content</dt>
+<dd>Author provided content for the panel element.</dd>
+</dl>
+
+</section>
+</section>
+
+<section>
+<h2 id="aam-guide">ARIA to accessibility API mapping guide</h2>
+
+<p>This section is non-normative.</p>
+
+<section>
+<h3 id="aam-roles-guide">ARIA roles</h3>
+
+<table>
+<caption>ARIA roles mapping guide</caption>
+
+<tr>
+<th>Element</th><th>ARIA role</th>
+</tr>
+
+<tr>
+<td>panel</td><td>group</td>
+</tr>
+
+<tr>
+<td>paneltitle</td><td>??</td>
+</tr>
+</tr>
+
+<tr>
+<td>panelset</td><td>??</td>
+</tr>
+</table>
+
+</section>
+
+<section>
+<h3 id="aam-states-props-guide">ARIA states and properties</h3>
+
+<table>
+<caption>ARIA states and properties mapping guide</caption>
+
+<tr>
+<th>Attribute</th><th>ARIA state/propertey</th>
+</tr>
+
+<tr>
+<td>removable</td><td>??</td>
+</tr>
+
+<tr>
+<td>expandable</td><td>??</td>
+</tr>
+</table>
 
 </section>
 </section>
