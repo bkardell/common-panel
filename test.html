@@ -9,36 +9,27 @@
 <body>
 <h1>Test page</h1>
 
-<h2>Carousel</h2>
+<h2>Tabset</h2>
 
 <section>
     <h4>Demo</h4>
-    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
-      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
-      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
-      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
-      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
-    <common-panel-set preferred-display="tabset" id="-cp-21" role="tablist"><div class="common-panel-tabs"><div class="common-panel-header-box" aria-controls="-cp-23" role="tab"><div tabindex="0" class="common-panel-header" aria-controls="-cp-23" aria-selected="true"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>
-</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div><div class="common-panel-header-box" aria-controls="-cp-25" role="tab"><div tabindex="-1" class="common-panel-header" aria-controls="-cp-25"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div><div class="common-panel-header-box" aria-controls="-cp-27" role="tab"><div tabindex="-1" class="common-panel-header" aria-controls="-cp-27"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div></div>
+    <p>Below is a running demo of the above code snippet using the prototype with preferred display set to tabset.</p>
+    <common-panel-set preferred-display="carousel" id="-cp-28" role="tablist"><div class="common-panel-tabs"><div class="common-panel-header-box" aria-controls="-cp-30" role="tab"><div class="common-panel-header" tabindex="0" aria-controls="-cp-30" aria-selected="true"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Local</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-header-box" aria-controls="-cp-32" role="tab"><div class="common-panel-header" tabindex="-1" aria-controls="-cp-32"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-header-box" aria-controls="-cp-34" role="tab"><div class="common-panel-header" tabindex="-1" aria-controls="-cp-34"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div></div>
+      <common-panel id="-cp-29" role="presentation" expansion-state="opened" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div class="common-panel-header" tabindex="0" aria-controls="-cp-30" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Local</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-content" id="-cp-30" tabindex="0" role="tabpanel" aria-expanded="true">
 
-	   <common-panel id="-cp-22" role="presentation" expansion-state="opened" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div tabindex="0" class="common-panel-header" aria-controls="-cp-23" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Local</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div>
-
-	  <div tabindex="0" id="-cp-23" class="common-panel-content" role="tabpanel" aria-expanded="true">
-         
          <p>This would contain content about local news stories.</p>
       </div></common-panel>
 
-      <common-panel id="-cp-24" role="presentation" expansion-state="closed" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div tabindex="0" class="common-panel-header" aria-controls="-cp-25" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div><div tabindex="-1" id="-cp-25" class="common-panel-content" role="tabpanel" aria-hidden="true">
-         
+      <common-panel id="-cp-31" role="presentation" expansion-state="closed" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div class="common-panel-header" tabindex="0" aria-controls="-cp-32" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-content" id="-cp-32" tabindex="-1" role="tabpanel" aria-hidden="true">
+
          <p>This would contain content about entertainment news stories.</p>
       </div></common-panel>
 
-      <common-panel id="-cp-26" role="presentation" expansion-state="closed" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div tabindex="0" class="common-panel-header" aria-controls="-cp-27" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button aria-hidden="true" style="display: none" title="Remove this panel" class="common-panel-remove">×</button></div></div><div tabindex="-1" id="-cp-27" class="common-panel-content" role="tabpanel" aria-hidden="true">
-         
+      <common-panel id="-cp-33" role="presentation" expansion-state="closed" data-upgrade-state="resolved"><div class="common-panel-header-box" role="presentation"><div class="common-panel-header" tabindex="0" aria-controls="-cp-34" role="tab"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-content" id="-cp-34" tabindex="-1" role="tabpanel" aria-hidden="true">
+
          <p>This would contain content about sports stories.</p>
       </div></common-panel>
     </common-panel-set>
-  </section>
 
   </body>
   </html>

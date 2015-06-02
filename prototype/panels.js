@@ -1,14 +1,14 @@
 this.Element && function(ElementPrototype) {
-	ElementPrototype.matches = ElementPrototype.matchesSelector || 
+	ElementPrototype.matches = ElementPrototype.matchesSelector ||
 	ElementPrototype.mozMatchesSelector ||
 	ElementPrototype.msMatchesSelector ||
 	ElementPrototype.oMatchesSelector ||
 	ElementPrototype.webkitMatchesSelector ||
 	function (selector) {
 		var node = this, nodes = (node.parentNode || node.document).querySelectorAll(selector), i = -1;
- 
+
 		while (nodes[++i] && nodes[i] != node);
- 
+
 		return !!nodes[i];
 	}
 }(Element.prototype);
@@ -129,7 +129,6 @@ this.Element && function(ElementPrototype) {
                                 headerElement = panelElement.headerElement;
                                 contentElement = panelElement.contentElement;
                                 tabElement = headerElement.cloneNode(true);
-                                tabElement.setAttribute("aria-controls", contentElement.id);
                                 //  Using header because qsa reports early (bug?) and you can get stuff before upgrade
                                 findAll(this, ">common-panel>.common-panel-header-box>.common-panel-header").forEach(function (item, i) {
                                     if (item.parentElement.parentElement === panelElement) {
@@ -138,11 +137,12 @@ this.Element && function(ElementPrototype) {
                                     this.common_panels[i] = item.parentElement.parentElement;
                                 }, this);
 
+                                tabElement.firstElementChild.setAttribute("aria-controls", contentElement.id);
                                 panelElement.setAttribute("role", "presentation");
                                 headerElement.setAttribute("role", "presentation");
                                 contentElement.setAttribute("role", "tabpanel");
                                 headerElement.firstElementChild.setAttribute("role", "tab");
-                                tabElement.setAttribute("role", "tab");
+                                tabElement.firstElementChild.setAttribute("role", "tab");
                                 tablistElement = find(this, ">.common-panel-tabs");
                                 tablistElement.insertBefore(tabElement, tablistElement.children[ownIndex] || null);
 
@@ -191,7 +191,7 @@ this.Element && function(ElementPrototype) {
                                                 self._deregisterChildPanel(el);
                                             }
                                         });
-    
+
                                     });
                                 });
                                 observer.observe(this, {
@@ -323,7 +323,7 @@ this.Element && function(ElementPrototype) {
                                     tabProxyElement = find(this.parentElement, ">.common-panel-tabs>.common-panel-header-box>.common-panel-header[aria-controls=\"" + contentElement.id + "\"]");
                                 }
                                 manageBooleanAttr(tabProxyElement, "aria-selected", isOpen);
-                                tabProxyElement.setAttribute("tabindex", (isOpen) ? "0" : "-1");
+                                //tabProxyElement.setAttribute("tabindex", (isOpen) ? "0" : "-1");
                             }
                             if (isOpen) {
                                 evt = document.createEvent("CustomEvent");
