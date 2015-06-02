@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Panel and Panel Sets Prototypes - tabs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      h2 { border-top: 1px solid green; }
+      section { padding-left: 1em; }
+      code[title] { background-color: #dfdfca; padding: 1em; color: rebeccapurple; display: block; margin-bottom: 2em; }
+      :root > *:not(h2) { margin-left: 2em; }
+      :not(common-panel-set) > common-panel { margin-bottom: 5em !important; }
+    </style>
+
+    <!-- Fill for media-query-mappings bit above -->
+    <script src="fill.js"></script>
+
+    <!-- Webreflection polyfill of custom elements API -->
+    <script src="custom-elements.js"></script>
+
+
+    <!-- Our custom elements -->
+    <script src="panels.js"></script>
+
+    <!-- The CSS for our custom elements -->
+    <link rel="stylesheet" type="text/css" href="panelset.css"/>
+
+</head>
+<body>
+
+  <section>
+    <h3>Panel Set's <code>preferred-display</code> Attribute (tabset)</h3>
+    <p>This example demonstrates the use of a <code>preferred-display</code> attribute set to <code>tabset</code> on a <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+          <code title="code snippet demonstrating a common-panel-set with the preferred-display attribute 'tabset'">&lt;common-panel-set preferred-display="tabset"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+    <common-panel-set preferred-display="tabset">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+
+
+  </body>
+</html>
