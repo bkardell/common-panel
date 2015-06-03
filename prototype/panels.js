@@ -37,16 +37,11 @@ this.Element && function(ElementPrototype) {
         findAll = function (scope, query) {
             return Array.prototype.slice.call(scope.querySelectorAll("#" + scope.id + query));
         },
-        attachDescriptor = function (beforeOrAfter, element, description) {
+        attachDescriptorBefore = function (element, description) {
             var descriptor = document.createElement("span");
             descriptor.classList.add("visually-hidden");
-            descriptor.innerHTML = " " + description + " ";
-
-            if (beforeOrAfter === "before") { 
-                element.insertBefore(descriptor, element.firstElementChild);
-            } else if (beforeOrAfter === "after") {
-                element.appendChild(descriptor);
-            }
+            descriptor.innerHTML = "&nbsp;" + description + "&nbsp;";
+            element.parentElement.insertBefore(descriptor, element);
         },
         sheet = document.createElement("style");
         
@@ -385,8 +380,9 @@ this.Element && function(ElementPrototype) {
                                 // we have to be destructive to content, that is, we build the same thing based on serialization rather than keep the thing
                                 // because without the ability to use shadow dom and projections, we HAVE to create new
                                 this.innerHTML = "";
-                                attachDescriptor("after", tab.firstElementChild, "panel");
-                                attachDescriptor("before", content, "panel content");
+                                attachDescriptorBefore(tab.querySelector(".common-panel-remove"), "panel");
+                                attachDescriptorBefore(content.firstChild, "panel content");
+                                
                                 this.appendChild(tab);
                                 this.appendChild(content);
                                 find(this, ">.common-panel-header-box>.common-panel-header>.common-panel-title").appendChild(titleElement);
