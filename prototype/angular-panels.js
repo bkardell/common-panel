@@ -90,7 +90,7 @@
         panelElement.setAttribute("role", "presentation");
         headerElement.setAttribute("role", "presentation");
         contentElement.setAttribute("role", "tabpanel");
-        tabElement.setAttribute("role", "tab");
+        tabElement.firstElementChild.setAttribute("role", "tab");
 
         // TODO: This seems bad, lets name the thing
         tabElement.firstElementChild.setAttribute("aria-controls", contentElement.id);
