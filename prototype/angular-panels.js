@@ -24,7 +24,7 @@
     },
     FOCUS_DELAY = 50,
     templates = {
-      tabset: "<div class=\"common-panel-tabs\"></div>{{tabs}}<transclude-replace></ng-trasclude-replace>",
+      tabset: "<div class=\"common-panel-tabs\" role=\"presentation\"></div>{{tabs}}<transclude-replace></ng-trasclude-replace>",
       tab: "<div class=\"common-panel-header-box\" role=\"presentation\"><div class=\"common-panel-header\" tabindex=\"0\"><i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"><common-panel-title>{{title}}</common-panel-title></span><button class=\"common-panel-remove\" title=\"Remove this panel\">x</button></div></div>",
       tabcontent: "<div class=\"common-panel-content\" tabindex=\"0\"><transclude-replace></transclude-replace></div>"
     },
@@ -72,6 +72,8 @@
         if (!panelElement.hasAttribute("is-removable")) {
           hideRemovable(tabElement);
         }
+
+        ownElement.setAttribute("role", "tablist");
 
         /* TODO: each of these has a related panel which needs wiring */
         panelElement.setAttribute("role", "presentation");

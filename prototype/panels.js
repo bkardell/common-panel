@@ -158,7 +158,7 @@ this.Element && function(ElementPrototype) {
                     createdCallback: {
                         value: function() {
                             var self = this;
-                            var tabbarEl = elFromString("<div class=\"common-panel-tabs\"></div>");
+                            var tabbarEl = elFromString("<div class=\"common-panel-tabs\" role=\"presentation\"></div>");
                             this.selectedIndex = -1;
                             this.common_panels = [];
                             this.id = this.id || nextUid(); // ensure it has an id
@@ -357,7 +357,7 @@ this.Element && function(ElementPrototype) {
 
                                 // aria-controls is only relevant when you are expandable
                                 tab = elFromString(
-                                    "<div class=\"common-panel-header-box\"><div class=\"common-panel-header\" tabindex=\"0\">" +
+                                    "<div class=\"common-panel-header-box\" role=\"presentation\"><div class=\"common-panel-header\" tabindex=\"0\">" +
                                     "<i class=\"common-panel-icon\"></i><span class=\"common-panel-title\"></span><button class=\"common-panel-remove\" title=\"Remove this panel\"" +
                                     removableOptions +
                                     ">&times;</button>" +
