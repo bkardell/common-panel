@@ -131,10 +131,10 @@
               get: function() {
                 // TOOD: add a .common_panels definition
                 // TODO: best way to find the expanded element?
-                return this.common_panels[selectedIndex];
+                return ownElement.common_panels[ownElement.selectedIndex];
               },
               set: function(panel) {
-                var panels = this.common_panels;
+                var panels = ownElement.common_panels;
                 ownElement.selectedIndex = panels.indexOf(panel);
                 ownElement.selectedIndex = (ownElement.selectedIndex !== -1) ? ownElement.selectedIndex : 0;
                 // setting a panel element active has a side effect of making siblings inactive...
