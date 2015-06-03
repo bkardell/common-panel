@@ -14,23 +14,27 @@
 
 <section>
     <h4>Demo</h4>
-    <p>Below is a running demo of the above code snippet using the prototype with preferred display set to tabset.</p>
-    <common-panel-set role="tablist" id="-cp-1" preferred-display="tabset"><div class="common-panel-tabs" role="presentation"><div class="common-panel-header-box" role="presentation"><div role="tab" aria-controls="-cp-3" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Local</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-header-box" role="presentation"><div role="tab" aria-controls="-cp-5" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div class="common-panel-header-box" role="presentation"><div aria-selected="true" role="tab" aria-controls="-cp-7" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div></div>
-      <common-panel data-upgrade-state="resolved" expansion-state="closed" role="presentation" id="-cp-2"><div role="presentation" class="common-panel-header-box"><div role="tab" aria-controls="-cp-3" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Local</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div aria-hidden="true" role="tabpanel" class="common-panel-content" id="-cp-3" tabindex="-1">
-         
-         <p>This would contain content about local news stories.</p>
-      </div></common-panel>
-
-      <common-panel data-upgrade-state="resolved" expansion-state="closed" role="presentation" id="-cp-4"><div role="presentation" class="common-panel-header-box"><div role="tab" aria-controls="-cp-5" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Entertainment</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div aria-hidden="true" role="tabpanel" class="common-panel-content" id="-cp-5" tabindex="-1">
-         
-         <p>This would contain content about entertainment news stories.</p>
-      </div></common-panel>
-
-      <common-panel data-upgrade-state="resolved" expansion-state="opened" role="presentation" id="-cp-6"><div role="presentation" class="common-panel-header-box"><div role="tab" aria-controls="-cp-7" class="common-panel-header" tabindex="0"><i class="common-panel-icon"></i><span class="common-panel-title"><common-panel-title>Sports</common-panel-title></span><button class="common-panel-remove" title="Remove this panel" style="display: none" aria-hidden="true">×</button></div></div><div aria-expanded="true" role="tabpanel" class="common-panel-content" id="-cp-7" tabindex="0">
-         
-         <p>This would contain content about sports stories.</p>
-      </div></common-panel>
-    </common-panel-set>
+    <common-panel class="ng-isolate-scope" id="-cp-1" role="group">
+        <div class="common-panel-header-box" role="presentation" id="-cp-4">
+            <div class="common-panel-header" tabindex="0" aria-controls="-cp-3" aria-describedby="-cp-5">
+                <i class="common-panel-icon"></i>
+                <span class="common-panel-title">
+                    <common-panel-title class="ng-binding">My favorite books</common-panel-title>
+                </span>
+                <button class="common-panel-remove" title="Remove this panel" style="display: none;">x</button>
+                <span id="-cp-5" style="display: none;">panel</span>
+            </div>
+        </div>
+        <div class="common-panel-content" tabindex="0" aria-describedby="-cp-2" id="-cp-3">
+            
+            <p class="ng-scope">Here are a list of my favorite books:
+              </p><ol class="ng-scope">
+                <li>Hitchhiker's Guide to the Galaxy</li>
+                <li>Pride and Prejudice</li>
+                <li>Green Eggs and Ham</li>
+              </ol>
+            <p class="ng-scope"></p>
+          <span id="-cp-2" style="display: none;">panel content</span></div></common-panel>
 
   </body>
   </html>
