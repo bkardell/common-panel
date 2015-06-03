@@ -38,7 +38,7 @@
     attachDescriptor = function (beforeOrAfter, element, description) {
         var descriptor = document.createElement("span");
         descriptor.classList.add("visually-hidden");
-        descriptor.innerHTML = description + " ";
+        descriptor.innerHTML = " " + description + " ";
 
         if (beforeOrAfter === "before") { 
             element.insertBefore(descriptor, element.firstElementChild);
