@@ -319,8 +319,8 @@
           ensureId(ownElement.headerElement);
 
           attachDescriptorBefore(headerElement.querySelector(".common-panel-remove"), "panel");
-          attachDescriptorBefore(contentElement.firstChild, "panel content");
-          
+          attachDescriptorBefore(contentElement.firstElementChild, "panel content");
+
           isExpandable = ownElement.hasAttribute("expansion-state");
           /* Tricky, this has to be kind of a 'non-element' else it is currently circular */
           findAll(contentElement, ">common-panel-title").forEach(function(potential) {
@@ -349,7 +349,7 @@
             scope.$parent.title = scope.title;
             commonPanelSetCtrl.addPanel(ownElement, scope.$parent);
           } else {
-            
+
             //TODO: wire up expansion toggle?
             if (isExpandable || scope.isRemovable)
               headerElement.addEventListener("click", function(evt) {
