@@ -361,3 +361,13 @@ common-panel-set[preferred-display="carousel"] > .common-panel-tabs > .common-pa
   -o-border-radius: 14px;
   border-radius: 14px;
 }
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: none;
+}

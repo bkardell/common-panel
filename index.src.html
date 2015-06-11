@@ -169,6 +169,14 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 </dl>
 
 <p>A panel element represents a chunk of content with a header that includes a visible title (paneltitle element). A panel element may be used on its own, or with other panel elements as part of a collection (panelset element).</p>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/16">Github issue 16</a><br>
+It isn't presently possible to imperitively create a panel element.</p>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/9">Github issue 9</a><br>
+Should it be possible to script a panel element to become either removable or expandable?</p>
 </section>
 
 <section>
@@ -233,9 +241,20 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 </figure>
 
 <p class="issue">
-If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can correctly manage which type of display the element takes on in which conditions. This is currently "up in the air". One approach, <a href="preferrential-display.html">prollyfilled here</a>, is to use an attribute. <a href="https://github.com/bkardell/common-panel/issues/25">See this issue in the tracker</a>
-</p>
+<a href="https://github.com/bkardell/common-panel/issues/5">Github issue 5</a><br>
+Should the panelset element have selectedIndex?</p>
 
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/25">Github issue 25</a><br>
+If HTML authors are encouraged to follow this separation, it inevitably begs the question about how CSS authors can correctly manage which type of display the element takes on in which conditions. This is currently "up in the air". One approach, <a href="preferrential-display.html">prollyfilled here</a>, is to use an attribute.</p>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/19">Github issue 19</a><br>
+Different visual metaphors have different selection (expansion) patterns. How can this be managed if the panelset element is predicated on a single selection model?</p>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/28>Github issue 28</a><br>
+When an AT is enabled on a touch device, only basic events are fired (mouse events, and in some circumstances blur/focus events). Is this something to consider?</p>
 </section>
 
 <section>
@@ -288,6 +307,10 @@ Today is the first day of the rest of your life.
 &lt;/panel&gt;
 </code></pre>
 </figure>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/20">Github issue 20</a><br>
+When you follow a link to a panel does it automatically expand?</p> 
 </section>
 
 <section>
@@ -384,6 +407,10 @@ Authors can also use the ::before pseudo-element to display a left-orientated in
 <dd>Author provided content for the panel element.</dd>
 </dl>
 </section>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/27">Github issue 27</a><br>
+Should we include recommended/suggested interaction models here?</p>
 </section>
 
 <section>
