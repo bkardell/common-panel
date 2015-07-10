@@ -145,17 +145,15 @@ companyURL: "http://www.paciellogroup.com/"
 <section>
 <h2>The panel element</h2>
 <dl>
-<dt><a data-anolis-xref="element-dfn-categories" href="http://www.w3.org/TR/html5/dom.html#element-dfn-categories">Categories</a>:</dt>
-<dd><!--Flow content.<br>
-Phrasing content.<br>
-If the element is in a panelset, or has the removable or expandable attributes: Interactive content.<br>
-If the element has the removable or expandable attributes: Palpable content.--></dd>
+<dt><a  href="http://www.w3.org/TR/html5/dom.html#element-dfn-categories">Categories</a>:</dt>
+<dd><!--
+If the element has the removable or expandable attributes: Palpable content. ??--></dd>
 <dd><a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">Flow content</a>.</dd>
 <dd>If the element is a child of a <a href="#the-panelset-element">panelset</a> element, or has the <a href="#the-removable-attribute">removable</a> or <a href="#the-expandable-attribute">expandable</a> attributes: <a href="http://www.w3.org/TR/html5/dom.html#interactive-content-0">Interactive content</a>.</dd>
 <dd><a href="http://www.w3.org/TR/html5/dom.html#palpable-content-0">Palpable content</a>.</dd>
 <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
 <dd>Where <a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">flow content</a> is expected.</dd>
-<dt>Content model:</dt>
+<dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-content-model">Content model</a>:</dt>
 <dd>One <a href="#the-paneltitle-element">paneltitle</a> element followed by <a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">flow content</a>.</dd>
 <dt><a data-anolis-xref="element-dfn-attributes" href="http://www.w3.org/TR/html5/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
 <dd><a href="http://www.w3.org/TR/html5/dom.html#global-attributes">Global attributes</a>.<br>
@@ -169,7 +167,7 @@ If the element has the removable or expandable attributes: Palpable content.--><
 <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-global">Global ARIA attributes</a>.<br>
 Any ARIA attributes applicable to the allowed roles.</dd>
 <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-dom">DOM interface:</a></dt>
-<dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a></dd>
+<dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a> ??</dd>
 </dl>
 
 <p>A panel element <a href="http://www.w3.org/TR/html5/dom.html#represents">represents</a> a chunk of content with a header that includes a visible title (<a href="l#the-paneltitle-element">paneltitle</a> element). A panel element may be used on its own, or with other panel elements as part of a collection (panelset element).</p>
@@ -186,19 +184,43 @@ Should it be possible to script a panel element to become either removable or ex
 <a href="https://github.com/bkardell/common-panel/issues/32">Github issue 32</a><br>
 Is panel-title a required child of panel element?
 </p>
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/33">Github issue 33</a><br>
+why not re-use open attribute instead of expandable?
+</p>
 </section>
 
 <section>
 <h2>The paneltitle element</h2>
 <dl>
-<dt>Categories:</dt>
-<dd>...</dd>
+  <dt><a  href="http://www.w3.org/TR/html5/dom.html#element-dfn-categories">Categories</a>:</dt>
+  <dd>
+    <!--
+If the element has the removable or expandable attributes: Palpable content. ??-->
+  </dd>
+  <dd>None.</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+  <dd>As the first or last child of a <a href="#the-panel-element">panel</a> element.</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-content-model">Content model</a>:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">Flow content</a>.</dd>
+  <dt><a data-anolis-xref="element-dfn-attributes" href="http://www.w3.org/TR/html5/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#global-attributes">Global attributes</a>.
+  </dd>
+  <dt><a data-anolis-xref="element-dfn-tag-omission" href="http://www.w3.org/TR/html5/dom.html#element-dfn-tag-omission">Tag omission in text/html</a>:</dt>
+  <dd>Neither tag is omissable.</dd>
+  <dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-group">group</a> role (default - <a href="http://www.w3.org/TR/html5/dom.html#aria-usage-note"><em>do not set</em></a>) ??</dd>
+  <dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-global">Global ARIA attributes</a>.<br>
+    Any ARIA attributes applicable to the allowed roles.</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-dom">DOM interface:</a></dt>
+  <dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a> ??</dd>
 </dl>
 
-<p>A paneltitle element represents the visible title of a panel (panel element). A paneltitle is the basic component of the panel header.</p>
+<p>A <code>paneltitle</code> element represents the visible title of a panel (<a href="#the-panel-element"><code>panel</code></a> element). A <code>paneltitle</code> is the basic component of the panel header.</p>
 
 <figure>
-<figcaption>panel element with paneltitle element</figcaption>
+<figcaption><code>panel</code> element with <code>paneltitle</code> element</figcaption>
 <img src="img/basic-panel.png" alt="panel element with paneltitle element">
 <pre class="prettyprinted"><code>
 &lt;panel&gt;
