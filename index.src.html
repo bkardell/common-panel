@@ -170,7 +170,7 @@ Any ARIA attributes applicable to the allowed roles.</dd>
 <dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a> ??</dd>
 </dl>
 
-<p>A panel element <a href="http://www.w3.org/TR/html5/dom.html#represents">represents</a> a chunk of content with a header that includes a visible title (<a href="l#the-paneltitle-element">paneltitle</a> element). A panel element may be used on its own, or with other panel elements as part of a collection (panelset element).</p>
+<p>A <code>panel</code> element <a href="http://www.w3.org/TR/html5/dom.html#represents">represents</a> a chunk of content with a header that includes a visible title (<a href="l#the-paneltitle-element"><code>paneltitle</code></a> element). A <code>panel</code> element may be used on its own, or with other <code>panel</code> elements as part of a collection (<a href="#the-panelset-element"><code>panelset</code></a> element).</p>
 
 <p class="issue">
 <a href="https://github.com/bkardell/common-panel/issues/16">Github issue 16</a><br>
@@ -239,18 +239,40 @@ If the element has the removable or expandable attributes: Palpable content. ??-
 <section>
 <h2>The panelset element</h2>
 <dl>
-<dt>Categories:</dt>
-<dd>...</dd>
+  <dt><a  href="http://www.w3.org/TR/html5/dom.html#element-dfn-categories">Categories</a>:</dt>
+  <dd>
+    <!--
+If the element has the removable or expandable attributes: Palpable content. ??-->
+  </dd>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">Flow content</a>.</dd>
+  <dd>&nbsp;</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+  <dd>Where <a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">flow content</a> is expected.</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-content-model">Content model</a>:</dt>
+  <dd>One or more <a href="#the-panel-element">panel</a> elements.</dd>
+  <dt><a data-anolis-xref="element-dfn-attributes" href="http://www.w3.org/TR/html5/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#global-attributes">Global attributes</a>.
+  </dd>
+  <dt><a data-anolis-xref="element-dfn-tag-omission" href="http://www.w3.org/TR/html5/dom.html#element-dfn-tag-omission">Tag omission in text/html</a>:</dt>
+  <dd>Neither tag is omissable.</dd>
+  <dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-group">group</a> role (default - <a href="http://www.w3.org/TR/html5/dom.html#aria-usage-note"><em>do not set</em></a>)</dd>
+  <dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
+  <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-global">Global ARIA attributes</a>.<br>
+    Any ARIA attributes applicable to the allowed roles.</dd>
+  <dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-dom">DOM interface:</a></dt>
+  <dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a> ??</dd>
+  <dt>&nbsp;</dt>
 </dl>
 
-<p>A panelset element represents a collection of panels (panel elements). A panelset may contain one or more panels.</p>
+<p>A <code>panelset</code> element represents a collection of panels (<code>panel</code> elements). A <code>panelset</code> may contain one or more <code>panel</code> elements.</p>
 
-<p>The panelset element manages the selection of its child panel elements. In other words, when panel elements are children of a panelset element, they are automatically collapsible.</p>
+<p>The <code>panelset</code> element manages the selection of its child <code>panel</code> elements. In other words, when <code>panel</code> elements are children of a <code>panelset</code> element, they are automatically collapsible.</p>
 
-<p>The first panel element within a panelset element should be expanded by default. Any subsequent claims of expansion trump the original claim.</p>
+<p>The first <code>panel</code> element within a <code>panelset</code> element should be expanded by default. Any subsequent claims of expansion trump the original claim.</p>
 
 <figure>
-<figcaption>panelset element containing multiple panel elements</figcaption>
+<figcaption><code>panelset</code> element containing multiple <code>panel</code> elements</figcaption>
 <pre class="prettyprinted"><code>
 &lt;panelset&gt;
 &lt;panel&gt;
@@ -290,17 +312,13 @@ When an AT is enabled on a touch device, only basic events are fired (mouse even
 
 <section>
 <h2>The removable attribute</h2>
-<dl>
-<dt>Categories:</dt>
-<dd>...</dd>
-</dl>
 
 <p>The removable attribute is a <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attribute">Boolean attribute</a> that indicates that a panel element can be removed from the user interface. When a panel element is dismissed from the user interface, it is removed from the DOM.</p>
 
 <p>When the removable attribute is present, a mechanism to dismiss the panel is included in the panel element header.</p>
 
 <figure>
-<figcaption>panel element with the removable attribute.</figcaption>
+<figcaption><code>panel</code> element with the <code>removable</code> attribute.</figcaption>
 <img src="img/removable-panel.png" alt="panel element with removable attribute">
 <pre class="prettyprinted"><code>
 &lt;panel removable&gt;
@@ -316,19 +334,15 @@ Today is the first day of the rest of your life.
 
 <section>
 <h2>The expandable attribute</h2>
-<dl>
-<dt>Categories:</dt>
-<dd>...</dd>
-</dl>
 
-<p>The expandable attribute indicates the expanded or collapsed state of a panel (panel element).</p>
+<p>The <code>expandable</code> attribute indicates the expanded or collapsed state of a <code>panel</code> element.</p>
 
-<p>When the expandable attribute is present, the paneltitle element becomes a control that allows the panel element to be toggled between an expanded or collapsed state.</p>
+<p>When the <code>expandable</code> attribute is present, the <code>paneltitle</code> element becomes a control that allows the <code>panel</code> element to be toggled between an expanded or collapsed state.</p>
 
-<p>When the expandable attribute is present and has no value, the panel is in a collapsed state. If the expandable attribute is not present, or is set to true, the panel is in an expanded state.</p>
+<p>When the <code>expandable</code> attribute is present and has no value, the panel is in a collapsed state. If the expandable attribute is not present, or is set to <code>true</code>, the panel is in an expanded state.</p>
 
 <figure>
-<figcaption>panel element with expandable attribute (collapsed state).</figcaption>
+<figcaption>panel element with <code>expandable</code> attribute (collapsed state).</figcaption>
 <img src="img/collapsed-panel.png" alt="Panel element with expandable attribute (collapsed state)">
 <pre class="prettyprinted"><code>
 
@@ -346,12 +360,8 @@ When you follow a link to a panel does it automatically expand?</p>
 
 <section>
 <h2>The prefereddisplay attribute</h2>
-<dl>
-<dt>Categories:</dt>
-<dd>...</dd>
-</dl>
 
-<p>The prefereddisplay attribute determines the initial visual representation of a panelset element containing one or more panel elements.</p>
+<p>The <code>prefereddisplay</code> attribute determines the initial visual representation of a <code>panelset</code> element containing one or more <code>panel</code> elements.</p>
 </section>
 
 <section>
@@ -406,7 +416,7 @@ Selects/activates the previous panel in this panel set in document order if any 
 <h2>User interfaces</h2>
 <p>This section is non-normative.</p>
 
-<p>When the panel and paneltitle elements are used, the user agent should expose a user interface to the user. This user interface should include a visible title, and may optionally include an author provided icon or indicator of expandable state.</p>
+<p>When the <code>panel</code> and <code>paneltitle</code> elements are used, the user agent should expose a user interface to the user. This user interface should include a visible title, and may optionally include an author provided icon or indicator of expandable state.</p>
 
 <p>If the removable attribute is present, the user interface should include a control for dismissing the panel element from the user interface. The control should be focusable and have an accessible name.</p>
 
