@@ -145,28 +145,31 @@ companyURL: "http://www.paciellogroup.com/"
 <section>
 <h2>The panel element</h2>
 <dl>
-<dt>Categories:</dt>
-<dd>Flow content.<br>
+<dt><a data-anolis-xref="element-dfn-categories" href="http://www.w3.org/TR/html5/dom.html#element-dfn-categories">Categories</a>:</dt>
+<dd><!--Flow content.<br>
 Phrasing content.<br>
 If the element is in a panelset, or has the removable or expandable attributes: Interactive content.<br>
-If the element has the removable or expandable attributes: Palpable content.</dd>
-<dt>Contexts in which this element can be used:</dt>
-<dd>Where flow content is expected.</dd>
+If the element has the removable or expandable attributes: Palpable content.--></dd>
+<dd><a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">Flow content</a>.</dd>
+<dd>If the element is a child of a <a href="#the-panelset-element">panelset</a> element, or has the removable or expandable attributes: <a href="http://www.w3.org/TR/html5/dom.html#interactive-content-0">Interactive content</a>.</dd>
+<dd><a href="http://www.w3.org/TR/html5/dom.html#palpable-content-0">Palpable content</a>.</dd>
+<dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+<dd>Where <a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">flow content</a> is expected.</dd>
 <dt>Content model:</dt>
-<dd>TBC??</dd>
-<dt>Content attributes:</dt>
+<dd>One <a href="#the-paneltitle-element">paneltitle</a> element followed by <a href="http://www.w3.org/TR/html5/dom.html#flow-content-1">flow content</a>.</dd>
+<dt><a data-anolis-xref="element-dfn-attributes" href="http://www.w3.org/TR/html5/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
 <dd>Global attributes.<br>
 removable - hints that the panel can be removed from the interface.<br>
 expandable - indicates the expanded state of the panel.<br></dd>
-<dt>Tag omission in text/HTML:</dt>
+<dt><a data-anolis-xref="element-dfn-tag-omission" href="http://www.w3.org/TR/html5/dom.html#element-dfn-tag-omission">Tag omission in text/html</a>:</dt>
 <dd>Neither tag is omissable.</dd>
-<dt>Allowed ARIA role attribute values:</dt>
-<dd>TBC?? Implicit role is group.</dd>
-<dt>Allowed ARIA state and property attributes:</dt>
+<dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
+<dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-group">group</a> role (default - <a href="http://www.w3.org/TR/html5/dom.html#aria-usage-note"><em>do not set</em></a>)</dd>
+<dt>Allowed <a href="http://www.w3.org/TR/html5/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
 <dd>Global ARIA attributes.<br>
 Any ARIA attributes applicable to the allowed roles.</dd>
-<dt>DOM interface:</dt>
-<dd>TBC??</dd>
+<dt><a href="http://www.w3.org/TR/html5/dom.html#element-dfn-dom">DOM interface:</a></dt>
+<dd>Uses <a href="http://www.w3.org/TR/html5/dom.html#htmlelement">HTMLElement</a></dd>
 </dl>
 
 <p>A panel element represents a chunk of content with a header that includes a visible title (paneltitle element). A panel element may be used on its own, or with other panel elements as part of a collection (panelset element).</p>
@@ -178,6 +181,11 @@ It isn't presently possible to imperitively create a panel element.</p>
 <p class="issue">
 <a href="https://github.com/bkardell/common-panel/issues/9">Github issue 9</a><br>
 Should it be possible to script a panel element to become either removable or expandable?</p>
+
+<p class="issue">
+<a href="https://github.com/bkardell/common-panel/issues/32">Github issue 32</a><br>
+Is panel-title a required child of panel element?
+</p>
 </section>
 
 <section>
@@ -254,7 +262,7 @@ If HTML authors are encouraged to follow this separation, it inevitably begs the
 Different visual metaphors have different selection (expansion) patterns. How can this be managed if the panelset element is predicated on a single selection model?</p>
 
 <p class="issue">
-<a href="https://github.com/bkardell/common-panel/issues/28>Github issue 28</a><br>
+<a href="https://github.com/bkardell/common-panel/issues/28">Github issue 28</a><br>
 When an AT is enabled on a touch device, only basic events are fired (mouse events, and in some circumstances blur/focus events). Is this something to consider?</p>
 </section>
 
