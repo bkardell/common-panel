@@ -260,6 +260,7 @@ this.Element && function(ElementPrototype) {
                                     case 38:
                                         // console.log("pressed up");
                                         self.selectPreviousTab();
+                                        evt.preventDefault();
                                         break;
                                     case 39:
                                         // console.log("pressed right"); /* next tab */
@@ -268,6 +269,7 @@ this.Element && function(ElementPrototype) {
                                     case 40:
                                         // console.log("pressed down");
                                         self.selectNextTab();
+                                        evt.preventDefault();
                                         break;
                                 }
 
@@ -399,7 +401,7 @@ this.Element && function(ElementPrototype) {
                                         tab.addEventListener("click", function () {
                                             tab.expansionState = "opened";
                                         }, false);
-                                        this.addEventListener("keydown", function(evt) {
+                                        this.addEventListener("down", function(evt) {
                                             if (evt.keyCode === 32) {
                                                 tab.expansionState = "closed";
                                             }
