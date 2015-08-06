@@ -217,6 +217,7 @@
               case 38:
                 // console.log("pressed up");
                 ownElement.selectPreviousTab();
+                evt.preventDefault();
                 break;
               case 39:
                 // console.log("pressed right"); /* next tab */
@@ -225,6 +226,7 @@
               case 40:
                 // console.log("pressed down");
                 ownElement.selectNextTab();
+                evt.preventDefault();
                 break;
             }
           });
