@@ -208,26 +208,29 @@
           ownElement.activePanelElement = findAll(ownElement, ">common-panel")[ownElement.selectedIndex];
           ownElement.addEventListener("keydown", function(evt) {
             // console.log("caught keys");
-            switch (evt.keyCode) {
-
-              case 37:
-                // console.log("pressed left"); /* previous tab */
-                ownElement.selectPreviousTab();
-                break;
-              case 38:
-                // console.log("pressed up");
-                ownElement.selectPreviousTab();
-                evt.preventDefault();
-                break;
-              case 39:
-                // console.log("pressed right"); /* next tab */
-                ownElement.selectNextTab();
-                break;
-              case 40:
-                // console.log("pressed down");
-                ownElement.selectNextTab();
-                evt.preventDefault();
-                break;
+            if (document.activeElement.classList.contains("common-panel-header")){
+              
+              switch (evt.keyCode) {
+  
+                case 37:
+                  // console.log("pressed left"); /* previous tab */
+                  ownElement.selectPreviousTab();
+                  break;
+                case 38:
+                  // console.log("pressed up");
+                  ownElement.selectPreviousTab();
+                  evt.preventDefault();
+                  break;
+                case 39:
+                  // console.log("pressed right"); /* next tab */
+                  ownElement.selectNextTab();
+                  break;
+                case 40:
+                  // console.log("pressed down");
+                  ownElement.selectNextTab();
+                  evt.preventDefault();
+                  break;
+              }
             }
           });
           // TODO: add key handler here which calls selectNextTab or selectPreviousTab
