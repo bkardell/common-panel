@@ -251,27 +251,30 @@ this.Element && function(ElementPrototype) {
                             }, false);
 
                             this.addEventListener("keydown", function(evt) {
-                                /* jshint -W015 */
-                                switch (evt.keyCode) {
-                                    case 37:
-                                        // console.log("pressed left"); /* previous tab */
-                                        self.selectPreviousTab();
-                                        break;
-                                    case 38:
-                                        // console.log("pressed up");
-                                        self.selectPreviousTab();
-                                        evt.preventDefault();
-                                        break;
-                                    case 39:
-                                        // console.log("pressed right"); /* next tab */
-                                        self.selectNextTab();
-                                        break;
-                                    case 40:
-                                        // console.log("pressed down");
-                                        self.selectNextTab();
-                                        evt.preventDefault();
-                                        break;
-                                }
+                            	if (document.activeElement.classList.contains("common-panel-header")){
+	            
+	                                /* jshint -W015 */
+	                                switch (evt.keyCode) {
+	                                    case 37:
+	                                        // console.log("pressed left"); /* previous tab */
+	                                        self.selectPreviousTab();
+	                                        break;
+	                                    case 38:
+	                                        // console.log("pressed up");
+	                                        self.selectPreviousTab();
+	                                        evt.preventDefault();
+	                                        break;
+	                                    case 39:
+	                                        // console.log("pressed right"); /* next tab */
+	                                        self.selectNextTab();
+	                                        break;
+	                                    case 40:
+	                                        // console.log("pressed down");
+	                                        self.selectNextTab();
+	                                        evt.preventDefault();
+	                                        break;
+	                                }
+                            	}
 
                             }, false);
 
