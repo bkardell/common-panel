@@ -342,7 +342,7 @@
           try {
               scope.title = $interpolate(titleElement.innerHTML)(scope.$parent);
           } catch (e) {
-              
+
           }
           // TODO: see if there is a way to map stupid boolean attributes
           scope.isRemovable = ownElement.hasAttribute("is-removable");
