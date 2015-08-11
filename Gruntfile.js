@@ -22,7 +22,10 @@ grunt.event.on('qunit.spawn', function (url) {
       },
       all: {
         options: {
-          urls: ['http://localhost:8000/test/index.html']
+          urls: [
+            'http://localhost:8000/test/directive-tests.html',
+            'http://localhost:8000/test/standard-tests.html'
+          ]
         }
       }
     },

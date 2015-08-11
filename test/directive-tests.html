@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Panel and Panel Sets Prototypes</title>
+  <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
+  <script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
+
+  <style>
+    h2 { border-top: 1px solid green; }
+    section { padding-left: 1em; }
+    code[title] { background-color: #dfdfca; padding: 1em; color: rebeccapurple; display: block; margin-bottom: 2em; }
+    :root > *:not(h2) { margin-left: 2em; }
+    :not(common-panel-set) > common-panel { margin-bottom: 5em !important; }
+  </style>
+
+  <!-- Fill for media-query-mappings bit above -->
+  <script src="../prototype/fill.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.11/angular.min.js"></script>
+
+  <script type="text/MediaQueryMappings">
+    @media all {
+      #foo {
+        --preferred-display: accordion;
+      }
+    }
+
+    @media screen and (min-width: 767px) {
+      #foo {
+        --preferred-display: tabset;
+      }
+    }
+  </script>
+
+
+
+    <!-- Our custom elements -->
+    <script src="../build/angular-panels.min.js"></script>
+
+</head>
+<body ng-app="test" ng-controller="Controller">
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="assertions.js"></script>
+  <section>
+    <h1>Panel and Panel Sets Prototypes</h1>
+    <p>This page contains descriptions, examples and instances of prototype implemention (prollyfill) of
+    the <a href="http://bkardell.github.io/common-panel/">Panels and Panel Sets Draft</a>.  It can be used
+    for illustration and education, as well as serve as a host for tests for manual or automated
+    checking of conformance for the prollyfill itself.</p>
+
+    <section>
+      <h2>Panels</h2>
+      <section>
+        <h3>Basic Panel</h3>
+        <p>This example demonstrates use of a simple, basic <code>common-panel</code>.</p>
+        <code title="code snippet demonstrating a simple vanilla common-panel">&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&lt;common-panel-title&gt;My favorite books&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;Here are a list of my favorite books:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ol&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Hitchhiker's Guide to the Galaxy&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Pride and Prejudice&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;Green Eggs and Ham&lt;/li&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ol&gt;<br>
+&nbsp;&nbsp;&lt;/p&gt;<br>
+&lt;/common-panel&gt;
+        </code>
+        <section>
+          <h4>Demo</h4>
+          <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel</code> with
+          a title "My favorite books" and paragraph with a list of three of one of the author's favorites. A user
+          should be able to switch from the title to content by way of the TAB key.</p>
+          <common-panel id="basic-panel">
+            <common-panel-title>My favorite books</common-panel-title>
+            <p>Here are a list of my favorite books:
+              <ol>
+                <li>Hitchhiker's Guide to the Galaxy</li>
+                <li>Pride and Prejudice</li>
+                <li>Green Eggs and Ham</li>
+              </ol>
+            </p>
+          </common-panel>
+        </section>
+    </section>
+
+    <section>
+      <h3>Removable Panel</h3>
+      <p>This example demonstrates use of a <code>common-panel</code> with the is-removable attribute set.</p>
+      <code title="code snippet demonstrating a common-panel element with the is-removable attribute set">&lt;common-panel is-removable&gt;<br>
+  &nbsp;&nbsp;&lt;common-panel-title&gt;Reminder&lt;/common-panel-title&gt;<br>
+  &nbsp;&nbsp;&lt;p&gt;You should try using this with assistive technology and, if you are sighted, close your eyes.&lt;/p&gt;<br>
+  &lt;/common-panel&gt;
+      </code>
+      <section>
+        <h4>Demo</h4>
+        <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel</code> with
+        a title "Reminder" and, as part of the title, "X" button which can be used to remove it.  It should also contain content
+        (the reminder) which is a one sentence paragraph about testing.  Users should be able to TAB focus onto the title
+        content, TAB again to the close button.  Pressing spacebar should cause this panel to be removed from the
+        document in its entirety.  If not removed, TAB again should switch focus to the content.
+        </p>
+        <common-panel is-removable id="simple-removable">
+          <common-panel-title>Reminder</common-panel-title>
+          <p>You should try using this with assistive technology and, if you are sighted, close your eyes.</p>
+        </common-panel>
+      </section>
+    </section>
+
+    <section>
+      <h3>Expandable/Collapsable Panel</h3>
+      <p>This example demonstrates the use of a <code>common-panel</code> with the a specified <code>expansion-state</code> attribute
+      set to "opened".</p>
+      <code title="code snippet demonstrating a common-panel with the expansion-state attribute 'opened'">&lt;common-panel expansion-state="opened"&gt;<br>
+  &nbsp;&nbsp;&lt;common-panel-title&gt;Today's News&lt;/common-panel-title&gt;<br>
+  &nbsp;&nbsp;&lt;p&gt;In today's news, accessibility matters.  Accessibility first design might actually help you realize some things that improve your design for visually oriented users as well, for example, this whole proposal!&lt;/p&gt;<br>
+  &lt;/common-panel&gt;</code>
+      <section>
+        <h4>Demo</h4>
+        <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel</code> with the
+        an <code>expansion</code> state of opened.  The user should be able to TAB focus onto the title content and, when the panel is
+        opened (as it is by default here) pressing the TAB should move focus to the content: a paragraph about acessibilty first design.  If the user presses the spacebar on the title, as it is collapsable, this should cause the content to become hidden and removed from
+        TAB navigation until it is re-opened.</p>
+        <common-panel expansion-state="opened" id="simple-expandable">
+          <common-panel-title>Today's News</common-panel-title>
+          <p>In today's news, accessibility matters.  Accessibility first design might actually help you realize some things that improve your
+        design for visually oriented users as well, for example, this whole proposal!</p>
+        </common-panel>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <h2>Panel Sets</h2>
+    <section>
+      <h3>Simple Panel Set</h3>
+      <p>This exaple demonstrates the use of <code>common-panel-set</code> surrounding a collection of simple, vanilla panels about
+      themeatic groups of news stories.  The panel set makes them all inherently "expandable" and manages their simple selection.
+      As none claims to be expanded, the first one is expanded.</p>
+      <code title="code snippet demonstrating a common-panel-set with no special attributes set">&lt;common-panel-set&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+    <section>
+      <h4>Demo</h4>
+      <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.</p>
+      <common-panel-set id="simple-panel-set">
+        <common-panel>
+           <common-panel-title>Local</common-panel-title>
+           <p>This would contain content about local news stories.</p>
+        </common-panel>
+
+        <common-panel>
+           <common-panel-title>Entertainment</common-panel-title>
+           <p>This would contain content about entertainment news stories.</p>
+        </common-panel>
+
+        <common-panel>
+           <common-panel-title>Sports</common-panel-title>
+           <p>This would contain content about sports stories.</p>
+        </common-panel>
+      </common-panel-set>
+    </section>
+  </section>
+
+  <section>
+      <h3>Panel Set (explicit expansion)</h3>
+      <p>This exaple demonstrates the use of <code>common-panel-set</code> surrounding a collection of panels about
+      themeatic groups of news stories.  As <code>common-panel</code> children claim their expansion state to be "opened",
+      each is processed in document order and the <code>common-panel-set</code> closes others.  This means, in a manner
+      similar to the <code>select</code> element, the last one in document order to make the claim ultimately "wins".</p>
+      <code title="code snippet demonstrating a common-panel-set with no special attributes set">&lt;common-panel-set&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel expansion-state="opened"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel expansion-state="opened"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+    <section>
+      <h4>Demo</h4>
+      <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      two of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the last one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em>In all ways beyond which panel is initially expanded, this should be functionally identical to the previous example.</em></p>
+      <common-panel-set id="explicit-expansion-panelset">
+        <common-panel>
+           <common-panel-title>Local</common-panel-title>
+           <p>This would contain content about local news stories.</p>
+        </common-panel>
+
+        <common-panel expansion-state="opened">
+           <common-panel-title>Entertainment</common-panel-title>
+           <p>This would contain content about entertainment news stories.</p>
+        </common-panel>
+
+        <common-panel expansion-state="opened">
+           <common-panel-title>Sports</common-panel-title>
+           <p>This would contain content about sports stories.</p>
+        </common-panel>
+      </common-panel-set>
+    </section>
+  </section>
+
+  <section>
+    <h3>Panel Set's <code>preferred-display</code> Attribute (tabset)</h3>
+    <p>This example demonstrates the use of a <code>preferred-display</code> attribute set to <code>tabset</code> on a <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+          <code title="code snippet demonstrating a common-panel-set with the preferred-display attribute 'tabset'">&lt;common-panel-set preferred-display="tabset"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+    <common-panel-set preferred-display="tabset">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+
+
+ <section>
+    <h3>Panel Set's <code>preferred-display</code> Attribute (carousel)</h3>
+    <p>This example demonstrates the use of a <code>preferred-display</code> attribute set to <code>carousel</code> on a <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+          <code title="code snippet demonstrating a common-panel-set with the preferred-display attribute 'carousel'">&lt;common-panel-set preferred-display="carousel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+    <common-panel-set preferred-display="carousel">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+
+<section>
+    <h3>Panel Set's <code>preferred-display</code> Attribute (accordion)</h3>
+    <p>This example demonstrates the use of a <code>preferred-display</code> attribute set to <code>accordion</code> on a <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+          <code title="code snippet demonstrating a common-panel-set with the preferred-display attribute 'accordion'">&lt;common-panel-set preferred-display="accordion"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+    <common-panel-set preferred-display="accordion">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+
+<section>
+    <h3>Panel Set's <code>preferred-display</code> Attribute (accordion)</h3>
+    <p>This example demonstrates the use of a <code>preferred-display</code> attribute set to <code>accordion</code> on a <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+          <code title="code snippet demonstrating a common-panel-set with the preferred-display attribute 'accordion'">&lt;common-panel-set preferred-display="accordion"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+    <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+    <common-panel-set preferred-display="accordion">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+
+
+<section>
+  <h3>Controlling <code>preferred-display</code> via Media Queries</h3>
+  <p>This example demonstrates the use of media queries to control <code>preferred-display</code> attribute to make it <code>tabset</code> on wide screen, but accordion on all others.  The <code>common-panel-set</code> element with content identical to the previous example.  Only the visual representation should change.</p>
+  <code title="code snipped demonstrating media query control of preferred-display">&lt;!-- demo uses script type="text/MediaQueryMappings" lightweight polyfill --&gt;<br>
+&lt;style&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@media all { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--preferred-display: accordion; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@media screen and (min-width: 767px) { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#foo { <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--preferred-display: tabset; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+    &lt;/style&gt;<br>
+
+ &lt;common-panel-set id="foo"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Local&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about local news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Entertainment&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about entertainment news stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;common-panel&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;common-panel-title&gt;Sports&lt;/common-panel-title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;This would contain content about sports stories.&lt;/p&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/common-panel&gt;<br>
+&lt;/common-panel-set&gt;</code>
+  <section>
+    <h4>Demo</h4>
+      <p>Below is a running demo of the above code snippet using the prototype.  It contains a <code>common-panel-set</code> in which
+      none of the <code>common-panel</code> children specify an <code>expansion</code> state of opened, thus, the first one should be.
+      The arrow keys should allow the user to navigate panels which open automatically, adding their content's ability to receive focus.
+      TAB should move the focus from title to open content and then to the next focusable thing after the <code>common-panel-set</code>.
+      Note that as its representation changes, neither the panel selection, nor the tab-focus should be lost.
+      <em> It is functionally identical to the previous example, only the visual representation should change.</em></p>
+     <common-panel-set id="foo">
+      <common-panel>
+         <common-panel-title>Local</common-panel-title>
+         <p>This would contain content about local news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Entertainment</common-panel-title>
+         <p>This would contain content about entertainment news stories.</p>
+      </common-panel>
+
+      <common-panel>
+         <common-panel-title>Sports</common-panel-title>
+         <p>This would contain content about sports stories.</p>
+      </common-panel>
+    </common-panel-set>
+  </section>
+</section>
+</section>
+
+</section>
+
+
+  <script>
+    angular.module("test", ["commonPanels"])
+      .controller("Controller", ["$scope", function($scope) {
+        $scope.stuffGoes = "Here";
+      }])
+  </script>
+  </body>
+</html>
