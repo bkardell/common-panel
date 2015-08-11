@@ -355,6 +355,9 @@
             header: headerElement.id
           };
 
+
+            console.log("here..1..." + isExpandable);
+
           if (!scope.isRemovable) {
             hideRemovable(headerElement);
           }
@@ -371,6 +374,7 @@
                   (evt.target.parentElement && evt.target.parentElement.matches(".common-panel-remove"))) {
                   ownElement.parentElement.removeChild(ownElement);
                 } else if (ownElement.hasAttribute("expansion-state")) {
+                  console.log("here...");
                   ownElement.toggleExpansionState();
                   ownElement.setAttribute(
                     "expansion-state", (ownElement.getAttribute("expansion-state") === "opened") ? "opened" : "closed"

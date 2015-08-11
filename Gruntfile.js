@@ -11,8 +11,8 @@ grunt.event.on('qunit.spawn', function (url) {
       },
       build: {
         files: [
-          { src: ['prototype/fill.js', 'panels.js'], dest: 'build/panels.min.js' },
-          { src: ['prototype/fill.js', 'angular-panels.js'], dest: 'build/angular-panels.min.js' }
+          { src: ['prototype/fill.js', 'prototype/panels.js'], dest: 'build/panels.min.js' },
+          { src: ['prototype/fill.js', 'prototype/angular-panels.js'], dest: 'build/angular-panels.min.js' }
         ]
       }
     },

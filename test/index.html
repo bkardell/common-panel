@@ -23,6 +23,8 @@
   <script src="../prototype/custom-elements.js"></script>
 
 
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.11/angular.min.js"></script>
+
   <script type="text/MediaQueryMappings">
     @media all {
       #foo {
@@ -40,13 +42,13 @@
 
 
     <!-- Our custom elements -->
-    <script src="../prototype/panels.js"></script>
+    <script src="../build/angular-panels.min.js"></script>
 
     <!-- The CSS for our custom elements -->
     <link rel="stylesheet" type="text/css" href="../prototype/panelset.css"/>
 
 </head>
-<body>
+<body ng-app="test" ng-controller="Controller">
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
   <script>
@@ -660,6 +662,11 @@
 </section>
 
 
-
+  <script>
+    angular.module("test", ["commonPanels"])
+      .controller("Controller", ["$scope", function($scope) {
+        $scope.stuffGoes = "Here";
+      }])
+  </script>
   </body>
 </html>
