@@ -161,7 +161,7 @@
                   tabProxyElement = activePanelElement.tabProxyElement;
                   // TODO: do we still need last set/mutations?
                   if (force || lastSet) {
-                    if (headerElement.firstElementChild.offsetParent) {
+                    if (headerElement.firstElementChild.offsetHeight !== 0) {
                       headerElement.firstElementChild.focus();
                     } else {
                       tabProxyElement.focus();
